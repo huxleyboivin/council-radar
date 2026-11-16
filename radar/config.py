@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = ROOT / "data"
+DATA_DIR = Path(os.environ.get("RADAR_DATA_DIR", ROOT / "data"))
 DB_PATH = Path(os.environ.get("RADAR_DB", DATA_DIR / "radar.db"))
 
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
