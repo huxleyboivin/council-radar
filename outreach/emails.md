@@ -1,6 +1,6 @@
 # Outreach drafts (sent as Huxley Boivin)
 
-Before any of these go out: fill in `[mailing address]` (CASL requires a valid mailing address
+Before any of these go out: fill in `230 Regina Street North, Waterloo, ON` (CASL requires a valid mailing address
 in commercial emails) and the live subscribe link. Send only to business addresses the company
 publishes for this kind of inquiry (business development, partnerships, media/general contact),
 and only on topics tied to the person's role. Honour any opt-out right away. This isn't legal advice.
@@ -21,7 +21,7 @@ Here is a sample issue: [sample link]. If it looks useful, I'm offering a foundi
 
 Thank you for your time,
 Huxley Boivin
-Council Radar · [mailing address]
+Council Radar · 230 Regina Street North, Waterloo, ON
 If you'd rather not hear from me again, just reply "no thanks" and I won't follow up.
 
 ---
@@ -40,7 +40,7 @@ Here is a sample issue: [sample link]. A team plan covers up to five people for 
 
 Thank you for your time,
 Huxley Boivin
-Council Radar · [mailing address]
+Council Radar · 230 Regina Street North, Waterloo, ON
 If you'd rather not hear from me again, just reply "no thanks" and I won't follow up.
 
 ---
@@ -59,7 +59,7 @@ Please let me know your thoughts!
 
 Thank you for your time,
 Huxley Boivin
-Council Radar · [mailing address]
+Council Radar · 230 Regina Street North, Waterloo, ON
 
 ---
 

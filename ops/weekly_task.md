@@ -29,7 +29,7 @@ Sheet {SHEET_ID} (columns: email, plan, status, started, source, notes). Owner: 
    commit and push `data/issues/`.
 5. **Send.** Send the rendered issue from the owner's Gmail to each `active` subscriber,
    one email per person, subject from the render output. Append this footer:
-   "Manage or cancel your subscription: https://billing.stripe.com/p/login/eVqaEZ3ZGbwjc1Qdm38Vi00 · Council Radar, {MAILING_ADDRESS} ·
+   "Manage or cancel your subscription: https://billing.stripe.com/p/login/eVqaEZ3ZGbwjc1Qdm38Vi00 · Council Radar, 230 Regina Street North, Waterloo, ON ·
    Reply 'unsubscribe' to stop these emails." If anyone replied "unsubscribe" since the last
    run, mark them `cancelled` first and don't email them.
 6. **Report.** Email the owner three lines: items this week, subscribers (active/new/cancelled),
