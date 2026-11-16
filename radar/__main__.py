@@ -114,7 +114,7 @@ def cmd_run(args) -> int:
                 continue
             for doc_key, title, url, text in docs:
                 prior = store.doc_status(con, doc_key)
-                if prior and prior["status"] == "ok" and not upcoming:
+                if prior and prior["status"] == "ok" and not upcoming and not getattr(args, "refresh", False):
                     stats["skipped"] += 1
                     continue  # attachments don't change; past agendas are final
                 try:
@@ -127,7 +127,9 @@ def cmd_run(args) -> int:
                 store.save_document(con, doc_key, m.meeting_id, title, url, h)
                 stats["documents"] += 1
                 for fkey, feed in feeds.items():
-                    if store.already_read(con, doc_key, fkey, h):
+                    # a read is keyed on text + the feed's patterns, so editing feeds.yaml re-scans
+                    rh = store.sha(h + "|" + "|".join(p.pattern for p in feed.patterns))
+                    if store.already_read(con, doc_key, fkey, rh):
                         continue
                     hits, excerpt = prefilter.excerpt(text or "", feed)
                     meta = {"doc_title": title, "municipality": name, "meeting_name": m.name,
@@ -151,7 +153,7 @@ def cmd_run(args) -> int:
                                       meeting_date=meta["meeting_date"], source_url=url)
                             if store.save_finding(con, fkey, it):
                                 stats["findings"] += 1
-                    store.mark_read(con, doc_key, fkey, h, hits)
+                    store.mark_read(con, doc_key, fkey, rh, hits)
             con.commit()
     store.log_run(con, "run", started, stats)
     con.commit()
@@ -337,6 +339,7 @@ def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="radar")
     sub = p.add_subparsers(dest="cmd", required=True)
     r = sub.add_parser("run"); r.add_argument("--only", help="comma-separated slugs")
+    r.add_argument("--refresh", action="store_true", help="re-fetch past agendas in the window (after editing feeds.yaml)")
     d = sub.add_parser("digest"); d.add_argument("--deliver", action="store_true")
     d.add_argument("--send-empty", action="store_true")
     sub.add_parser("discover"); sub.add_parser("health")

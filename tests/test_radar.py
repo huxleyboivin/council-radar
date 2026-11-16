@@ -205,3 +205,15 @@ def test_tracker_delays_live_findings_and_hides_signals(tmp_path, monkeypatch):
     assert "Old grant" in heads
     assert "Fresh grant" not in heads      # subscribers get it first
     assert "Early signal" not in heads     # signals stay subscriber-only
+
+
+def test_prefilter_catches_common_bess_and_solar_phrasings():
+    feed = prefilter.load_feeds()["energy"]
+    for text in ("consent for a lease of 22 years to facilitate a battery storage facility",
+                 "a proposed battery facility on agricultural lands",
+                 "ground-mounted solar array on the property",
+                 "construction of wind turbines"):
+        assert prefilter.excerpt(text, feed)[0] >= 1, text
+    for text in ("Museum Storage Lease Agreement", "bicycle storage and waste enclosure",
+                 "replace the smoke detector battery"):
+        assert prefilter.excerpt(text, feed) == (0, ""), text

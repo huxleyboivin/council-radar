@@ -33,8 +33,8 @@ def render(findings, feed_title: str, issue_date: date | None = None, intro: str
     munis = sorted({_get(f, "municipality") for f in findings if _get(f, "municipality")})
     lines += [f"**{len(findings)} items from {len(munis)} municipalities {period_label}.**", ""]
     if not findings:
-        lines += ["No new council items matched this feed this week. We checked every monitored "
-                  "agenda, report and set of minutes.", ""]
+        lines += ["No new council items matched this feed this week. We checked the published agendas "
+                  "and minutes of every monitored council.", ""]
     for key, label in SECTIONS:
         group = [f for f in findings if _get(f, "category") == key]
         if not group:

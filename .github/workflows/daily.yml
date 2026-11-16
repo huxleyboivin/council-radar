@@ -7,6 +7,10 @@ on:
       only:
         description: "Comma-separated municipality slugs (blank = all)"
         required: false
+      refresh:
+        description: "Re-scan past agendas in the window (after editing feeds.yaml)"
+        type: boolean
+        default: false
 permissions:
   contents: write
 concurrency: radar-data
@@ -23,10 +27,12 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
+          EXTRA=""
+          if [ "${{ github.event.inputs.refresh }}" = "true" ]; then EXTRA="--refresh"; fi
           if [ -n "${{ github.event.inputs.only }}" ]; then
-            python -m radar run --only "${{ github.event.inputs.only }}"
+            python -m radar run --only "${{ github.event.inputs.only }}" $EXTRA
           else
-            python -m radar run
+            python -m radar run $EXTRA
           fi
       - run: python -m radar health
         if: always()
