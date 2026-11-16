@@ -1,0 +1,357 @@
+- name: Township of Admaston/Bromley
+  platform: civicweb
+  slug: admastonbromley
+- name: Township of Addington Highlands
+  platform: civicweb
+  slug: addingtonhighlands
+- name: Township of Algonquin Highlands
+  platform: civicweb
+  slug: algonquinhighlands
+- name: Township of Alnwick/Haldimand
+  platform: civicweb
+  slug: alnwickhaldimand
+- name: Township of Armstrong
+  platform: civicweb
+  slug: armstrong
+- name: Town of Atikokan
+  platform: civicweb
+  slug: atikokan
+- name: Town of Aylmer
+  platform: civicweb
+  slug: aylmer
+- name: Town of Bancroft
+  platform: civicweb
+  slug: bancroft
+- name: Township of Beckwith
+  platform: civicweb
+  slug: beckwith
+- name: Municipality of Bluewater
+  platform: civicweb
+  slug: bluewater
+- name: Township of Bonfield
+  platform: civicweb
+  slug: bonfieldtownship
+- name: Town of Bracebridge
+  platform: civicweb
+  slug: bracebridge
+- name: Municipality of Brighton
+  platform: civicweb
+  slug: brighton
+- name: City of Brockville
+  platform: civicweb
+  slug: brockville
+- name: Municipality of Brooke-Alvinston
+  platform: civicweb
+  slug: brookealvinston
+- name: Municipality of Callander
+  platform: civicweb
+  slug: callander
+- name: Township of Carlow/Mayo
+  platform: civicweb
+  slug: carlowmayo
+- name: Municipality of Central Elgin
+  platform: civicweb
+  slug: centralelgin
+- name: Municipality of Central Huron
+  platform: civicweb
+  slug: centralhuron
+- name: Municipality of Centre Hastings
+  platform: civicweb
+  slug: centrehastings
+- name: Township of Centre Wellington
+  platform: civicweb
+  slug: centrewellington
+- name: Township of Chamberlain
+  platform: civicweb
+  slug: chamberlaintownship
+- name: Township of Chapple
+  platform: civicweb
+  slug: chapple
+- name: City of Clarence-Rockland
+  platform: civicweb
+  slug: clarencerockland
+- name: Town of Deep River
+  platform: civicweb
+  slug: deepriver
+- name: Town of Deseronto
+  platform: civicweb
+  slug: deseronto
+- name: Township of Drummond/North Elmsley
+  platform: civicweb
+  slug: drummondnorthelmsley
+- name: Municipality of Dysart et al
+  platform: civicweb
+  slug: dysartetal
+- name: Town of East Gwillimbury
+  platform: civicweb
+  slug: eastgwillimbury
+- name: Township of Elizabethtown-Kitley
+  platform: civicweb
+  slug: elizabethtownkitley
+- name: Town of Englehart
+  platform: civicweb
+  slug: englehart
+- name: Township of Faraday
+  platform: civicweb
+  slug: faraday
+- name: Township of Fauquier-Strickland
+  platform: civicweb
+  slug: fauquierstrickland
+- name: Town of Fort Frances
+  platform: civicweb
+  slug: fortfrances
+- name: Municipality of French River
+  platform: civicweb
+  slug: frenchriver
+- name: Township of Georgian Bay
+  platform: civicweb
+  slug: georgianbay
+- name: Town of Gore Bay
+  platform: civicweb
+  slug: gorebay
+- name: Town of Gravenhurst
+  platform: civicweb
+  slug: gravenhurst
+- name: Township of Greater Madawaska
+  platform: civicweb
+  slug: greatermadawaska
+- name: Town of Greater Napanee
+  platform: civicweb
+  slug: greaternapanee
+- name: Municipality of Greenstone
+  platform: civicweb
+  slug: greenstone
+- name: Municipality of Grey Highlands
+  platform: civicweb
+  slug: greyhighlands
+- name: City of Hamilton
+  platform: civicweb
+  slug: hamilton
+- name: Municipality of Hastings Highlands
+  platform: civicweb
+  slug: hastingshighlands
+- name: Town of Hearst
+  platform: civicweb
+  slug: hearst
+- name: Municipality of Highlands East
+  platform: civicweb
+  slug: highlandseast
+- name: Township of Hudson
+  platform: civicweb
+  slug: hudson
+- name: Township of Ignace
+  platform: civicweb
+  slug: ignace
+- name: Town of Ingersoll
+  platform: civicweb
+  slug: ingersoll
+- name: Town of Innisfil
+  platform: civicweb
+  slug: innisfil
+- name: Town of Iroquois Falls
+  platform: civicweb
+  slug: iroquoisfalls
+- name: Town of Kirkland Lake
+  platform: civicweb
+  slug: kirklandlake
+- name: Township of Lake of Bays
+  platform: civicweb
+  slug: lakeofbays
+- name: Township of Limerick
+  platform: civicweb
+  slug: limerick
+- name: Township of Loyalist
+  platform: civicweb
+  slug: loyalist
+- name: Township of Madawaska Valley
+  platform: civicweb
+  slug: madawaskavalley
+- name: Township of Madoc
+  platform: civicweb
+  slug: madoc
+- name: Township of Manitouwadge
+  platform: civicweb
+  slug: manitouwadge
+- name: Township of Mapleton
+  platform: civicweb
+  slug: mapleton
+- name: Municipality of Marmora and Lake
+  platform: civicweb
+  slug: marmoraandlake
+- name: Township of McNab/Braeside
+  platform: civicweb
+  slug: mcnabbraeside
+- name: Municipality of Meaford
+  platform: civicweb
+  slug: meaford
+- name: Town of Midland
+  platform: civicweb
+  slug: midland
+- name: Township of Minden Hills
+  platform: civicweb
+  slug: mindenhills
+- name: Town of Mono
+  platform: civicweb
+  slug: mono
+- name: Township of Montague
+  platform: civicweb
+  slug: montague
+- name: Township of Muskoka Lakes
+  platform: civicweb
+  slug: muskokalakes
+- name: Town of New Tecumseth
+  platform: civicweb
+  slug: newtecumseth
+- name: City of Niagara Falls
+  platform: civicweb
+  slug: niagarafalls
+- name: Township of North Frontenac
+  platform: civicweb
+  slug: northfrontenac
+- name: Township of North Stormont
+  platform: civicweb
+  slug: northstormont
+- name: Municipality of Northern Bruce Peninsula
+  platform: civicweb
+  slug: northernbrucepeninsula
+- name: Township of Norwich
+  platform: civicweb
+  slug: norwich
+- name: Municipality of Oliver Paipoonge
+  platform: civicweb
+  slug: oliverpaipoonge
+- name: City of Orillia
+  platform: civicweb
+  slug: orillia
+- name: Township of Oro-Medonte
+  platform: civicweb
+  slug: oromedonte
+- name: Township of Otonabee-South Monaghan
+  platform: civicweb
+  slug: otonabeesouthmonaghan
+- name: Town of Penetanguishene
+  platform: civicweb
+  slug: penetanguishene
+- name: Town of Perth
+  platform: civicweb
+  slug: perth
+- name: Township of Perth South
+  platform: civicweb
+  slug: perthsouth
+- name: Town of Petrolia
+  platform: civicweb
+  slug: petrolia
+- name: County of Prince Edward
+  platform: civicweb
+  slug: princeedwardcounty
+- name: City of Quinte West
+  platform: civicweb
+  slug: quintewest
+- name: Township of Ramara
+  platform: civicweb
+  slug: ramara
+- name: Township of Russell
+  platform: civicweb
+  slug: russell
+- name: City of Sarnia
+  platform: civicweb
+  slug: sarnia
+- name: Township of Schreiber
+  platform: civicweb
+  slug: schreiber
+- name: Township of Severn
+  platform: civicweb
+  slug: severn
+- name: Municipality of Shuniah
+  platform: civicweb
+  slug: shuniah
+- name: Municipality of South Bruce
+  platform: civicweb
+  slug: southbruce
+- name: Town of South Bruce Peninsula
+  platform: civicweb
+  slug: southbrucepeninsula
+- name: Township of South Frontenac
+  platform: civicweb
+  slug: southfrontenac
+- name: Township of South-West Oxford
+  platform: civicweb
+  slug: southwestoxford
+- name: Township of Springwater
+  platform: civicweb
+  slug: springwater
+- name: Township of Stone Mills
+  platform: civicweb
+  slug: stonemills
+- name: Township of Tay
+  platform: civicweb
+  slug: tay
+- name: Town of Tecumseh
+  platform: civicweb
+  slug: tecumseh
+- name: Township of Terrace Bay
+  platform: civicweb
+  slug: terracebay
+- name: City of Timmins
+  platform: civicweb
+  slug: timmins
+- name: Township of Tiny
+  platform: civicweb
+  slug: tiny
+- name: Municipality of Trent Hills
+  platform: civicweb
+  slug: trenthills
+- name: Municipality of Trent Lakes
+  platform: civicweb
+  slug: trentlakes
+- name: Township of Tudor and Cashel
+  platform: civicweb
+  slug: tudorandcashel
+- name: Township of Tyendinaga
+  platform: civicweb
+  slug: tyendinagatownship
+- name: Township of Warwick
+  platform: civicweb
+  slug: warwick
+- name: Municipality of Wawa
+  platform: civicweb
+  slug: wawa
+- name: Municipality of West Perth
+  platform: civicweb
+  slug: westperth
+- name: Village of Westport
+  platform: civicweb
+  slug: westport
+- name: Township of Wollaston
+  platform: civicweb
+  slug: wollaston
+- name: Township of Zorra
+  platform: civicweb
+  slug: zorra
+- name: County of Frontenac
+  platform: civicweb
+  slug: frontenac
+- name: County of Haliburton
+  platform: civicweb
+  slug: haliburton
+- name: County of Hastings
+  platform: civicweb
+  slug: hastingscounty
+- name: County of Lambton
+  platform: civicweb
+  slug: lambton
+- name: County of Lanark
+  platform: civicweb
+  slug: lanarkcounty
+- name: County of Lennox and Addington
+  platform: civicweb
+  slug: lennoxandaddington
+- name: County of Perth
+  platform: civicweb
+  slug: perth
+- name: County of Peterborough
+  platform: civicweb
+  slug: peterboroughcounty
+- name: County of Simcoe
+  platform: civicweb
+  slug: simcoe
