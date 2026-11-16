@@ -1,7 +1,23 @@
 {
- "generated": "2026-11-16T05:28:31+00:00",
+ "generated": "2026-11-16T12:07:43+00:00",
  "municipalities_configured": 150,
  "recent_runs": [
+  {
+   "id": 5,
+   "kind": "run",
+   "started_at": "2026-11-16T11:41:38+00:00",
+   "finished_at": "2026-11-16T12:07:42+00:00",
+   "stats": {
+    "municipalities": 150,
+    "meetings": 862,
+    "documents": 237,
+    "skipped": 389,
+    "matched": 0,
+    "ai_reads": 0,
+    "findings": 0,
+    "errors": []
+   }
+  },
   {
    "id": 4,
    "kind": "run",
