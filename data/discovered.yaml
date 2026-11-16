@@ -1,0 +1,429 @@
+- name: Township of Adelaide Metcalfe
+  platform: escribe
+  slug: adelaidemetcalfe
+- name: Township of Amaranth
+  platform: escribe
+  slug: amaranth
+- name: Town of Amherstburg
+  platform: escribe
+  slug: amherstburg
+- name: Township of The Archipelago
+  platform: escribe
+  slug: thearchipelago
+- name: Municipality of Arran-Elderslie
+  platform: escribe
+  slug: arranelderslie
+- name: Township of Assiginack
+  platform: escribe
+  slug: assiginack
+- name: Township of Augusta
+  platform: escribe
+  slug: augusta
+- name: City of Barrie
+  platform: escribe
+  slug: barrie
+- name: Township of Blandford-Blenheim
+  platform: escribe
+  slug: blandfordblenheim
+- name: Town of Blind River
+  platform: escribe
+  slug: blindriver
+- name: Town of The Blue Mountains
+  platform: escribe
+  slug: bluemountains
+- name: Town of Bradford West Gwillimbury
+  platform: escribe
+  slug: bradfordwestgwillimbury
+- name: City of Brampton
+  platform: escribe
+  slug: brampton
+- name: County of Brant
+  platform: escribe
+  slug: brant
+- name: City of Brantford
+  platform: escribe
+  slug: brantford
+- name: Township of Brock
+  platform: escribe
+  slug: townshipofbrock
+- name: Municipality of Brockton
+  platform: escribe
+  slug: brockton
+- name: City of Cambridge
+  platform: escribe
+  slug: cambridge
+- name: Town of Carleton Place
+  platform: escribe
+  slug: carletonplace
+- name: Village of Casselman
+  platform: escribe
+  slug: casselman
+- name: Township of Cavan Monaghan
+  platform: escribe
+  slug: cavanmonaghan
+- name: Township of Champlain
+  platform: escribe
+  slug: champlain
+- name: Municipality of Chatham-Kent
+  platform: escribe
+  slug: chatham-kent
+- name: Township of Chatsworth
+  platform: escribe
+  slug: chatsworth
+- name: Municipality of Clarington
+  platform: escribe
+  slug: clarington
+- name: Township of Clearview
+  platform: escribe
+  slug: clearview
+- name: Town of Cobourg
+  platform: escribe
+  slug: cobourg
+- name: Town of Cochrane
+  platform: escribe
+  slug: cochrane
+- name: Town of Collingwood
+  platform: escribe
+  slug: collingwood
+- name: City of Cornwall
+  platform: escribe
+  slug: cornwall
+- name: Township of Cramahe
+  platform: escribe
+  slug: cramahe
+- name: Township of Douro-Dummer
+  platform: escribe
+  slug: douro-dummer
+- name: City of Dryden
+  platform: escribe
+  slug: dryden
+- name: Municipality of Dutton/Dunwich
+  platform: escribe
+  slug: duttondunwich
+- name: Municipality of East Ferris
+  platform: escribe
+  slug: eastferris
+- name: Township of East Garafraxa
+  platform: escribe
+  slug: eastgarafraxa
+- name: Township of East Hawkesbury
+  platform: escribe
+  slug: easthawkesbury
+- name: City of Elliot Lake
+  platform: escribe
+  slug: elliotlake
+- name: Town of Erin
+  platform: escribe
+  slug: erin
+- name: Town of Espanola
+  platform: escribe
+  slug: espanola
+- name: Town of Fort Erie
+  platform: escribe
+  slug: forterie
+- name: Township of Georgian Bluffs
+  platform: escribe
+  slug: georgianbluffs
+- name: Town of Georgina
+  platform: escribe
+  slug: georgina
+- name: Town of Goderich
+  platform: escribe
+  slug: goderich
+- name: Town of Grand Valley
+  platform: escribe
+  slug: townofgrandvalley
+- name: Town of Grimsby
+  platform: escribe
+  slug: grimsby
+- name: City of Guelph
+  platform: escribe
+  slug: guelph
+- name: Town of Halton Hills
+  platform: escribe
+  slug: haltonhills
+- name: Township of Hamilton
+  platform: escribe
+  slug: hamilton
+- name: Town of Hanover
+  platform: escribe
+  slug: hanover
+- name: Town of Hawkesbury
+  platform: escribe
+  slug: hawkesbury
+- name: Municipality of Huron Shores
+  platform: escribe
+  slug: huronshores
+- name: Township of Huron-Kinloss
+  platform: escribe
+  slug: huronkinloss
+- name: Town of Kapuskasing
+  platform: escribe
+  slug: kapuskasing
+- name: City of Kawartha Lakes
+  platform: escribe
+  slug: kawarthalakes
+- name: City of Kenora
+  platform: escribe
+  slug: kenora
+- name: Township of King
+  platform: escribe
+  slug: king
+- name: City of Kingston
+  platform: escribe
+  slug: cityofkingston
+- name: Town of Kingsville
+  platform: escribe
+  slug: townofkingsville
+- name: City of Kitchener
+  platform: escribe
+  slug: kitchener
+- name: Town of Lakeshore
+  platform: escribe
+  slug: lakeshore
+- name: Municipality of Lambton Shores
+  platform: escribe
+  slug: lambtonshores
+- name: Township of Lanark Highlands
+  platform: escribe
+  slug: lanarkhighlands
+- name: Town of LaSalle
+  platform: escribe
+  slug: lasalle
+- name: Town of Lincoln
+  platform: escribe
+  slug: lincoln
+- name: City of London
+  platform: escribe
+  slug: london
+- name: Township of Lucan Biddulph
+  platform: escribe
+  slug: lucanbiddulph
+- name: Township of Machar
+  platform: escribe
+  slug: machar
+- name: City of Markham
+  platform: escribe
+  slug: markham
+- name: Municipality of Markstay-Warren
+  platform: escribe
+  slug: markstay-warren
+- name: Municipality of McDougall
+  platform: escribe
+  slug: mcdougall
+- name: Village of Merrickville-Wolford
+  platform: escribe
+  slug: merrickville-wolford
+- name: Municipality of Middlesex Centre
+  platform: escribe
+  slug: middlesexcentre
+- name: Town of Milton
+  platform: escribe
+  slug: milton
+- name: City of Mississauga
+  platform: escribe
+  slug: mississauga
+- name: Township of Moonbeam
+  platform: escribe
+  slug: moonbeam
+- name: Municipality of The Nation
+  platform: escribe
+  slug: thenation
+- name: Town of Newmarket
+  platform: escribe
+  slug: newmarket
+- name: County of Norfolk
+  platform: escribe
+  slug: norfolkcounty
+- name: City of North Bay
+  platform: escribe
+  slug: northbay
+- name: Township of North Dundas
+  platform: escribe
+  slug: northdundas
+- name: Township of North Glengarry
+  platform: escribe
+  slug: northglengarry
+- name: Municipality of North Grenville
+  platform: escribe
+  slug: northgrenville
+- name: Municipality of North Middlesex
+  platform: escribe
+  slug: northmiddlesex
+- name: Municipality of North Perth
+  platform: escribe
+  slug: northperth
+- name: Town of Oakville
+  platform: escribe
+  slug: oakville
+- name: Town of Orangeville
+  platform: escribe
+  slug: orangeville
+- name: City of Oshawa
+  platform: escribe
+  slug: oshawa
+- name: City of Owen Sound
+  platform: escribe
+  slug: owensound
+- name: Township of Perry
+  platform: escribe
+  slug: perry
+- name: Township of Perth East
+  platform: escribe
+  slug: pertheast
+- name: City of Peterborough
+  platform: escribe
+  slug: peterborough
+- name: City of Pickering
+  platform: escribe
+  slug: pickering
+- name: Village of Point Edward
+  platform: escribe
+  slug: pointedward
+- name: City of Port Colborne
+  platform: escribe
+  slug: portcolborne
+- name: Municipality of Port Hope
+  platform: escribe
+  slug: porthope
+- name: Town of Prescott
+  platform: escribe
+  slug: prescott
+- name: Town of Renfrew
+  platform: escribe
+  slug: renfrew
+- name: Township of Rideau Lakes
+  platform: escribe
+  slug: rideaulakes
+- name: Town of Saugeen Shores
+  platform: escribe
+  slug: saugeenshores
+- name: Township of Scugog
+  platform: escribe
+  slug: scugog
+- name: Town of Shelburne
+  platform: escribe
+  slug: shelburne
+- name: Town of Smiths Falls
+  platform: escribe
+  slug: smithsfalls
+- name: Municipality of South Dundas
+  platform: escribe
+  slug: southdundas
+- name: Township of South Glengarry
+  platform: escribe
+  slug: southglengarry
+- name: Municipality of South Huron
+  platform: escribe
+  slug: southhuron
+- name: Township of South Stormont
+  platform: escribe
+  slug: southstormont
+- name: Township of Southgate
+  platform: escribe
+  slug: southgate
+- name: Municipality of Southwest Middlesex
+  platform: escribe
+  slug: southwestmiddlesex
+- name: City of St. Catharines
+  platform: escribe
+  slug: stcatharines
+- name: City of St. Thomas
+  platform: escribe
+  slug: stthomas
+- name: City of Stratford
+  platform: escribe
+  slug: stratford
+- name: Municipality of Strathroy-Caradoc
+  platform: escribe
+  slug: strathroy-caradoc
+- name: City of Temiskaming Shores
+  platform: escribe
+  slug: temiskamingshores
+- name: Municipality of Thames Centre
+  platform: escribe
+  slug: thamescentre
+- name: City of Thorold
+  platform: escribe
+  slug: thorold
+- name: City of Thunder Bay
+  platform: escribe
+  slug: thunderbay
+- name: Town of Tillsonburg
+  platform: escribe
+  slug: tillsonburg
+- name: Municipality of Tweed
+  platform: escribe
+  slug: tweed
+- name: Township of Uxbridge
+  platform: escribe
+  slug: uxbridge
+- name: City of Vaughan
+  platform: escribe
+  slug: vaughan
+- name: Town of Wasaga Beach
+  platform: escribe
+  slug: wasagabeach
+- name: City of Welland
+  platform: escribe
+  slug: welland
+- name: Township of Wellesley
+  platform: escribe
+  slug: wellesley
+- name: Township of Wellington North
+  platform: escribe
+  slug: wellington-north
+- name: Municipality of West Elgin
+  platform: escribe
+  slug: westelgin
+- name: Municipality of West Grey
+  platform: escribe
+  slug: westgrey
+- name: Township of West Lincoln
+  platform: escribe
+  slug: westlincoln
+- name: Town of Whitby
+  platform: escribe
+  slug: whitby
+- name: Township of Wilmot
+  platform: escribe
+  slug: wilmot
+- name: City of Woodstock
+  platform: escribe
+  slug: woodstock
+- name: Township of Woolwich
+  platform: escribe
+  slug: woolwich
+- name: County of Dufferin
+  platform: escribe
+  slug: dufferincounty
+- name: County of Elgin
+  platform: escribe
+  slug: elgincounty
+- name: County of Grey
+  platform: escribe
+  slug: grey
+- name: County of Middlesex
+  platform: escribe
+  slug: middlesexcounty
+- name: County of Northumberland
+  platform: escribe
+  slug: northumberland
+- name: County of Oxford
+  platform: escribe
+  slug: oxfordcounty
+- name: County of Wellington
+  platform: escribe
+  slug: wellington
+- name: Region of Durham
+  platform: escribe
+  slug: durhamregion
+- name: Region of Niagara
+  platform: escribe
+  slug: niagararegion
+- name: Region of Peel
+  platform: escribe
+  slug: peelregion
+- name: Region of Waterloo
+  platform: escribe
+  slug: regionofwaterloo
