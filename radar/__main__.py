@@ -102,14 +102,17 @@ def cmd_run(args) -> int:
             upcoming = m.start is None or m.start.date() >= today - timedelta(days=2)
             try:
                 docs = list(escribe.iter_meeting_documents(fetcher, slug, m))
+            except escribe.Blocked as e:
+                stats["errors"].append({"municipality": slug, "stage": "blocked", "meeting": m.url,
+                                        "error": "bot verification page; not retried"})
+                continue
             except Exception as e:
                 stats["errors"].append({"municipality": slug, "stage": "meeting", "meeting": m.url,
                                         "error": repr(e)[:300]})
                 continue
             for doc_key, title, url, text in docs:
                 prior = store.doc_status(con, doc_key)
-                is_attachment = ":doc:" in doc_key
-                if prior and prior["status"] == "ok" and (is_attachment or not upcoming):
+                if prior and prior["status"] == "ok" and not upcoming:
                     stats["skipped"] += 1
                     continue  # attachments don't change; past agendas are final
                 try:

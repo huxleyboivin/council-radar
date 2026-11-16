@@ -45,6 +45,19 @@ def test_parse_calendar_json():
     assert m.docs[0].doc_id == "4411"
 
 
+def test_calendar_html_pages_and_bot_gate():
+    cal = {"d": [{"ID": "6f1a2b3c-0000-4000-8000-1234567890ab", "MeetingName": "Council",
+                  "StartDate": "2026/11/24 18:00:00", "HasAgenda": True, "MeetingDocumentLink": [
+                      {"Type": "Agenda", "Url": "/FileStream.ashx?DocumentId=1"},
+                      {"Type": "Agenda", "Url": "/Meeting.aspx?Id=6f1a2b3c-0000-4000-8000-1234567890ab&Agenda=Agenda&lang=English"},
+                      {"Type": "PostMinutes", "Url": "/Meeting.aspx?Id=6f1a2b3c-0000-4000-8000-1234567890ab&Agenda=PostMinutes&lang=English"}]}]}
+    m = escribe.parse_calendar_json(cal, "x")[0]
+    assert [k for k, _ in m.html_pages] == ["Agenda", "PostMinutes"]
+    blocked = SimpleNamespace(status_code=403, headers={"Server": "cloudflare"}, text="<title>Verifying you are human</title>")
+    assert escribe.is_challenge(blocked)
+    assert not escribe.is_challenge(SimpleNamespace(status_code=200, headers={}, text="ok"))
+
+
 def test_parse_portal_html_fallback():
     ms = escribe.parse_portal_html(PORTAL, "examplecounty")
     assert len(ms) == 1 and ms[0].start == datetime(2026, 11, 24)

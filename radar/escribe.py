@@ -41,6 +41,7 @@ class Meeting:
     url: str
     docs: list[DocLink] = field(default_factory=list)
     has_agenda: bool = True
+    html_pages: list[tuple[str, str]] = field(default_factory=list)  # (type, url) e.g. Agenda, PostMinutes
 
 
 def base_url(slug: str) -> str:
@@ -134,20 +135,24 @@ def parse_calendar_json(payload, slug: str) -> list[Meeting]:
         # Always use eScribe's canonical agenda address: the calendar's own "Url" field varies
         # by portal (some return paths relative to the calendar service, which 404).
         url = f"Meeting.aspx?Id={mid}&Agenda=Agenda&lang=English"
-        docs = []
+        docs, pages = [], []
         for d in _first(it, "MeetingDocumentLink", "Documents", "documents", default=[]) or []:
-            durl = _first(d, "Url", "URL", "url", default="")
-            m = DOC_ID_RE.search(durl or "")
+            durl = _first(d, "Url", "URL", "url", default="") or ""
+            m = DOC_ID_RE.search(durl)
             if m:
                 docs.append(DocLink(m.group(1), urljoin(base + "/", durl),
                                     " ".join(str(_first(d, k, default="")) for k in ("Type", "Title", "Format")).strip()))
+            elif MEETING_ID_RE.search(durl):
+                kind = str(_first(d, "Type", default="Agenda")) or "Agenda"
+                pages.append((kind, urljoin(base + "/", durl)))
         meetings.append(Meeting(
             meeting_id=mid,
             name=str(_first(it, "MeetingName", "Name", "Title", "name", default="Meeting")),
             start=parse_date(str(_first(it, "StartDate", "Start", "start", "Date", default="") or "")),
             url=urljoin(base + "/", url),
             docs=docs,
-            has_agenda=bool(it.get("HasAgenda", True)) or bool(docs),
+            has_agenda=bool(it.get("HasAgenda", True)) or bool(docs) or bool(pages),
+            html_pages=pages,
         ))
     return meetings
 
@@ -237,14 +242,38 @@ def fetch_document_text(f: Fetcher, doc: DocLink) -> str:
     return ""  # spreadsheets, images, etc. are skipped
 
 
+class Blocked(Exception):
+    """The site answered with a bot-verification page. We never try to get past these."""
+
+
+def is_challenge(resp: requests.Response) -> bool:
+    return resp.status_code in (403, 503) and (
+        "cloudflare" in resp.headers.get("Server", "").lower() or "Verifying you are human" in resp.text[:5000])
+
+
+def fetch_page(f: Fetcher, url: str) -> str:
+    if not f.allowed(url):
+        raise PermissionError(f"robots.txt disallows {url}")
+    f._wait()
+    r = f.s.get(url, timeout=60)
+    if is_challenge(r):
+        raise Blocked(url)
+    r.raise_for_status()
+    return r.text
+
+
 def iter_meeting_documents(f: Fetcher, slug: str, meeting: Meeting) -> Iterable[tuple[str, str, str, str]]:
-    """Yield (doc_key, title, url, text) for the agenda page itself and every attachment."""
-    html = f.get(agenda_url(meeting)).text
-    agenda_text, page_docs = parse_meeting_page(html, slug)
-    yield (f"{slug}:agenda:{meeting.meeting_id}", f"{meeting.name} agenda", agenda_url(meeting), agenda_text)
+    """Yield (doc_key, title, url, text) for each HTML agenda/minutes page of a meeting.
+
+    Attachments (FileStream PDFs) sit behind bot verification on many portals, so they are not
+    downloaded. Their titles appear in the agenda page text and readers follow the links.
+    """
+    pages = meeting.html_pages or [("Agenda", agenda_url(meeting))]
     seen = set()
-    for d in meeting.docs + page_docs:
-        if d.doc_id in seen:
+    for kind, url in pages:
+        if url in seen:
             continue
-        seen.add(d.doc_id)
-        yield (f"{slug}:doc:{d.doc_id}", d.title, d.url, None)  # text fetched lazily by caller
+        seen.add(url)
+        html = fetch_page(f, url)
+        text, _docs = parse_meeting_page(html, slug)
+        yield (f"{slug}:{kind.lower()}:{meeting.meeting_id}", f"{meeting.name} {kind}", url, text)
