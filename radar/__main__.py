@@ -242,8 +242,22 @@ def cmd_debug(args) -> int:
     items = r.json().get("d", [])
     print("calendar items:", len(items))
     print(json.dumps(items[:2], indent=1, default=str)[:3000])
-    meetings = escribe.parse_calendar_json(r.json(), args.slug)
+    print("robots.txt:", f.s.get(base + "/robots.txt", timeout=20).text[:500])
+    meetings = [m for m in escribe.parse_calendar_json(r.json(), args.slug) if m.docs]
     if meetings:
+        d = meetings[0].docs[0]
+        print("doc:", d.url, d.title)
+        tests = {
+            "plain": {},
+            "referer": {"Referer": escribe.agenda_url(meetings[0])},
+            "referer+accept": {"Referer": escribe.agenda_url(meetings[0]),
+                               "Accept": "application/pdf,text/html;q=0.9,*/*;q=0.8"},
+        }
+        f.get(escribe.agenda_url(meetings[0]))  # pick up any session cookie first
+        for name, h in tests.items():
+            resp = f.s.get(d.url, headers=h, timeout=60)
+            print(f"download[{name}]:", resp.status_code, resp.headers.get("Content-Type"),
+                  resp.headers.get("Server"), len(resp.content), resp.text[:150].replace("\n", " ") if resp.status_code != 200 else "")
         m = meetings[0]
         page = f.get(escribe.agenda_url(m))
         print("agenda url:", escribe.agenda_url(m), page.status_code, len(page.text))
