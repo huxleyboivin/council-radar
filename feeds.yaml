@@ -1,0 +1,38 @@
+# Each feed is one product. The prefilter keeps only passages that match a feed's
+# patterns, so the AI read (the only per-document cost) runs on a small slice of text.
+energy:
+  title: "Council Radar: Ontario Energy Projects"
+  audience: >-
+    Developers, consultants and lawyers working on Ontario electricity projects (battery
+    storage, solar, wind, gas, hydrogen, LDES) who need municipal support confirmations for
+    IESO procurements (LT2, LLT) and must track local policy affecting siting.
+  patterns:
+    - '\bIESO\b'
+    - 'Independent Electricity System Operator'
+    - '\bLT2\b|\bLLT\b|Long[- ]Lead[- ]Time|Long[- ]Term 2'
+    - 'municipal support (resolution|confirmation)'
+    - '\bMSC\b|\bMSR\b|\bMRSPS\b'
+    - 'battery energy storage|\bBESS\b|energy storage'
+    - 'solar (farm|project|facility|energy)|photovoltaic'
+    - 'wind (turbine|farm|project|energy)'
+    - 'unwilling host'
+    - 'renewable energy (project|facility|approval)'
+    - 'community benefit agreement'
+    - 'hydrogen (peaker|plant)|natural gas (plant|generation)|peaker plant'
+  categories:
+    - support_request      # proponent asks council for an MSC / MSR
+    - support_granted      # council grants support
+    - support_denied       # council refuses / defers / issues "acknowledgement only"
+    - policy_protocol      # council adopts or directs a protocol, criteria, blanket resolution
+    - zoning_bylaw         # zoning / official plan / interim control affecting energy siting
+    - delegation           # proponent or residents present; early signal
+    - other_relevant
+str_rules:
+  title: "Council Radar: Ontario Short-Term Rental Rules"
+  audience: Short-term rental hosts and property managers in Ontario.
+  enabled: false
+  patterns:
+    - 'short[- ]term rental'
+    - '\bSTR\b'
+    - 'municipal accommodation tax|\bMAT\b'
+  categories: [bylaw_passed, bylaw_proposed, fee_change, enforcement, other_relevant]

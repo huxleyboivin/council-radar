@@ -1,0 +1,26 @@
+# Ontario municipalities monitored by Council Radar.
+# platform: escribe  -> portal is https://pub-<slug>.escribemeetings.com
+# Seed list = portals confirmed in public search results. `python -m radar discover`
+# (run monthly on GitHub Actions) probes the remaining Ontario municipalities and
+# appends any eScribe portals it finds to data/discovered.yaml.
+- name: City of Ottawa
+  platform: escribe
+  slug: ottawa
+- name: City of Greater Sudbury
+  platform: escribe
+  slug: greatersudbury
+- name: Town of Caledon
+  platform: escribe
+  slug: caledon
+- name: City of Richmond Hill
+  platform: escribe
+  slug: richmondhill
+- name: Municipality of Kincardine
+  platform: escribe
+  slug: kincardine
+- name: Bruce County
+  platform: escribe
+  slug: brucecounty
+- name: Haldimand County
+  platform: escribe
+  slug: haldimandcounty

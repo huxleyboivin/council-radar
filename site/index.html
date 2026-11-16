@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Council Radar: Ontario council decisions on energy projects, every week</title>
+<meta name="description" content="A weekly brief for Ontario energy developers: every council support request, refusal, protocol and zoning change, read from the agendas and linked to the source.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F4; --ink:#14284B; --muted:#4D5B73; --rule:#C9D0DA;
+    --line:#2F6FB5; --granted:#2E7D4F; --refused:#B3412E; --pending:#B07A12; --signal:#5B4FA8;
+    --serif:"Source Serif 4", Georgia, serif; --sans:"Public Sans", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.6 var(--sans)}
+  a{color:var(--line)}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--line);outline-offset:3px}
+  .wrap{max-width:68rem;margin:0 auto;padding:0 1.5rem}
+  header.top{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0}
+  .brand{font:700 1.05rem/1 var(--sans);letter-spacing:.01em;color:var(--ink);text-decoration:none;display:flex;gap:.6rem;align-items:center}
+  .brand svg{flex:none}
+  .top nav a{color:var(--muted);text-decoration:none;margin-left:1.5rem;font-size:.95rem}
+  .top nav a:hover{color:var(--ink)}
+
+  /* The memorable thing: the hero is written as a council resolution. */
+  .resolution{margin:3rem 0 4.5rem;display:grid;grid-template-columns:3.5rem minmax(0,44rem);gap:0 1.25rem}
+  .resolution .gutter{font:400 .8rem/2.15 var(--sans);color:var(--rule);text-align:right;padding-top:.35rem;user-select:none}
+  .resolution .body{font:400 1.32rem/1.62 var(--serif);border-left:2px solid var(--ink);padding-left:1.5rem}
+  .resolution p{margin:0 0 .9rem}
+  .resolution .w{font-weight:600;font-variant:small-caps;letter-spacing:.03em}
+  .resolution h1{font:600 clamp(2rem,4.4vw,3.1rem)/1.12 var(--serif);margin:1.6rem 0 1.4rem;letter-spacing:-.01em}
+  .resolution .moved{font:400 .95rem/1.5 var(--sans);color:var(--muted);margin-top:1.6rem}
+  .actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.75rem;font-family:var(--sans)}
+  .btn{display:inline-block;font:700 1rem/1 var(--sans);padding:.95rem 1.3rem;border-radius:3px;text-decoration:none;border:2px solid var(--ink);cursor:pointer}
+  .btn.primary{background:var(--ink);color:var(--paper)}
+  .btn.secondary{background:transparent;color:var(--ink)}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.primary:hover{background:#0d1c36}
+  @media (prefers-reduced-motion: no-preference){
+    .resolution .body p,.resolution h1,.resolution .actions{opacity:0;animation:in .5s ease forwards}
+    .resolution .body > :nth-child(2){animation-delay:.12s}
+    .resolution .body > :nth-child(3){animation-delay:.24s}
+    .resolution .body > :nth-child(4){animation-delay:.42s}
+    .resolution .body > :nth-child(n+5){animation-delay:.6s}
+    @keyframes in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  }
+
+  section{padding:3.5rem 0;border-top:1px solid var(--rule)}
+  h2{font:600 1.75rem/1.25 var(--serif);margin:0 0 .6rem}
+  .lede{color:var(--muted);max-width:38rem;margin:0 0 2rem}
+
+  .feed{list-style:none;margin:0;padding:0;max-width:52rem}
+  .feed li{display:grid;grid-template-columns:9.5rem 1fr;gap:1.25rem;padding:1.25rem 0;border-bottom:1px solid var(--rule)}
+  .status{font:700 .82rem/1.3 var(--sans);padding:.3rem .55rem;border-radius:2px;align-self:start;justify-self:start;color:#fff}
+  .s-refused{background:var(--refused)} .s-granted{background:var(--granted)} .s-policy{background:var(--line)}
+  .s-signal{background:var(--signal)} .s-request{background:var(--pending)}
+  .feed h3{font:600 1.15rem/1.35 var(--serif);margin:0 0 .25rem}
+  .feed .where{font-size:.9rem;color:var(--muted);margin:0 0 .45rem}
+  .feed p{margin:0;max-width:40rem}
+  .more{margin-top:1.5rem}
+
+  .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem;max-width:60rem;padding:0;list-style:none;counter-reset:s}
+  .steps li{counter-increment:s}
+  .steps li::before{content:counter(s);display:block;font:600 2.2rem/1 var(--serif);color:var(--line);margin-bottom:.6rem}
+  .steps h3{font:700 1.02rem/1.35 var(--sans);margin:0 0 .35rem}
+  .steps p{margin:0;color:var(--muted)}
+
+  .plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;max-width:52rem}
+  .plan{background:#fff;border:1px solid var(--rule);padding:1.75rem}
+  .plan.lead{border:2px solid var(--ink)}
+  .plan h3{font:700 1.05rem/1.3 var(--sans);margin:0 0 .75rem}
+  .price{font:600 2.4rem/1 var(--serif);margin:0}
+  .price small{font:400 1rem var(--sans);color:var(--muted)}
+  .was{color:var(--muted);font-size:.92rem;margin:.4rem 0 1rem}
+  .plan ul{padding-left:1.1rem;margin:0 0 1.5rem}
+  .plan li{margin:.3rem 0}
+  .fine{font-size:.9rem;color:var(--muted);max-width:44rem;margin-top:1.25rem}
+
+
+  dl.faq{max-width:46rem;margin:0}
+  .faq dt{font:600 1.1rem/1.4 var(--serif);margin-top:1.5rem}
+  .faq dd{margin:.35rem 0 0;color:var(--ink)}
+  footer{border-top:1px solid var(--rule);padding:2rem 0 3rem;color:var(--muted);font-size:.9rem}
+
+  @media (max-width:760px){
+    .resolution{grid-template-columns:1fr;margin-top:1.5rem}
+    .resolution .gutter{display:none}
+    .resolution .body{font-size:1.15rem;padding-left:1rem}
+    .feed li{grid-template-columns:1fr;gap:.5rem}
+    .steps,.plans{grid-template-columns:1fr}
+    .top nav a{margin-left:1rem}
+    .top nav a.hide-sm{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#" aria-label="Council Radar home">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11.5" fill="none" stroke="#14284B" stroke-width="2"/><circle cx="13" cy="13" r="6" fill="none" stroke="#2F6FB5" stroke-width="2"/><path d="M13 13 L22.5 6.5" stroke="#14284B" stroke-width="2" stroke-linecap="round"/><circle cx="13" cy="13" r="1.8" fill="#14284B"/></svg>
+      Council Radar
+    </a>
+    <nav aria-label="Page sections"><a class="hide-sm" href="#sample">Sample</a><a class="hide-sm" href="#how">How it works</a><a href="#pricing">Pricing</a></nav>
+  </header>
+
+  <main>
+    <div class="resolution">
+      <div class="gutter" aria-hidden="true">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9</div>
+      <div class="body">
+        <p><span class="w">Whereas</span> every IESO proposal on municipal land needs the support of that municipality's council at the time of submission;</p>
+        <p><span class="w">And whereas</span> Ontario's councils are newly elected, are writing new protocols, and post their decisions in hundreds of PDF agendas that nobody has time to read;</p>
+        <h1>Be it resolved that you hear about it the week it happens.</h1>
+        <p>Council Radar reads Ontario council and committee agendas, staff reports and minutes every day. Each Monday you get a short brief: every support request, refusal, new protocol, zoning change and early delegation on wind, solar, storage and gas projects, each with a link to the council's own document.</p>
+        <div class="actions">
+          <a class="btn primary" href="#pricing">Subscribe for $59 a month</a>
+          <a class="btn secondary" href="#sample">Read a sample issue</a>
+        </div>
+        <p class="moved">Built for developers, consultants, lawyers and community-relations teams working on LT2 Window 2 and the Long Lead-Time RFP.</p>
+      </div>
+    </div>
+
+    <section id="sample" aria-labelledby="sample-h">
+      <h2 id="sample-h">What lands in your inbox</h2>
+      <p class="lede">Excerpts from the sample issue. Live issues cover the past week across every council we monitor.</p>
+      <ul class="feed">
+        <li>
+          <span class="status s-refused">Acknowledged only</span>
+          <div>
+            <h3>Puslinch won't issue support letters until it has a protocol</h3>
+            <p class="where">Township of Puslinch · Council · October 7, 2026 · 7 MW solar</p>
+            <p>Council issued a letter acknowledging it had been informed of the project, not a letter of support, and directed staff to build an IESO protocol in Q1 2027. Plan your timeline around it.</p>
+          </div>
+        </li>
+        <li>
+          <span class="status s-policy">New criteria</span>
+          <div>
+            <h3>Haldimand lets the CAO sign support letters; wind still excluded</h3>
+            <p class="where">Haldimand County · Council · Report EDT-02-2026</p>
+            <p>Projects that meet the county's criteria skip council entirely. Engagement must start three months before submission, and community benefit payments are $1,133 per MW per year, capped at $300,000.</p>
+          </div>
+        </li>
+        <li>
+          <span class="status s-signal">Early signal</span>
+          <div>
+            <h3>Prowind's wind and solar pitch in Minto draws organized pushback</h3>
+            <p class="where">Town of Minto · Delegation and community meetings · 70 MW wind, 24 MW solar</p>
+            <p>Council hasn't taken a position yet. Expect a support request to the new council, with residents already mobilized.</p>
+          </div>
+        </li>
+      </ul>
+      <p class="more"><a href="sample.html">Read the full sample issue</a></p>
+    </section>
+
+    <section id="how" aria-labelledby="how-h">
+      <h2 id="how-h">How it works</h2>
+      <p class="lede">Nothing to install. One email a week, written to be read in five minutes.</p>
+      <ol class="steps">
+        <li><h3>We collect every document</h3><p>Each morning we pull new agendas, staff reports, by-laws and minutes from Ontario council portals.</p></li>
+        <li><h3>AI reads them, rules check them</h3><p>Only passages about energy projects get read. Each item is tagged and summarized, with a quote and a link to the source.</p></li>
+        <li><h3>You get Monday's brief</h3><p>Grouped by what matters: support granted, refused, requested, new protocols, zoning, early signals.</p></li>
+      </ol>
+    </section>
+
+    <section id="pricing" aria-labelledby="pricing-h">
+      <h2 id="pricing-h">Pricing</h2>
+      <p class="lede">Prices in Canadian dollars. Cancel any time from the link in any email.</p>
+      <div class="plans">
+        <div class="plan lead">
+          <h3>Founding subscriber</h3>
+          <p class="price">$59 <small>/ month</small></p>
+          <p class="was">Regular price $99 a month. Founding rate locked in for as long as you stay subscribed. Limited to the first 25 subscribers.</p>
+          <ul>
+            <li>The weekly Ontario energy brief</li>
+            <li>Every item linked to the council's document</li>
+            <li>Request councils you need covered</li>
+          </ul>
+          <a class="btn primary" data-paid-link href="#">Subscribe for $59 a month</a>
+        </div>
+        <div class="plan">
+          <h3>Team</h3>
+          <p class="price">$249 <small>/ month</small></p>
+          <p class="was">Up to 5 people at one company, one invoice.</p>
+          <ul>
+            <li>Everything in the founding plan</li>
+            <li>Five inboxes</li>
+            <li>Annual billing available</li>
+          </ul>
+          <a class="btn secondary" data-team-link href="#">Subscribe your team</a>
+        </div>
+      </div>
+      <p class="fine">Want to see it first? <a href="sample.html">Read the full sample issue</a>. Payments are handled by Stripe, and every issue includes a link to manage or cancel your subscription.</p>
+    </section>
+
+    <section aria-labelledby="faq-h">
+      <h2 id="faq-h">Questions</h2>
+      <dl class="faq">
+        <dt>Which councils do you cover?</dt>
+        <dd>We start with municipalities that publish agendas through eScribe and add more every month. The goal is all 444. If a council matters to your pipeline, reply to any issue and we'll prioritize it.</dd>
+        <dt>How accurate is it?</dt>
+        <dd>Every item quotes and links its source, so you can check it in one click. The summaries are AI-written from public documents. Confirm the details in the source before you rely on them.</dd>
+        <dt>Is this different from a legislative monitoring platform?</dt>
+        <dd>It's narrower and much cheaper. We track one thing, council activity on energy projects in Ontario, and deliver it as a brief instead of a dashboard.</dd>
+        <dt>Can I expense it?</dt>
+        <dd>Yes. Payment is handled by Stripe and every charge comes with a receipt.</dd>
+      </dl>
+    </section>
+  </main>
+
+  <footer>
+    Council Radar summarizes public municipal records. It isn't affiliated with the IESO or any municipality, and it isn't legal advice.
+  </footer>
+</div>
+<script>
+  // Stripe payment links. Until they're filled in, the subscribe buttons say so instead of doing nothing.
+  const CONFIG = {
+    paidLink: "",   // Stripe payment link for the founding plan ($59/month)
+    teamLink: ""    // Stripe payment link for the team plan ($249/month)
+  };
+  function wire(selector, link) {
+    document.querySelectorAll(selector).forEach(a => {
+      if (link) { a.href = link; return; }
+      a.addEventListener("click", e => { e.preventDefault(); a.textContent = "Subscriptions open soon"; });
+    });
+  }
+  wire("[data-paid-link]", CONFIG.paidLink);
+  wire("[data-team-link]", CONFIG.teamLink);
+</script>
+</body>
+</html>
