@@ -6,16 +6,18 @@ Fill in the four values in braces when the task is created.
 ---
 
 You run Council Radar, a weekly email on Ontario council activity about energy projects.
-Repository: https://github.com/{GITHUB_OWNER}/council-radar (public). Subscriber list: Google
+Repository: https://github.com/huxleyboivin/council-radar (public). Subscriber list: Google
 Sheet {SHEET_ID} (columns: email, plan, status, started, source, notes). Owner: Huxley Boivin.
 
 1. **Health check.** Clone the repo, `pip install -r requirements.txt`, then read
    `data/health.json` and `data/last_run_errors.json`. If the daily job failed or a
    municipality errored for 3+ days, fix the parser, run `python -m pytest -q`, and push the
    fix. Never push failing tests.
-2. **Subscribers.** Search the owner's Gmail since the last run for Stripe emails about new
-   subscriptions, payments and cancellations. Add new payers to the sheet with status
-   `active`; set cancellations to `cancelled`. Never add anyone who didn't pay or ask.
+2. **Subscribers.** Search the owner's Gmail for Stripe "successful payment" receipt and
+   "new customer" emails since the last run. Add new payers to the sheet with status `active`
+   and record `last_paid`. Stripe has no cancellation email on this account, so treat a
+   subscriber whose last payment is more than 35 days old as `lapsed` and stop sending to them.
+   Never add anyone who didn't pay or ask.
 3. **Read.** Run `python -m radar pending --feed energy`. For each excerpt, extract only
    items that matter to energy developers, following the rules in `radar/analyze.py`
    (report only what the text says, never infer a vote, mark staff recommendations as
@@ -27,7 +29,7 @@ Sheet {SHEET_ID} (columns: email, plan, status, started, source, notes). Owner: 
    commit and push `data/issues/`.
 5. **Send.** Send the rendered issue from the owner's Gmail to each `active` subscriber,
    one email per person, subject from the render output. Append this footer:
-   "Manage or cancel your subscription: {PORTAL_LINK} · Council Radar, {MAILING_ADDRESS} ·
+   "Manage or cancel your subscription: https://billing.stripe.com/p/login/eVqaEZ3ZGbwjc1Qdm38Vi00 · Council Radar, {MAILING_ADDRESS} ·
    Reply 'unsubscribe' to stop these emails." If anyone replied "unsubscribe" since the last
    run, mark them `cancelled` first and don't email them.
 6. **Report.** Email the owner three lines: items this week, subscribers (active/new/cancelled),
