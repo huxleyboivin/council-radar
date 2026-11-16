@@ -8,7 +8,30 @@ import requests
 UA = "CouncilRadarBot/1.0 (+https://huxleyboivin.github.io/council-radar/; councilradaron@gmail.com)"
 s = requests.Session()
 s.headers["User-Agent"] = UA
+from urllib.parse import urlparse
+from urllib.robotparser import RobotFileParser
+_robots = {}
+def allowed(url):
+    host = urlparse(url).scheme + "://" + urlparse(url).netloc
+    if host not in _robots:
+        rp = RobotFileParser(host + "/robots.txt")
+        try:
+            rp.parse(s.get(host + "/robots.txt", timeout=20).text.splitlines())
+        except Exception:
+            rp = None
+        _robots[host] = rp
+    rp = _robots[host]
+    return True if rp is None else rp.can_fetch(UA, url)
+
 for url in sys.argv[1:]:
+    print("ROBOTS", "allowed" if allowed(url) else "DISALLOWED", "for our bot:", url)
+    if url.endswith("robots.txt"):
+        body = s.get(url, timeout=25).text
+        lines = body.splitlines()
+        for i, l in enumerate(lines):
+            if l.strip().lower() in ("user-agent: *",) or l.lower().startswith("allow") or "googlebot" in l.lower():
+                print("  ROBOTS L%d:" % i, " | ".join(lines[i:i+4]))
+        continue
     time.sleep(1.5)
     try:
         r = s.get(url, timeout=25)
