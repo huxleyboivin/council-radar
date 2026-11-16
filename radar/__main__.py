@@ -229,6 +229,27 @@ def cmd_discover(args) -> int:
     return 0
 
 
+def cmd_debug(args) -> int:
+    """Print a raw calendar item and the links found on one agenda page (for parser repairs)."""
+    f = escribe.Fetcher()
+    today = date.today()
+    base = escribe.base_url(args.slug)
+    r = f.post_json(base + "/MeetingsCalendarView.aspx/GetCalendarMeetings",
+                    {"calendarStartDate": (today - timedelta(days=21)).isoformat(),
+                     "calendarEndDate": (today + timedelta(days=21)).isoformat()})
+    items = r.json().get("d", [])
+    print("calendar items:", len(items))
+    print(json.dumps(items[:2], indent=1, default=str)[:3000])
+    meetings = escribe.parse_calendar_json(r.json(), args.slug)
+    if meetings:
+        m = meetings[0]
+        page = f.get(escribe.agenda_url(m))
+        print("agenda url:", escribe.agenda_url(m), page.status_code, len(page.text))
+        text, docs = escribe.parse_meeting_page(page.text, args.slug)
+        print("agenda text chars:", len(text), "docs:", [(d.doc_id, d.title[:60]) for d in docs[:10]])
+    return 0
+
+
 def cmd_health(args) -> int:
     con = store.connect()
     runs = [dict(r) for r in con.execute("SELECT * FROM runs ORDER BY id DESC LIMIT 14")]
@@ -260,10 +281,11 @@ def main(argv=None) -> int:
     pe = sub.add_parser("pending"); pe.add_argument("--feed", default="energy"); pe.add_argument("--since")
     rn = sub.add_parser("render"); rn.add_argument("--feed", default="energy")
     rn.add_argument("--findings", required=True); rn.add_argument("--mark-done", action="store_true")
+    dbg = sub.add_parser("debug"); dbg.add_argument("slug")
     args = p.parse_args(argv)
     try:
         return {"run": cmd_run, "digest": cmd_digest, "discover": cmd_discover, "health": cmd_health,
-                "pending": cmd_pending, "render": cmd_render}[args.cmd](args)
+                "pending": cmd_pending, "render": cmd_render, "debug": cmd_debug}[args.cmd](args)
     except Exception:
         traceback.print_exc()
         return 1

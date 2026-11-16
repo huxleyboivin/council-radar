@@ -130,8 +130,9 @@ def parse_calendar_json(payload, slug: str) -> list[Meeting]:
             mid = m.group(1).lower() if m else ""
         if not mid:
             continue
-        if not url:
-            url = f"Meeting.aspx?Id={mid}&Agenda=Agenda&lang=English"
+        # Always use eScribe's canonical agenda address: the calendar's own "Url" field varies
+        # by portal (some return paths relative to the calendar service, which 404).
+        url = f"Meeting.aspx?Id={mid}&Agenda=Agenda&lang=English"
         docs = []
         for d in _first(it, "MeetingDocumentLink", "Documents", "documents", default=[]) or []:
             durl = _first(d, "Url", "URL", "url", default="")
