@@ -17,7 +17,7 @@ from pathlib import Path
 
 import yaml
 
-from . import analyze, config, deliver, digest, escribe, prefilter, store
+from . import tracker, analyze, config, deliver, digest, escribe, prefilter, store
 
 
 def load_municipalities() -> list[dict]:
@@ -65,6 +65,8 @@ def cmd_render(args) -> int:
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / f"{date.today().isoformat()}-{args.feed}.md"
     path.write_text(body)
+    # keep the findings so the public tracker can publish decisions after the delay
+    (out_dir / f"{date.today().isoformat()}-{args.feed}-findings.json").write_text(json.dumps(items, indent=1))
     if args.mark_done:
         (out_dir / "last_issue.txt").write_text(date.today().isoformat())
     print(json.dumps({"subject": subject, "path": str(path)}))
@@ -301,10 +303,12 @@ def main(argv=None) -> int:
     rn = sub.add_parser("render"); rn.add_argument("--feed", default="energy")
     rn.add_argument("--findings", required=True); rn.add_argument("--mark-done", action="store_true")
     dbg = sub.add_parser("debug"); dbg.add_argument("slug")
+    sub.add_parser("tracker")
     args = p.parse_args(argv)
     try:
         return {"run": cmd_run, "digest": cmd_digest, "discover": cmd_discover, "health": cmd_health,
-                "pending": cmd_pending, "render": cmd_render, "debug": cmd_debug}[args.cmd](args)
+                "pending": cmd_pending, "render": cmd_render, "debug": cmd_debug,
+                "tracker": lambda a: (tracker.build(), 0)[1]}[args.cmd](args)
     except Exception:
         traceback.print_exc()
         return 1

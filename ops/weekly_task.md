@@ -18,6 +18,9 @@ Sheet 1RoZ2Vt3GqNF515Ir32ZlS8dAhFQ0St89ElkNMMmvOLU (in the Google Drive connecte
    and record `last_paid`. Stripe has no cancellation email on this account, so treat a
    subscriber whose last payment is more than 35 days old as `lapsed` and stop sending to them.
    Never add anyone who didn't pay or ask.
+   **Free trials.** Also search Gmail for messages with subject "Free trial issue" since the last
+   run (they come from the site's trial links). Add each sender to the sheet with plan `trial`,
+   status `trial`, source `site`, notes `trial_issues=0`. Trial readers get the next two issues.
 3. **Read.** Run `python -m radar pending --feed energy`. For each excerpt, extract only
    items that matter to energy developers, following the rules in `radar/analyze.py`
    (report only what the text says, never infer a vote, mark staff recommendations as
@@ -26,9 +29,14 @@ Sheet 1RoZ2Vt3GqNF515Ir32ZlS8dAhFQ0St89ElkNMMmvOLU (in the Google Drive connecte
    technology, capacity_mw, proponent, summary, evidence, source_url. Check every item against its
    excerpt before keeping it. Drop duplicates across documents.
 4. **Render.** `python -m radar render --findings /tmp/findings.json --mark-done`, then
-   commit and push `data/issues/`.
-5. **Send.** Send the rendered issue from the owner's Gmail to each `active` subscriber,
-   one email per person, subject from the render output. Append this footer:
+   `python -m radar tracker` (rebuilds the free public tracker on the site; it only publishes
+   decisions older than 14 days). Commit and push `data/issues/` and `site/`.
+5. **Send.** Send the rendered issue from the owner's Gmail to each `active` subscriber and
+   each `trial` reader, one email per person, subject from the render output. For trial readers,
+   add one line above the footer: "This is trial issue N of 2. To keep getting it:
+   https://buy.stripe.com/eVqaEZ3ZGbwjc1Qdm38Vi00 ($59/month founding rate) or
+   https://buy.stripe.com/4gM8wRfIo9ob4zobdV8Vi01 (team of 5, $249/month)." Increase
+   `trial_issues`; after the second, set status `trial_ended` and stop sending. Append this footer:
    "Manage or cancel your subscription: https://billing.stripe.com/p/login/eVqaEZ3ZGbwjc1Qdm38Vi00 · Council Radar, 230 Regina Street North, Waterloo, ON ·
    Reply 'unsubscribe' to stop these emails." If anyone replied "unsubscribe" since the last
    run, mark them `cancelled` first and don't email them.

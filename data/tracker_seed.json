@@ -1,0 +1,33 @@
+[
+  {
+    "category": "support_granted", "municipality": "City of Ottawa",
+    "headline": "Council grants Municipal Support Confirmation to West Capital Power battery project",
+    "status": "decided", "meeting_name": "City Council", "meeting_date": "2025-12-10",
+    "technology": "Battery storage", "proponent": "Capital Power",
+    "summary": "Council granted a Municipal Support Confirmation for the West Capital Power Capacity Project at 1500 Thomas Argue Road (Ward 5, West Carleton-March) for LT2 Window 1 (Capacity).",
+    "source_url": "https://engage.ottawa.ca/independent-electricity-service-operator-ieso-long-term-2-lt2-procurement-process"
+  },
+  {
+    "category": "support_denied", "municipality": "Municipality of Shuniah",
+    "headline": "Council votes against support for 400 MW / 3.2 GWh storage project",
+    "status": "decided", "meeting_name": "Council", "meeting_date": "2025-12",
+    "technology": "Battery storage", "capacity_mw": 400, "proponent": "PowerBank (formerly SolarBank)",
+    "summary": "Council declined a Municipal Support Resolution for PowerBank's long-duration storage project weeks before the LT2 capacity deadline.",
+    "source_url": "https://www.energy-storage.news/ontario-municipality-denies-support-for-3-2gwh-bess-project-ahead-of-looming-ieso-rfp-deadline/"
+  },
+  {
+    "category": "support_granted", "municipality": "Township of Centre Wellington",
+    "headline": "Support letter issued for Elora BESS",
+    "status": "decided", "meeting_name": "Council", "meeting_date": "2023-12",
+    "technology": "Battery storage", "proponent": "Aypa Power (Elora BESS LP)",
+    "summary": "The township issued a Municipal Support Resolution (support letter) for the Elora battery project at 6235 Guelph Street; a zoning amendment followed.",
+    "source_url": "https://www.centrewellington.ca/media/fg5jxhak/planning-report_elora-bess.pdf"
+  },
+  {
+    "category": "policy_protocol", "municipality": "Township of Selwyn",
+    "headline": "Municipal Support Resolution protocol for utility installations adopted",
+    "status": "decided", "meeting_name": "By-law 2025-049", "meeting_date": "2025-06-24",
+    "summary": "Selwyn adopted a written protocol setting out what proponents must provide when they ask council for a Municipal Support Resolution.",
+    "source_url": "https://www.selwyntownship.ca/media/ummlaj4s/selwyn-msr-protocol-final.pdf"
+  }
+]

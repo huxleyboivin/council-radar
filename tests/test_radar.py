@@ -187,3 +187,21 @@ def test_run_end_to_end(tmp_path, monkeypatch):
     calls_after_first = fake.calls
     assert cli.main(["run"]) == 0  # second run: report unchanged, nothing re-read
     assert fake.calls == calls_after_first  # agenda re-fetched but unchanged, so no new AI read
+
+
+def test_tracker_delays_live_findings_and_hides_signals(tmp_path, monkeypatch):
+    import json
+    from datetime import date
+    from radar import config, tracker
+    monkeypatch.setattr(config, "DATA_DIR", tmp_path)
+    (tmp_path / "issues").mkdir()
+    live = [
+        {"category": "support_granted", "municipality": "Town A", "headline": "Old grant", "meeting_date": "2026-10-01"},
+        {"category": "support_granted", "municipality": "Town B", "headline": "Fresh grant", "meeting_date": "2026-11-12"},
+        {"category": "delegation", "municipality": "Town C", "headline": "Early signal", "meeting_date": "2026-09-01"},
+    ]
+    (tmp_path / "issues" / "2026-11-16-energy-findings.json").write_text(json.dumps(live))
+    heads = {i["headline"] for i in tracker.collect_items(date(2026, 11, 16))}
+    assert "Old grant" in heads
+    assert "Fresh grant" not in heads      # subscribers get it first
+    assert "Early signal" not in heads     # signals stay subscriber-only
