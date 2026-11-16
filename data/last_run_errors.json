@@ -1,0 +1,122 @@
+[
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=5c1671ce-db0b-4cfa-a81f-c1bfa1c09326",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=5c1671ce-db0b-4cfa-a81f-c1bfa1c09326&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=137bf37a-21b6-43f0-b4ff-c951a64718b3",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=137bf37a-21b6-43f0-b4ff-c951a64718b3&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=1d2d50c0-6ecb-4a4a-a9ce-08b5806e14bb",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=1d2d50c0-6ecb-4a4a-a9ce-08b5806e14bb&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=7e8e2766-5703-4860-9fc6-7b51b4bd783a",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=7e8e2766-5703-4860-9fc6-7b51b4bd783a&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=ee55e976-b1b9-47c7-96e3-f3cf2c023c2e",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=ee55e976-b1b9-47c7-96e3-f3cf2c023c2e&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=e6f0fdb9-4961-4108-94f7-671e77c83130",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=e6f0fdb9-4961-4108-94f7-671e77c83130&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=c8ab8fc1-ffd1-481c-af1c-68c0ac437af1",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=c8ab8fc1-ffd1-481c-af1c-68c0ac437af1&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=abe9d9f1-e19b-4bd0-95f6-465f4d38147b",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=abe9d9f1-e19b-4bd0-95f6-465f4d38147b&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=7ea54068-c1d9-4972-8cee-1172d1031ad9",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=7ea54068-c1d9-4972-8cee-1172d1031ad9&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=afc4d325-07f3-4204-a235-d2a87858e5c1",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=afc4d325-07f3-4204-a235-d2a87858e5c1&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=1aec42e4-722f-4cbc-a6d8-d5feaacdcd05",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=1aec42e4-722f-4cbc-a6d8-d5feaacdcd05&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=63d7e140-1e97-4f40-827d-fd8bd35aa368",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=63d7e140-1e97-4f40-827d-fd8bd35aa368&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=0e176a88-8996-4b96-bdaf-38624bd64786",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=0e176a88-8996-4b96-bdaf-38624bd64786&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "ottawa",
+  "stage": "meeting",
+  "meeting": "https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=80b4ba85-715f-4f82-b29c-eef0fb7816bc",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-ottawa.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=80b4ba85-715f-4f82-b29c-eef0fb7816bc&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "haldimandcounty",
+  "stage": "meeting",
+  "meeting": "https://pub-haldimandcounty.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=e177df1b-0fdc-47d5-950b-5b2db3381f11",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-haldimandcounty.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=e177df1b-0fdc-47d5-950b-5b2db3381f11&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "haldimandcounty",
+  "stage": "meeting",
+  "meeting": "https://pub-haldimandcounty.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=7db8b87a-c0c8-40ae-9241-dc115fdd5b0f",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-haldimandcounty.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=7db8b87a-c0c8-40ae-9241-dc115fdd5b0f&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "haldimandcounty",
+  "stage": "meeting",
+  "meeting": "https://pub-haldimandcounty.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=268e86db-f7ae-4401-b1e6-1253ef70bd38",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-haldimandcounty.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=268e86db-f7ae-4401-b1e6-1253ef70bd38&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "haldimandcounty",
+  "stage": "meeting",
+  "meeting": "https://pub-haldimandcounty.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=ecbf9692-27df-470f-8360-1a656014f09e",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-haldimandcounty.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=ecbf9692-27df-470f-8360-1a656014f09e&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "haldimandcounty",
+  "stage": "meeting",
+  "meeting": "https://pub-haldimandcounty.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=da00fb74-8d28-4fe2-9411-b30f9db701a9",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-haldimandcounty.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=da00fb74-8d28-4fe2-9411-b30f9db701a9&Agenda=Agenda&lang=English')"
+ },
+ {
+  "municipality": "haldimandcounty",
+  "stage": "meeting",
+  "meeting": "https://pub-haldimandcounty.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=b1983829-4ae9-4cb7-b1ba-b65dfec6e828",
+  "error": "HTTPError('404 Client Error: Not Found for url: https://pub-haldimandcounty.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=b1983829-4ae9-4cb7-b1ba-b65dfec6e828&Agenda=Agenda&lang=English')"
+ }
+]
