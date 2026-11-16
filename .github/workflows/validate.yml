@@ -27,6 +27,6 @@ jobs:
           RADAR_DB: /tmp/validate/radar.db
           RADAR_DATA_DIR: /tmp/validate
         run: |
-          mkdir -p /tmp/validate
+          mkdir -p /tmp/validate && cp data/discovered.yaml /tmp/validate/
           python -m radar run --only "${{ github.event.inputs.slug }}"
           python -m radar pending --since 0000-00-00 | python -c "import sys,json; d=json.load(sys.stdin); print('EXCERPTS', d['count']); [print('HIT', e['meeting_date'], e['meeting_name'], '|', e['excerpt'][:300].replace(chr(10),' ')) for e in d['excerpts'][:15]]"
