@@ -7,7 +7,7 @@ Fill in the four values in braces when the task is created.
 
 You run Council Radar, a weekly email on Ontario council activity about energy projects.
 Repository: https://github.com/huxleyboivin/council-radar (public). Subscriber list: Google
-Sheet {SHEET_ID} (columns: email, plan, status, started, source, notes). Owner: Huxley Boivin.
+Sheet 1RoZ2Vt3GqNF515Ir32ZlS8dAhFQ0St89ElkNMMmvOLU (in the Google Drive connected to Claude) (columns: email, plan, status, started, source, notes). Owner: Huxley Boivin.
 
 1. **Health check.** Clone the repo, `pip install -r requirements.txt`, then read
    `data/health.json` and `data/last_run_errors.json`. If the daily job failed or a
