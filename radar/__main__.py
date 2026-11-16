@@ -236,6 +236,47 @@ def cmd_discover(args) -> int:
     return 0
 
 
+OTHER_PLATFORMS = {
+    # platform: (url template, marker that must appear in the page)
+    "civicweb": ("https://{slug}.civicweb.net/Portal/", "civicweb"),
+    "icompass": ("https://{slug}.icompasscanada.com/", "icompass"),
+}
+
+
+def cmd_survey(args) -> int:
+    """Find which other agenda platforms the councils we don't cover yet use (no parsing, just a count)."""
+    names_file = config.DATA_DIR / "ontario_municipalities.txt"
+    names = [l.strip() for l in names_file.read_text().splitlines() if l.strip() and not l.startswith("#")]
+    covered = {m["name"] for m in load_municipalities()}
+    fetcher = escribe.Fetcher(delay=0.4)
+    found = []
+    for line in names:
+        disp = display_name(*parse_name_line(line))
+        if disp in covered:
+            continue
+        hit = None
+        for platform, (tmpl, marker) in OTHER_PLATFORMS.items():
+            for slug in slug_candidates(line)[:3]:
+                try:
+                    fetcher._wait()
+                    r = fetcher.s.get(tmpl.format(slug=slug), timeout=15, allow_redirects=True)
+                except Exception:
+                    continue
+                if r.status_code == 200 and marker in r.text.lower():
+                    hit = {"name": disp, "platform": platform, "slug": slug}
+                    break
+            if hit:
+                break
+        if hit:
+            found.append(hit)
+            print("found", hit["platform"], disp, hit["slug"])
+    out = config.DATA_DIR / "platform_survey.yaml"
+    out.write_text(yaml.safe_dump(found, sort_keys=False))
+    from collections import Counter
+    print("survey:", dict(Counter(f["platform"] for f in found)), "of", len(names) - len(covered), "uncovered")
+    return 0
+
+
 def cmd_debug(args) -> int:
     """Print a raw calendar item and the links found on one agenda page (for parser repairs)."""
     f = escribe.Fetcher()
@@ -303,12 +344,12 @@ def main(argv=None) -> int:
     rn = sub.add_parser("render"); rn.add_argument("--feed", default="energy")
     rn.add_argument("--findings", required=True); rn.add_argument("--mark-done", action="store_true")
     dbg = sub.add_parser("debug"); dbg.add_argument("slug")
-    sub.add_parser("tracker")
+    sub.add_parser("tracker"); sub.add_parser("survey")
     args = p.parse_args(argv)
     try:
         return {"run": cmd_run, "digest": cmd_digest, "discover": cmd_discover, "health": cmd_health,
                 "pending": cmd_pending, "render": cmd_render, "debug": cmd_debug,
-                "tracker": lambda a: (tracker.build(), 0)[1]}[args.cmd](args)
+                "tracker": lambda a: (tracker.build(), 0)[1], "survey": cmd_survey}[args.cmd](args)
     except Exception:
         traceback.print_exc()
         return 1
