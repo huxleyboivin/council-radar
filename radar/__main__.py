@@ -97,6 +97,8 @@ def cmd_run(args) -> int:
         for m in meetings:
             stats["meetings"] += 1
             store.upsert_meeting(con, m, name, slug)
+            if not m.has_agenda:
+                continue  # nothing published yet; check again tomorrow
             upcoming = m.start is None or m.start.date() >= today - timedelta(days=2)
             try:
                 docs = list(escribe.iter_meeting_documents(fetcher, slug, m))

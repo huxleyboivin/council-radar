@@ -40,6 +40,7 @@ class Meeting:
     start: datetime | None
     url: str
     docs: list[DocLink] = field(default_factory=list)
+    has_agenda: bool = True
 
 
 def base_url(slug: str) -> str:
@@ -146,6 +147,7 @@ def parse_calendar_json(payload, slug: str) -> list[Meeting]:
             start=parse_date(str(_first(it, "StartDate", "Start", "start", "Date", default="") or "")),
             url=urljoin(base + "/", url),
             docs=docs,
+            has_agenda=bool(it.get("HasAgenda", True)) or bool(docs),
         ))
     return meetings
 
