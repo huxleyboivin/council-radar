@@ -1,4 +1,14 @@
-date,email,name,organization,segment,template,stage,address_source_url,personalization_source_url,status,notes
-2026-11-16,JVellone@blg.com,John Vellone,Borden Ladner Gervais,law_firm,B,initial,,https://www.blg.com/en/insights/2024/12/unpacking-iesos-lt2-rfp-key-insights-from-recent-engagements,sent,auto-reply: out of office until 2026-11-16
-2026-11-16,rwilliamson@airdberlis.com,Randy Williamson,Aird & Berlis,law_firm,B,initial,,,sent,
-2026-11-16,eric.bays@stantec.com,Eric Bays,Stantec,consultancy,B,initial,,,sent,auto-reply: on leave; colleague Barrett Wagar named in auto-reply (do not email unless his address is published)
+date,email,name,organization,segment,template,stage,thread_id,subject,address_source_url,personalization_source_url,status,notes
+2026-11-16,appro@appro.org,,APPrO,association,C,initial,1a1e2af3e0ecd8a1,A free municipal roundup for your members,,,sent,
+2026-11-16,info@prowind.com,,Prowind Canada,developer,A,initial,1a1e2af417ffe4d4,"Council activity on your Minto proposal, weekly",,https://www.wellingtonadvertiser.com/german-green-energy-developer-pitches-minto-on-wind-solar-potential/,sent,
+2026-11-16,contact@nrstor.com,,NRStor,developer,A,initial,1a1e2b58f4a043b2,"Council activity on your St. Clair storage project, weekly",,,sent,
+2026-11-16,info@sitka-power.ca,,Sitka Power,developer,A,initial,1a1e2b5905d6642f,"Ontario council activity on energy projects, weekly",,,sent,LT2e W1 winner (Timmins Mountjoy and Chatsworth solar)
+2026-11-16,info@moosepower.com,,Moose Power,developer,A,initial,1a1e2b5922761733,"Ontario council activity on solar projects, weekly",,,sent,
+2026-11-16,eric.bays@stantec.com,Eric Bays,Stantec,consultancy,B,initial,1a1e2b5947e5833b,Weekly brief on Ontario council decisions for IESO projects,,,sent,auto-reply: on leave; auto-reply names Barrett Wagar (contact only if his address is published)
+2026-11-16,rwilliamson@airdberlis.com,Randy Williamson,Aird & Berlis,law_firm,B,initial,1a1e2b596c072075,Weekly brief on Ontario council decisions for IESO projects,,,sent,
+2026-11-16,JVellone@blg.com,John Vellone,Borden Ladner Gervais,law_firm,B,initial,1a1e2b598ef86ac7,Weekly brief on Ontario council decisions for IESO projects,,https://www.blg.com/en/insights/2024/12/unpacking-iesos-lt2-rfp-key-insights-from-recent-engagements,sent,auto-reply: out of office until 2026-11-16
+2026-11-16,leone.king@energystoragecanada.org,Leone King,Energy Storage Canada,association,C,initial,1a1e2b59b5c342aa,A free municipal roundup for your members,,,sent,
+2026-11-16,shaheer.aziz@hydrostor.ca,Shaheer Aziz,Hydrostor,developer,A,initial,1a1e2bfb42a0961d,"Council activity on your Quinte storage project, weekly",,,sent,
+2026-11-16,info@sndevcorp.ca,,Six Nations of the Grand River Development Corp.,developer,A,initial,1a1e2bfb9929656f,"Ontario council activity on energy projects, weekly",,,sent,
+2026-11-16,info@capstoneinfra.com,,Capstone Infrastructure,developer,A,initial,1a1e2bfbb02f3beb,"Ontario council activity on wind projects, weekly",,,sent,
+2026-11-16,info@ontario-sea.org,,Ontario Sustainable Energy Association,association,C,initial,1a1e2bfbd590aa85,A free municipal roundup for your members,,,sent,

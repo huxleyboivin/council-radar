@@ -33,7 +33,7 @@ Files: `outreach/prospects.csv` (research list), `outreach/log.csv` (every email
    - Interested, asking a question, or wanting a trial: status `replied`. **Don't answer**; tell the
      owner (they reply personally). A trial request also goes through the weekly task's trial path.
 3. **Follow-ups.** For each `initial` sent 7 or more days ago with no reply (and not out of office),
-   send the follow-up template as a reply in the same thread, mentioning one real item from the latest
+   send the follow-up template as a reply in the same thread (`replyThreadId` = `thread_id`), mentioning one real item from the latest
    issue in `data/issues/`. Log stage `followup`.
 4. **Find new prospects** until there are 10 good ones (fewer is fine; never pad the list):
    - Proponents and consultants named in this week's findings and pending excerpts
@@ -48,7 +48,7 @@ Files: `outreach/prospects.csv` (research list), `outreach/log.csv` (every email
    Add new organizations to `prospects.csv` with an evidence URL.
 5. **Send** one email per prospect from `emails.md`, filling every bracket with real, sourced details.
    Use the sample link https://huxleyboivin.github.io/council-radar/sample.html. Plain text, no
-   attachments, no tracking. Log each send in `log.csv`.
+   attachments, no tracking. Log each send in `log.csv`, including the Gmail `thread_id`.
 6. Commit `outreach/` and push (rebase first).
 7. **Notify the owner** (push notification and one email to councilradaron@gmail.com): new emails sent
    (organization, person, why), follow-ups sent, replies needing them, opt-outs, bounces, and anything
