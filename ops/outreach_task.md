@@ -13,6 +13,12 @@ Files: `outreach/prospects.csv` (research list), `outreach/log.csv` (every email
   Record the page in `address_source_url`.
 - Skip any page that says it doesn't accept unsolicited commercial email. Skip personal (non-business)
   addresses, government and municipal staff, councillors, and residents' groups.
+- Skip inboxes meant for something other than business inquiries: media, press, communications,
+  investor relations, community engagement or project-feedback addresses (for example media@,
+  press@, communication@, ir@, communityengagement@). Press releases are fine as a source of facts,
+  but not as a source of addresses unless the address is listed for business or sales inquiries.
+  Also skip individual contacts that only appear in regulatory or securities filings (OEB, SEC, SEDAR).
+- Check for bounces again at the end of the run, after sending, and add any to `suppression.csv`.
 - Never contact anyone in `suppression.csv` (matching email or domain) or anyone already in
   `log.csv` with stage `initial`, except for that one follow-up.
 - Every claim in an email must be true and checkable: the project or publication you mention needs
