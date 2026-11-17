@@ -23,19 +23,19 @@ INTRO = (
 ITEMS = [
     {
         "category": "support_denied", "municipality": "Township of Puslinch",
-        "headline": "Council issues acknowledgement letter only for 7 MW solar farm",
+        "headline": "Council acknowledges a 7 MW solar project but doesn't give support yet",
         "status": "decided", "meeting_name": "Council (delegation)", "meeting_date": "2026-10-07",
         "technology": "Solar", "capacity_mw": 7, "proponent": "Landowner-led proponent",
-        "summary": ("Council would only write a letter confirming it has been informed of the project, not a letter "
-                    "of support. It also told staff to develop a protocol for IESO projects, with community "
-                    "engagement, in Q1 2027, and is writing to the local MPP that IESO rules clash with "
-                    "municipal planning processes. What it means: Puslinch won't issue support letters until "
-                    "the protocol exists. Plan around Q1 2027."),
+        "summary": ("Council sent a letter confirming it has been informed of the project, rather than a letter of "
+                    "support. It asked staff to develop a protocol for IESO projects, including community "
+                    "engagement, in Q1 2027, and is writing to the local MPP about how IESO timelines fit with "
+                    "municipal planning. What it means: support letters are unlikely before the protocol is in "
+                    "place, so plan around Q1 2027."),
         "source_url": "https://www.wellingtonadvertiser.com/brighter-days-may-be-ahead-for-solar-farm-project/",
     },
     {
         "category": "policy_protocol", "municipality": "Haldimand County",
-        "headline": "Revised LT2 criteria: CAO can issue support letters; wind still excluded",
+        "headline": "Revised LT2 criteria let the CAO issue support letters; wind is not eligible",
         "status": "decided", "meeting_name": "Council (Report EDT-02-2026)", "meeting_date": "2026-04-07",
         "summary": ("Council unanimously kept blanket support. The CAO can now issue support letters to projects "
                     "that meet the criteria, so proponents don't have to come to council one by one. Eligible: "
@@ -48,7 +48,7 @@ ITEMS = [
     },
     {
         "category": "policy_protocol", "municipality": "City of Richmond Hill",
-        "headline": "Blanket support with delegated authority for solar; other projects go to council",
+        "headline": "Staff propose a faster support process for solar; other projects go to council",
         "status": "recommended", "meeting_name": "Committee of the Whole (SRPBS.26.004)",
         "meeting_date": "2026-04-01",
         "summary": ("Staff proposed a formal process for municipal support requests: a blanket support resolution, "
@@ -61,24 +61,23 @@ ITEMS = [
     },
     {
         "category": "delegation", "municipality": "Town of Minto",
-        "headline": "Prowind wind and solar pitch draws resident pushback; council undecided",
+        "headline": "Prowind presents wind and solar proposals; council hasn't taken a position",
         "status": "presented", "meeting_name": "Council delegation / community meetings",
         "meeting_date": "2026-10-08", "technology": "Wind + solar", "proponent": "Prowind",
-        "summary": ("Prowind pitched a 70 MW, 10-turbine wind project and a 24 MW solar project to council in June, "
-                    "and wants a support resolution for the IESO process. By October, residents had held "
-                    "information sessions raising concerns; council has not taken a position either way. Signal: "
-                    "a support request to the new council looks likely, and opposition is organized."),
+        "summary": ("Prowind presented a 70 MW, 10-turbine wind project and a 24 MW solar project to council in June, "
+                    "and plans to ask for a support resolution for the IESO process. In October, residents held "
+                    "information sessions to discuss their concerns. Council has not taken a position. Coming up: "
+                    "a support request to the new council is likely, and community interest is high."),
         "source_url": "https://www.wellingtonadvertiser.com/minto-residents-hear-concerns-about-proposed-wind-turbines/",
     },
     {
         "category": "delegation", "municipality": "Township of Wellesley",
-        "headline": "RES Canada floats 200 MW, 30-turbine wind project",
+        "headline": "RES Canada presents an early-stage 200 MW wind proposal",
         "status": "presented", "meeting_name": "Council delegation", "meeting_date": "June 2026",
         "technology": "Wind", "capacity_mw": 200, "proponent": "RES Canada",
-        "summary": ("RES Canada brought an early-stage wind proposal of up to 30 turbines to township council. The "
-                    "mayor described public reaction as roughly a 50-50 split, and leasing has not started. "
-                    "Signal: an early test of the waters ahead of LT2 Window 2. Expect a formal support request "
-                    "to the new council."),
+        "summary": ("RES Canada presented an early-stage proposal of up to 30 turbines to township council. The "
+                    "mayor described public opinion as roughly evenly split, and land leasing has not started. "
+                    "Coming up: a formal support request to the new council is likely ahead of LT2 Window 2."),
         "source_url": "https://www.observerxtra.com/mixed-reviews-for-a-wellesley-wind-turbine-proposal-still-in-its-early-stages/",
     },
 ]

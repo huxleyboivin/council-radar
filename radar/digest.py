@@ -5,11 +5,11 @@ from datetime import date
 
 SECTIONS = [
     ("support_granted", "Support granted"),
-    ("support_denied", "Support refused, deferred or acknowledgement-only"),
+    ("support_denied", "Support refused, deferred or not yet given"),
     ("support_request", "New support requests"),
     ("policy_protocol", "New council protocols and criteria"),
     ("zoning_bylaw", "Zoning, official plan and by-law changes"),
-    ("delegation", "Early signals: delegations and presentations"),
+    ("delegation", "Coming up: delegations and presentations"),
     ("other_relevant", "Also on the radar"),
 ]
 STATUS_LABEL = {"decided": "Decided", "recommended": "Staff recommendation", "on_agenda": "On agenda",

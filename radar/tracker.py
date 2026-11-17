@@ -21,7 +21,7 @@ SITE = ROOT / "site"
 PUBLIC_DELAY_DAYS = 14
 PUBLIC_CATEGORIES = [
     ("support_granted", "Support granted"),
-    ("support_denied", "Refused or acknowledged only"),
+    ("support_denied", "Support refused or not yet given"),
     ("policy_protocol", "New protocols and criteria"),
 ]
 TRIAL_MAILTO = ("mailto:councilradaron@gmail.com?subject=Free%20trial%20issue&body=Hi%20Huxley%2C%20"
@@ -125,35 +125,35 @@ def render(items: list[dict], councils: list[str], built: date) -> str:
 
 PAGE = """<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ontario municipal support tracker for IESO energy projects · Council Radar</title>
+<title>Ontario municipal support tracker for IESO energy projects | Council Radar</title>
 <meta name="description" content="Which Ontario councils granted or refused municipal support for LT2 and LLT energy projects, and which have adopted protocols. Free, sourced, updated weekly. {n_councils} councils monitored.">
 <link rel="canonical" href="https://huxleyboivin.github.io/council-radar/tracker.html">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{{--paper:#F6F7F4;--ink:#14284B;--muted:#4D5B73;--rule:#C9D0DA;--line:#2F6FB5}}
-body{{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.65 "Public Sans",system-ui,sans-serif}}
+:root{{--paper:#FFFFFF;--ink:#14284B;--text:#1F2D44;--muted:#52607A;--rule:#D5DCE5;--mist:#EEF3F8;--line:#2F6FB5}}
+body{{margin:0;background:var(--paper);color:var(--text);font:400 1.0625rem/1.65 "Public Sans",system-ui,sans-serif}}
 main{{max-width:46rem;margin:0 auto;padding:2rem 1.5rem 4rem}}
 a{{color:var(--line)}} a:focus-visible,input:focus-visible{{outline:3px solid var(--line);outline-offset:3px}}
-h1{{font:600 2.2rem/1.15 "Source Serif 4",Georgia,serif;margin:1.5rem 0 .6rem}}
-h2{{font:600 1.35rem/1.3 "Source Serif 4",Georgia,serif;margin:2.6rem 0 .6rem;padding-top:1.1rem;border-top:2px solid var(--ink)}}
+h1{{font:700 2.2rem/1.15 "Public Sans",sans-serif;letter-spacing:-.02em;color:var(--ink);margin:1.5rem 0 .6rem}}
+h2{{font:700 1.3rem/1.3 "Public Sans",sans-serif;color:var(--ink);margin:2.6rem 0 .6rem;padding-top:1.1rem;border-top:1px solid var(--rule)}}
 h2 .n{{font:500 .95rem "Public Sans",sans-serif;color:var(--muted)}}
-h3{{font:600 1.1rem/1.35 "Source Serif 4",Georgia,serif;margin:0 0 .15rem}}
+h3{{font:600 1.08rem/1.4 "Public Sans",sans-serif;color:var(--ink);margin:0 0 .15rem}}
 .lede{{color:var(--muted);max-width:38rem}}
 .feed{{list-style:none;padding:0;margin:0}} .feed li{{padding:1rem 0;border-bottom:1px solid var(--rule)}}
 .feed p{{margin:.2rem 0}} .where{{color:var(--muted);font-size:.92rem}}
-.cta{{background:#fff;border:1px solid var(--rule);padding:1.1rem 1.25rem;margin:1.8rem 0}}
-.cta p{{margin:.2rem 0}} .btns a{{display:inline-block;margin:.5rem 1rem .2rem 0;font-weight:700}}
+.cta{{background:var(--mist);border-radius:10px;padding:1.25rem 1.5rem;margin:1.8rem 0}}
+.cta p{{margin:.2rem 0}} .btns a{{display:inline-block;margin:.5rem 1rem .2rem 0;font-weight:600}} .btns a:first-child{{background:var(--ink);color:#fff;text-decoration:none;padding:.7rem 1.05rem;border-radius:6px}}
 label{{display:block;font-weight:500;margin-top:1.2rem}}
-input{{font:inherit;padding:.5rem .7rem;border:1px solid var(--rule);width:min(100%,22rem);background:#fff;color:var(--ink)}}
+input{{font:inherit;padding:.6rem .8rem;border:1px solid var(--rule);border-radius:6px;width:min(100%,22rem);background:#fff;color:var(--ink)}}
 .councils{{columns:2 15rem;padding-left:1.1rem;font-size:.95rem}}
 .small{{font-size:.9rem;color:var(--muted)}}
 </style></head>
 <body><main>
-<a href="index.html">Council Radar</a>
+<a href="index.html">Back to Council Radar</a>
 <h1>Ontario municipal support tracker</h1>
-<p class="lede">Every IESO proposal on municipal land needs council support. This page lists the council decisions and protocols we've confirmed, each linked to its source. It's free and updated weekly; decisions appear here {delay} days after subscribers hear about them.</p>
-<div class="cta"><p><strong>Want them the week they happen, plus early signals and delegations before anything is decided?</strong></p>
+<p class="lede">IESO projects on municipal land need support from the local council. This free page lists the council decisions and protocols we've confirmed, each with a link to the source. It's updated weekly, and decisions are added {delay} days after subscribers receive them.</p>
+<div class="cta"><p><strong>Want them the week they happen?</strong> Subscribers also see requests and presentations before councils decide.</p>
 <p class="btns"><a href="index.html#pricing">Subscribe for $59 a month</a><a href="{trial}">Get a free trial issue</a></p></div>
 <label for="q">Filter by municipality</label><input id="q" type="search" placeholder="e.g. Haldimand" autocomplete="off">
 {sections}

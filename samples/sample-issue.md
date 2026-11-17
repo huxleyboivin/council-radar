@@ -7,25 +7,25 @@
 
 **5 items from 5 municipalities in this sample.**
 
-## Support refused, deferred or acknowledgement-only
+## Support refused, deferred or not yet given
 
-### Township of Puslinch: Council issues acknowledgement letter only for 7 MW solar farm
+### Township of Puslinch: Council acknowledges a 7 MW solar project but doesn't give support yet
 *Decided · Council (delegation) · 2026-10-07 · Solar · 7 MW · Landowner-led proponent*
 
-Council would only write a letter confirming it has been informed of the project, not a letter of support. It also told staff to develop a protocol for IESO projects, with community engagement, in Q1 2027, and is writing to the local MPP that IESO rules clash with municipal planning processes. What it means: Puslinch won't issue support letters until the protocol exists. Plan around Q1 2027.
+Council sent a letter confirming it has been informed of the project, rather than a letter of support. It asked staff to develop a protocol for IESO projects, including community engagement, in Q1 2027, and is writing to the local MPP about how IESO timelines fit with municipal planning. What it means: support letters are unlikely before the protocol is in place, so plan around Q1 2027.
 
 [Read the source document](https://www.wellingtonadvertiser.com/brighter-days-may-be-ahead-for-solar-farm-project/)
 
 ## New council protocols and criteria
 
-### Haldimand County: Revised LT2 criteria: CAO can issue support letters; wind still excluded
+### Haldimand County: Revised LT2 criteria let the CAO issue support letters; wind is not eligible
 *Decided · Council (Report EDT-02-2026) · 2026-04-07*
 
 Council unanimously kept blanket support. The CAO can now issue support letters to projects that meet the criteria, so proponents don't have to come to council one by one. Eligible: ground-mounted solar, battery storage, hydro, biomass, nuclear, natural gas, biogas and co-generation in industrial areas; wind turbines remain excluded. Proponents need a public website at least 3 months before submitting to the IESO, consultation finished 2 months before, and two public meetings with notice to owners within 500 m. A community benefit agreement remains mandatory: $1,133/MW per year in 2026, capped at $300,000 per project.
 
 [Read the source document](https://haldimandpress.com/haldimand-tightens-rules-for-future-energy-project-approvals/)
 
-### City of Richmond Hill: Blanket support with delegated authority for solar; other projects go to council
+### City of Richmond Hill: Staff propose a faster support process for solar; other projects go to council
 *Staff recommendation · Committee of the Whole (SRPBS.26.004) · 2026-04-01*
 
 Staff proposed a formal process for municipal support requests: a blanket support resolution, with delegated authority, for solar projects, and individual council resolutions for every other energy technology. What it means: solar developers may get a faster staff-level path here, while storage and other technologies still need a council vote.
@@ -34,19 +34,19 @@ Staff proposed a formal process for municipal support requests: a blanket suppor
 
 [Read the source document](https://pub-richmondhill.escribemeetings.com/filestream.ashx?DocumentId=72776)
 
-## Early signals: delegations and presentations
+## Coming up: delegations and presentations
 
-### Town of Minto: Prowind wind and solar pitch draws resident pushback; council undecided
+### Town of Minto: Prowind presents wind and solar proposals; council hasn't taken a position
 *Presented · Council delegation / community meetings · 2026-10-08 · Wind + solar · Prowind*
 
-Prowind pitched a 70 MW, 10-turbine wind project and a 24 MW solar project to council in June, and wants a support resolution for the IESO process. By October, residents had held information sessions raising concerns; council has not taken a position either way. Signal: a support request to the new council looks likely, and opposition is organized.
+Prowind presented a 70 MW, 10-turbine wind project and a 24 MW solar project to council in June, and plans to ask for a support resolution for the IESO process. In October, residents held information sessions to discuss their concerns. Council has not taken a position. Coming up: a support request to the new council is likely, and community interest is high.
 
 [Read the source document](https://www.wellingtonadvertiser.com/minto-residents-hear-concerns-about-proposed-wind-turbines/)
 
-### Township of Wellesley: RES Canada floats 200 MW, 30-turbine wind project
+### Township of Wellesley: RES Canada presents an early-stage 200 MW wind proposal
 *Presented · Council delegation · June 2026 · Wind · 200 MW · RES Canada*
 
-RES Canada brought an early-stage wind proposal of up to 30 turbines to township council. The mayor described public reaction as roughly a 50-50 split, and leasing has not started. Signal: an early test of the waters ahead of LT2 Window 2. Expect a formal support request to the new council.
+RES Canada presented an early-stage proposal of up to 30 turbines to township council. The mayor described public opinion as roughly evenly split, and land leasing has not started. Coming up: a formal support request to the new council is likely ahead of LT2 Window 2.
 
 [Read the source document](https://www.observerxtra.com/mixed-reviews-for-a-wellesley-wind-turbine-proposal-still-in-its-early-stages/)
 
