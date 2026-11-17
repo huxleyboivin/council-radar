@@ -1,0 +1,4 @@
+date,email,name,organization,segment,template,stage,address_source_url,personalization_source_url,status,notes
+2026-11-16,JVellone@blg.com,John Vellone,Borden Ladner Gervais,law_firm,B,initial,,https://www.blg.com/en/insights/2024/12/unpacking-iesos-lt2-rfp-key-insights-from-recent-engagements,sent,auto-reply: out of office until 2026-11-16
+2026-11-16,rwilliamson@airdberlis.com,Randy Williamson,Aird & Berlis,law_firm,B,initial,,,sent,
+2026-11-16,eric.bays@stantec.com,Eric Bays,Stantec,consultancy,B,initial,,,sent,auto-reply: on leave; colleague Barrett Wagar named in auto-reply (do not email unless his address is published)
