@@ -90,6 +90,173 @@ def coverage() -> list[str]:
     return sorted({m["name"] for m in munis}, key=lambda n: re.sub(r"^(City|Town|Township|Municipality|County|Village|United Counties|Region|Regional Municipality) of ", "", n))
 
 
+def _portals() -> dict[str, str]:
+    """Monitored council name -> its public meeting portal."""
+    import yaml
+    munis = yaml.safe_load((config.ROOT / "municipalities.yaml").read_text()) or []
+    extra = config.DATA_DIR / "discovered.yaml"
+    if extra.exists():
+        munis += yaml.safe_load(extra.read_text()) or []
+    return {m["name"]: f"https://pub-{m['slug']}.escribemeetings.com" for m in munis
+            if m.get("platform", "escribe") == "escribe" and m.get("slug")}
+
+
+# ---------------------------------------------------------------------------
+# "Check your council" lookup on the landing page.
+# Every Ontario municipality, whether we read it, what's public about it, how many
+# subscriber-only items it has had lately (count only), and its next meetings.
+# ---------------------------------------------------------------------------
+LOCKED_WINDOW_DAYS = 90
+_KIND_RE = re.compile(r"^(City|Town|Township|Municipality|County|Village|Region|United Counties|Regional Municipality) of (.+)$")
+_KIND_ALIAS = {"united counties": "county", "regional municipality": "region"}
+
+
+def _muni_key(name: str) -> tuple[str, str]:
+    """('haldimand', 'county') for both 'Haldimand County' and 'Haldimand (County)'."""
+    name = (name or "").strip()
+    m = re.match(r"^(.+?) \((\w+)\)$", name) or None
+    if m:
+        core, kind = m[1], m[2]
+    elif (m := _KIND_RE.match(name)):
+        kind, core = m[1], m[2]
+    elif name.endswith(" County"):
+        core, kind = name[:-7], "County"
+    else:
+        core, kind = name, ""
+    kind = kind.lower()
+    return core.strip().lower(), _KIND_ALIAS.get(kind, kind)
+
+
+def _ontario_municipalities() -> list[str]:
+    f = config.DATA_DIR / "ontario_municipalities.txt"
+    if not f.exists():
+        return []
+    out = []
+    for line in f.read_text().splitlines():
+        m = re.match(r"^(.+?) \((\w+)\)$", line.strip())
+        if m:
+            out.append(f"{m[2]} of {m[1]}")
+    return out
+
+
+def _when(start: str) -> str:
+    """'2026-11-24T19:00:00' -> 'Tue, Nov 24, 7 p.m.' (meeting times are local)."""
+    try:
+        from datetime import datetime
+        d = datetime.fromisoformat(start[:19])
+    except ValueError:
+        return start[:10]
+    day = d.strftime("%a, %b %-d")
+    if d.hour == 0 and d.minute == 0:
+        return day
+    h = d.hour % 12 or 12
+    t = f"{h}:{d.minute:02d}" if d.minute else f"{h}"
+    return f"{day}, {t} {'a.m.' if d.hour < 12 else 'p.m.'}"
+
+
+_MEETING_LIKELY = re.compile(r"council|planning|committee of the whole|general (government )?committee|"
+                            r"adjustment|development|infrastructure|public meeting|special", re.I)
+_MEETING_UNLIKELY = re.compile(r"advisory|accessib|library|\bbia\b|police|o\.?p\.?p|heritage|museum|diversity|"
+                              r"youth|senior|arts|health|board of management|orientation|closed", re.I)
+
+
+def _meeting_rank(name: str) -> int:
+    """0 = where energy items usually come up, 2 = rarely."""
+    name = name or ""
+    if _MEETING_UNLIKELY.search(name):
+        return 2
+    return 0 if _MEETING_LIKELY.search(name) else 1
+
+
+def council_index(public: list[dict], today: date | None = None) -> dict:
+    today = today or date.today()
+    portals = _portals()
+    entries: dict[tuple[str, str], dict] = {}
+    for name in _ontario_municipalities():
+        entries.setdefault(_muni_key(name), {"n": name})
+    for name in coverage():
+        e = entries.setdefault(_muni_key(name), {"n": name})
+        e["n"] = name  # the name we use everywhere else wins
+        e["c"] = 1
+        if name in portals:
+            e["p"] = portals[name]
+
+    def entry(muni: str) -> dict:
+        return entries.setdefault(_muni_key(muni), {"n": muni})
+
+    public_keys = set()
+    for it in public:
+        public_keys.add((it.get("municipality"), (it.get("headline") or "").lower()))
+        entry(it.get("municipality", "")).setdefault("i", []).append(
+            [it.get("category"), _pretty_date(it.get("meeting_date", "")), it.get("headline", ""), it.get("source_url", "")])
+
+    # Subscriber-only items: count them, never show them.
+    since = today - timedelta(days=LOCKED_WINDOW_DAYS)
+    locked: set[tuple[str, str]] = set()
+    live = []
+    for f in sorted((config.DATA_DIR / "issues").glob("*-findings.json")):
+        try:
+            live += json.loads(f.read_text())
+        except Exception:
+            continue
+    import sqlite3
+    db = None
+    if config.DB_PATH.exists():
+        db = sqlite3.connect(config.DB_PATH)
+        try:
+            live += [{"municipality": m, "headline": h, "meeting_date": d} for m, h, d in
+                     db.execute("SELECT municipality, headline, meeting_date FROM findings")]
+        except sqlite3.Error:
+            pass
+    for it in live:
+        key = (it.get("municipality"), (it.get("headline") or "").lower())
+        d = _parse_date(it.get("meeting_date", ""))
+        if key in public_keys or key in locked or not d or d < since:
+            continue
+        locked.add(key)
+        e = entry(it["municipality"])
+        e["l"] = e.get("l", 0) + 1
+
+    meta = {"built": today.isoformat(), "public_delay": PUBLIC_DELAY_DAYS, "locked_days": LOCKED_WINDOW_DAYS}
+    if db is not None:
+        try:
+            q = ("SELECT m.municipality, COUNT(DISTINCT m.meeting_id), COUNT(d.doc_key) "
+                 "FROM meetings m LEFT JOIN documents d ON d.meeting_id = m.meeting_id GROUP BY m.municipality")
+            for muni, meetings, docs in db.execute(q):
+                e = entry(muni)
+                e["m"], e["d"] = meetings, docs
+            seen_meetings, upcoming = set(), {}
+            for muni, name, start, url in db.execute(
+                    "SELECT municipality, name, start, url FROM meetings WHERE start >= ? ORDER BY start, name",
+                    (today.isoformat(),)):
+                k = (muni, start, re.sub(r"\W|of|meeting", "", (name or "").lower()))
+                if k in seen_meetings:
+                    continue
+                seen_meetings.add(k)
+                upcoming.setdefault(muni, []).append((_meeting_rank(name), start, name, url))
+            for muni, rows in upcoming.items():
+                best, kinds = [], set()  # where energy items land first, one per kind, then soonest
+                for r in sorted(rows):
+                    kind = re.sub(r"[\s\-–]*(panel|no\.?)?\s*\d+$", "", r[2] or "", flags=re.I).lower()
+                    if kind not in kinds and len(best) < 3:
+                        kinds.add(kind)
+                        best.append(r)
+                entry(muni)["u"] = [[n, _when(st), u] for _, st, n, u in sorted(best, key=lambda r: r[1])]
+            meta["documents"] = db.execute("SELECT COUNT(*) FROM documents").fetchone()[0]
+            meta["meetings"] = db.execute("SELECT COUNT(*) FROM meetings").fetchone()[0]
+            row = db.execute("SELECT finished_at FROM runs WHERE kind='run' AND finished_at IS NOT NULL "
+                             "ORDER BY id DESC LIMIT 1").fetchone()
+            if row and row[0]:
+                meta["last_run"] = row[0]
+        except sqlite3.Error:
+            pass
+        db.close()
+    councils = sorted(entries.values(), key=lambda e: _muni_key(e["n"]))
+    meta["covered"] = sum(1 for e in councils if e.get("c"))
+    meta["total"] = len(councils)
+    return {"meta": meta, "councils": councils}
+
+
 def _e(s) -> str:
     return html.escape(str(s or ""))
 
@@ -164,8 +331,10 @@ input{{font:inherit;padding:.6rem .8rem;border:1px solid var(--rule);border-radi
 </main>
 <script>
 const q=document.getElementById("q");
-q.addEventListener("input",()=>{{const v=q.value.trim().toLowerCase();
-document.querySelectorAll(".feed li").forEach(li=>{{li.hidden=v&&!li.dataset.muni.includes(v);}});}});
+function f(){{const v=q.value.trim().toLowerCase();
+document.querySelectorAll(".feed li").forEach(li=>{{li.hidden=v&&!li.dataset.muni.includes(v);}});}}
+q.addEventListener("input",f);
+const pre=new URLSearchParams(location.search).get("q");if(pre){{q.value=pre;f();}}
 </script></body></html>"""
 
 
@@ -179,6 +348,10 @@ def build(today: date | None = None) -> Path:
     if idx.exists():
         s = idx.read_text()
         s = re.sub(r"<!--COVERAGE-->.*?<!--/COVERAGE-->", f"<!--COVERAGE-->{len(councils)}<!--/COVERAGE-->", s)
+        data = json.dumps(council_index(items, today), separators=(",", ":"), ensure_ascii=False).replace("</", "<\\/")
+        s = re.sub(r"<!--COUNCILDATA-->.*?<!--/COUNCILDATA-->",
+                   lambda _: f'<!--COUNCILDATA--><script type="application/json" id="council-data">{data}</script><!--/COUNCILDATA-->',
+                   s, flags=re.S)
         idx.write_text(s)
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

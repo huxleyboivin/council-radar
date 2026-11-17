@@ -39,6 +39,8 @@ input{font:inherit;padding:.6rem .8rem;border:1px solid var(--rule);border-radiu
 </main>
 <script>
 const q=document.getElementById("q");
-q.addEventListener("input",()=>{const v=q.value.trim().toLowerCase();
-document.querySelectorAll(".feed li").forEach(li=>{li.hidden=v&&!li.dataset.muni.includes(v);});});
+function f(){const v=q.value.trim().toLowerCase();
+document.querySelectorAll(".feed li").forEach(li=>{li.hidden=v&&!li.dataset.muni.includes(v);});}
+q.addEventListener("input",f);
+const pre=new URLSearchParams(location.search).get("q");if(pre){q.value=pre;f();}
 </script></body></html>

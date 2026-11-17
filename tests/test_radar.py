@@ -217,3 +217,26 @@ def test_prefilter_catches_common_bess_and_solar_phrasings():
     for text in ("Museum Storage Lease Agreement", "bicycle storage and waste enclosure",
                  "replace the smoke detector battery"):
         assert prefilter.excerpt(text, feed) == (0, ""), text
+
+
+def test_council_lookup_counts_subscriber_items_without_revealing_them(tmp_path, monkeypatch):
+    import json
+    from datetime import date
+    from radar import config, tracker
+    monkeypatch.setattr(config, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(config, "DB_PATH", tmp_path / "none.db")
+    (tmp_path / "issues").mkdir()
+    (tmp_path / "ontario_municipalities.txt").write_text("# header\nHaldimand (County)\nMinto (Town)\n")
+    live = [
+        {"category": "support_granted", "municipality": "Haldimand County", "headline": "Public grant", "meeting_date": "2026-10-01"},
+        {"category": "zoning_bylaw", "municipality": "Haldimand County", "headline": "Secret lease hearing", "meeting_date": "2026-11-12"},
+    ]
+    (tmp_path / "issues" / "2026-11-16-energy-findings.json").write_text(json.dumps(live))
+    today = date(2026, 11, 16)
+    data = tracker.council_index(tracker.collect_items(today), today)
+    blob = json.dumps(data)
+    assert "Secret lease hearing" not in blob          # subscriber items are counted, never shown
+    hald = next(c for c in data["councils"] if c["n"] == "Haldimand County")
+    assert hald["l"] == 1
+    assert any(i[2] == "Public grant" for i in hald["i"])
+    assert any(c["n"] == "Town of Minto" and not c.get("c") for c in data["councils"])
