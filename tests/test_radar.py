@@ -273,3 +273,14 @@ def test_calendar_feeds_are_valid_and_never_reveal_findings(tmp_path):
             uid = block.split("UID:")[1].split("@")[0].lower()
             assert ("SUMMARY:⚡" in block) == (uid in flagged)
     assert tracker.council_slug("Township of Wellesley") == "township-of-wellesley"
+
+
+def test_by_hand_calculator_totals_match_council_counts():
+    from datetime import date
+    from radar import tracker
+    today = date(2026, 11, 19)
+    data = tracker.council_index(tracker.collect_items(today), today)
+    month = data["meta"]["month"]
+    assert month["meetings"] == sum(c.get("k", 0) for c in data["councils"])
+    assert month["documents"] == sum(c.get("r", 0) for c in data["councils"])
+    assert all(c.get("c") for c in data["councils"] if c.get("k"))  # only councils we read

@@ -283,6 +283,22 @@ def council_index(public: list[dict], today: date | None = None) -> dict:
                         kinds.add(kind)
                         best.append(r)
                 entry(muni)["u"] = [[n, _when(st), u] for _, st, n, u in sorted(best, key=lambda r: r[1])]
+            # Workload of checking by hand: relevant meetings and their documents, last 30 days.
+            lo = (today - timedelta(days=30)).isoformat()
+            hi = (today + timedelta(days=1)).isoformat()
+            k_tot = r_tot = 0
+            for muni, name, docs in db.execute(
+                    "SELECT m.municipality, m.name, COUNT(d.doc_key) FROM meetings m "
+                    "LEFT JOIN documents d ON d.meeting_id = m.meeting_id "
+                    "WHERE m.start >= ? AND m.start < ? GROUP BY m.meeting_id", (lo, hi)):
+                if muni not in covered or _meeting_rank(name) >= 2:
+                    continue
+                e = entry(muni)
+                e["k"] = e.get("k", 0) + 1
+                e["r"] = e.get("r", 0) + docs
+                k_tot, r_tot = k_tot + 1, r_tot + docs
+            meta["month"] = {"meetings": k_tot, "documents": r_tot,
+                             "councils": sum(1 for e in entries.values() if e.get("k"))}
             meta["documents"] = db.execute("SELECT COUNT(*) FROM documents").fetchone()[0]
             meta["meetings"] = db.execute("SELECT COUNT(*) FROM meetings").fetchone()[0]
             row = db.execute("SELECT finished_at FROM runs WHERE kind='run' AND finished_at IS NOT NULL "
