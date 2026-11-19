@@ -1,11 +1,11 @@
-# Weekly outreach task (Tuesdays, after the Monday issue)
+# Daily outreach task (weekdays, 1:37 pm Toronto)
 
 Owner: Huxley Boivin. Sends from councilradaron@gmail.com, signed as Huxley Boivin.
 Files: `outreach/prospects.csv` (research list), `outreach/log.csv` (every email sent),
 `outreach/suppression.csv` (never contact), `outreach/emails.md` (templates A, B, C and the follow-up).
 
 ## Hard limits
-- At most **10 new prospects** and **10 follow-ups** per run. One initial email and at most one
+- At most **20 new prospects** and **20 follow-ups** per run. These are ceilings, not targets: never pad the list. One initial email and at most one
   follow-up per person, ever. Never more than one person per organization per run.
 - Only email an address that the person or company **publishes themselves** (company contact page,
   team or bio page, press release, the author line on their own publication). Never guess or
@@ -41,7 +41,7 @@ Files: `outreach/prospects.csv` (research list), `outreach/log.csv` (every email
 3. **Follow-ups.** For each `initial` sent 7 or more days ago with no reply (and not out of office),
    send the follow-up template as a reply in the same thread (`replyThreadId` = `thread_id`), mentioning one real item from the latest
    issue in `data/issues/`. Log stage `followup`.
-4. **Find new prospects** until there are 10 good ones (fewer is fine; never pad the list):
+4. **Find new prospects** until there are 20 good ones (fewer is fine; never pad the list):
    - Proponents and consultants named in this week's findings and pending excerpts
      (`data/issues/*-findings.json`, `python -m radar pending --feed energy --since <last week>`),
      e.g. a developer seeking a municipal support confirmation or presenting to council.
@@ -60,6 +60,6 @@ Files: `outreach/prospects.csv` (research list), `outreach/log.csv` (every email
    Templates B and C: use the sample link https://huxleyboivin.github.io/council-radar/sample.html.
    Plain text, no attachments, no tracking. Log each send in `log.csv`, including the Gmail `thread_id`.
 6. Commit `outreach/` and push (rebase first).
-7. **Notify the owner** (push notification and one email to councilradaron@gmail.com): new emails sent
+7. **Notify the owner** (push notification and one email to councilradaron@gmail.com) only if something was sent or needs them: new emails sent
    (organization, person, why), follow-ups sent, replies needing them, opt-outs, bounces, and anything
    that made you stop.
