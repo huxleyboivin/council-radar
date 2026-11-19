@@ -257,6 +257,7 @@
     $("out").innerHTML = h;
   }
 
+  window.CRStart = Object.assign(window.CRStart || {}, {context: () => ({councils: picked.map(c => c.n), company: forWho, source: "brief" + (forWho ? " for " + forWho : "")})});
   function add(c) { if (c && !picked.includes(c)) { picked.push(c); render(); } }
   document.addEventListener("click", e => {
     const a = e.target.closest("[data-add]"); if (a) return add(C.find(c => c.n === a.dataset.add));
@@ -283,5 +284,6 @@
   });
 })();
 </script>
+<script src="start.js"></script>
 </body>
 </html>

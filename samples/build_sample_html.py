@@ -30,7 +30,8 @@ hr{border:0;border-top:1px solid var(--rule);margin:2.5rem 0 1rem}
 </style></head>
 <body><main><a class="back" href="index.html">Back to Council Radar</a>
 %s
-<div class="cta"><p><strong>Want to see it for your own councils?</strong> <a href="brief.html">Preview your Monday email</a> for the municipalities your projects depend on.</p><p><strong>Get this every Monday.</strong> Council activity on energy projects from 150 Ontario councils, each item linked to its source.</p><p><a class="btn" href="https://buy.stripe.com/eVqaEZ3ZGbwjc1Qdm38Vi00">Subscribe for $59 a month</a> <a href="mailto:councilradaron@gmail.com?subject=Free%%20trial%%20issue">Get a free trial issue</a></p></div></main></body></html>"""
+<div class="cta"><p><strong>Want to see it for your own councils?</strong> <a href="brief.html">Preview your Monday email</a> for the municipalities your projects depend on.</p><p><strong>Get this every Monday.</strong> Council activity on energy projects from 150 Ontario councils, each item linked to its source.</p><p><a class="btn" href="https://buy.stripe.com/eVqaEZ3ZGbwjc1Qdm38Vi00">Subscribe for $59 a month</a> <a href="mailto:councilradaron@gmail.com?subject=Free%%20trial%%20issue">Get a free trial issue</a></p></div></main><script src="start.js"></script>
+</body></html>"""
 
 (ROOT / "site" / "sample.html").write_text(PAGE % body)
 print("wrote site/sample.html")

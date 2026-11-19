@@ -316,7 +316,7 @@
             <a class="btn primary" id="watch-brief" href="brief.html">See my Monday email</a>
             <a class="btn secondary" id="watch-sub" href="#pricing">Subscribe for $59 a month</a>
           </div>
-          <p class="fine-sm">See the email we'd send you next Monday for these councils. Or <a id="watch-trial" href="#">request a free trial issue</a> by email.</p>
+          <p class="fine-sm">See the email we'd send you next Monday for these councils. Or <a id="watch-trial" href="#" data-start>get a free trial issue</a>.</p>
         </div>
         <div class="actions" id="plain-actions" style="margin-top:1.6rem">
           <a class="btn primary" href="#pricing">Subscribe for $59 a month</a>
@@ -501,6 +501,7 @@
       <div class="actions">
         <a class="btn primary" href="#pricing">Subscribe for $59 a month</a>
         <a class="btn secondary" href="#check" data-focus-finder>Check your council</a>
+        <a class="btn secondary" href="mailto:councilradaron@gmail.com?subject=Free%20trial%20issue" data-start>Get a free issue</a>
       </div>
     </div>
   </div>
@@ -568,6 +569,11 @@
   let watch = [];
   try { watch = JSON.parse(localStorage.getItem("cr-watch") || "[]").filter(n => byName[n]); } catch (e) {}
   const save = () => { try { localStorage.setItem("cr-watch", JSON.stringify(watch)); } catch (e) {} };
+  // Start panel (start.js): knows the watchlist; a dock follows the visitor once they have one.
+  let trayInView = false;
+  const syncDock = () => window.CRStart && window.CRStart.dock && window.CRStart.dock(watch.length, trayInView);
+  window.CRStart = Object.assign(window.CRStart || {}, {context: () => ({councils: watch.slice(), source: "home"}), onReady: syncDock});
+  if ("IntersectionObserver" in window) new IntersectionObserver(es => { trayInView = es.some(x => x.isIntersecting); syncDock(); }).observe(watchBox);
   function renderWatch() {
     watchBox.hidden = !watch.length; plain.hidden = !!watch.length;
     $("watch-h").textContent = watch.length === 1 ? "Your council" : `Your ${watch.length} councils`;
@@ -583,6 +589,7 @@
     const btn = slot.querySelector("[data-watch]");
     if (btn) setWatchBtn(btn, watch.includes(btn.dataset.watch));
     if (typeof renderCalc === "function") renderCalc();
+    syncDock();
     const ct = slot.querySelector("[data-card-trial]");
     if (ct) { ct.hidden = !watch.length; ct.href = brief; ct.textContent = $("watch-brief").textContent; }
   }
@@ -760,5 +767,6 @@
   renderWatch();
 })();
 </script>
+<script src="start.js"></script>
 </body>
 </html>
