@@ -240,3 +240,13 @@ def test_council_lookup_counts_subscriber_items_without_revealing_them(tmp_path,
     assert hald["l"] == 1
     assert any(i[2] == "Public grant" for i in hald["i"])
     assert any(c["n"] == "Town of Minto" and not c.get("c") for c in data["councils"])
+
+
+def test_council_lookup_includes_published_sample_signals():
+    from datetime import date
+    from radar import tracker
+    today = date(2026, 11, 18)
+    data = tracker.council_index(tracker.collect_items(today), today)
+    wellesley = next(c for c in data["councils"] if c["n"] == "Township of Wellesley")
+    assert any(i[0] == "delegation" for i in wellesley.get("i", []))
+    assert not wellesley.get("l")  # a published signal is never counted as subscriber-only

@@ -142,7 +142,7 @@
 - name: Town of Halton Hills
   platform: escribe
   slug: haltonhills
-- name: Township of Hamilton
+- name: City of Hamilton
   platform: escribe
   slug: hamilton
 - name: Town of Hanover

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Monday email, previewed: Council Radar</title>
+<meta name="description" content="See the Monday email Council Radar would send you for the Ontario councils your energy projects depend on: decisions, subscriber items and the meetings coming up.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Ccircle cx='13' cy='13' r='11.5' fill='none' stroke='%2314284B' stroke-width='2'/%3E%3Ccircle cx='13' cy='13' r='6' fill='none' stroke='%232F6FB5' stroke-width='2'/%3E%3Cpath d='M13 13 L22.5 6.5' stroke='%2314284B' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#14284B;--text:#1F2D44;--muted:#52607A;--line:#D5DCE5;--mist:#EEF3F8;--blue:#2F6FB5;--granted:#2E7D4F;--refused:#B23A3A;--rules:#2F6FB5;--sans:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  body{margin:0;background:var(--mist);color:var(--text);font:400 1.0625rem/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+  a{color:var(--blue)} a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+  .top{max-width:60rem;margin:0 auto;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .brand{display:flex;align-items:center;gap:.55rem;font-weight:700;color:var(--ink);text-decoration:none;font-size:1.05rem}
+  .pill{font:600 .74rem/1 var(--sans);letter-spacing:.04em;text-transform:uppercase;background:#fff;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:.35rem .55rem}
+  .btn{display:inline-block;text-align:center;font:600 1rem/1.2 var(--sans);text-decoration:none;border-radius:8px;padding:.85rem 1.2rem;border:2px solid var(--ink);cursor:pointer}
+  .btn.primary{background:var(--ink);color:#fff}.btn.primary:hover{background:#0d1c36}
+  .btn.secondary{background:#fff;color:var(--ink)}.btn.secondary:hover{background:var(--mist)}
+  .btn.small{padding:.5rem .8rem;font-size:.92rem}
+  .wrap{max-width:60rem;margin:0 auto;padding:0 1.25rem 7rem;display:grid;grid-template-columns:minmax(0,1fr) 17rem;gap:1.75rem;align-items:start}
+  .lead{grid-column:1/-1;margin:.6rem 0 .2rem}
+  .lead h1{font:700 clamp(1.7rem,3.4vw,2.35rem)/1.15 var(--sans);letter-spacing:-.02em;color:var(--ink);margin:0 0 .5rem}
+  .lead p{margin:0;color:var(--muted);max-width:40rem}
+
+  /* the email */
+  .mail{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 2px rgba(20,40,75,.06),0 24px 50px -28px rgba(20,40,75,.35);overflow:hidden;animation:rise .4s ease-out}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .chrome{padding:1rem 1.4rem;border-bottom:1px solid var(--line);background:#FAFBFD;font-size:.93rem;color:var(--muted)}
+  .chrome div{display:flex;gap:.6rem;padding:.12rem 0}
+  .chrome b{flex:none;width:4.2rem;font-weight:600;color:var(--muted)}
+  .chrome .subj{color:var(--ink);font-weight:700}
+  .body{padding:1.5rem 1.4rem 1.8rem}
+  .hello{margin:0 0 1.1rem}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:0 0 1.4rem}
+  .stat{border:1px solid var(--line);border-radius:10px;padding:.75rem .8rem}
+  .stat strong{display:block;font:700 1.6rem/1.1 var(--sans);color:var(--ink)}
+  .stat span{font-size:.86rem;color:var(--muted)}
+  .council{border-top:1px solid var(--line);padding-top:1.1rem;margin-top:1.3rem}
+  .council h2{font:700 1.2rem/1.3 var(--sans);color:var(--ink);margin:0 0 .15rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+  .badge{font:600 .7rem/1 var(--sans);letter-spacing:.03em;text-transform:uppercase;padding:.3rem .45rem;border-radius:4px}
+  .badge.on{background:#DDF1E4;color:#1D5C38}.badge.off{background:#E7EBF1;color:#3F4B60}
+  .council .sub{margin:0 0 .5rem;font-size:.9rem;color:var(--muted)}
+  .council h3{font:700 .76rem/1 var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:1rem 0 .35rem}
+  ul.rows{list-style:none;margin:0;padding:0}
+  ul.rows li{padding:.5rem 0;border-bottom:1px solid #EDF1F6;font-size:.98rem;line-height:1.45}
+  ul.rows li:last-child{border-bottom:0}
+  .rows .h{display:block;font-weight:600;color:var(--ink)}
+  .rows .m{font-size:.86rem;color:var(--muted)}
+  .tag{display:inline-flex;align-items:center;gap:.35rem;font:600 .8rem/1 var(--sans);margin-bottom:.25rem}
+  .tag::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:currentColor}
+  .t-granted{color:var(--granted)}.t-refused{color:var(--refused)}.t-rules{color:var(--rules)}.t-lock{color:#6B778C}.t-signal{color:#B7791F}
+  .redact{display:block;height:.8rem;border-radius:3px;background:linear-gradient(90deg,#D9DFE8,#E8ECF2,#D9DFE8);background-size:200% 100%;animation:shimmer 2.8s linear infinite;margin:.35rem 0}
+  @keyframes shimmer{to{background-position:-200% 0}}
+  .locked li{position:relative}
+  .unlock{font-size:.86rem;color:var(--muted)}
+  .unlock a{font-weight:600}
+  .none{margin:.2rem 0;color:var(--muted);font-size:.95rem}
+  .ontario{margin-top:1.6rem;padding:1rem 1.1rem;border-radius:10px;background:var(--mist)}
+  .ontario p{margin:0 0 .3rem}
+  .incta{margin-top:1.8rem;padding:1.3rem 1.3rem 1.4rem;border-radius:12px;background:var(--ink);color:#fff}
+  .incta h2{font:700 1.25rem/1.3 var(--sans);margin:0 0 .35rem;color:#fff}
+  .incta p{margin:0 0 1rem;color:#C9D4E6;font-size:.98rem}
+  .incta .btn.primary{background:#fff;color:var(--ink);border-color:#fff}
+  .incta .btn.secondary{background:transparent;color:#fff;border-color:#8FA3C3}
+  .incta .acts{display:flex;flex-wrap:wrap;gap:.6rem}
+  .foot{margin:1.4rem 0 0;font-size:.82rem;color:var(--muted)}
+
+  /* side: edit councils */
+  .side{position:sticky;top:1rem;background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.1rem}
+  .side h2{font:700 1rem/1.3 var(--sans);color:var(--ink);margin:0 0 .6rem}
+  .chips{list-style:none;margin:0 0 .8rem;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
+  .chips li{display:inline-flex;align-items:center;gap:.3rem;background:var(--mist);border:1px solid var(--line);border-radius:999px;padding:.28rem .35rem .28rem .7rem;font-size:.88rem;color:var(--ink)}
+  .chips button{border:0;background:none;color:var(--muted);font-size:1.05rem;line-height:1;cursor:pointer;padding:0 .2rem}
+  .side label{display:block;font-size:.88rem;color:var(--muted);margin-bottom:.3rem}
+  .side input{width:100%;font:500 1rem/1.2 var(--sans);padding:.65rem .7rem;border:1.5px solid var(--ink);border-radius:8px;color:var(--ink)}
+  .side .hint{font-size:.82rem;color:var(--muted);margin:.4rem 0 1rem}
+  .side .btn{width:100%;margin-top:.5rem}
+  .copied{font-size:.85rem;color:var(--granted);margin:.4rem 0 0;min-height:1.2em}
+
+  /* empty state */
+  .empty{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.6rem 1.4rem}
+  .empty h2{font:700 1.25rem/1.3 var(--sans);color:var(--ink);margin:0 0 .4rem}
+  .picks{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1rem}
+  .picks button{font:500 .92rem/1 var(--sans);color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:.5rem .8rem;cursor:pointer}
+  .picks button:hover{border-color:var(--ink)}
+
+  .bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);box-shadow:0 -10px 30px -20px rgba(20,40,75,.4);padding:.75rem 1rem;display:none;z-index:9}
+  .bar .btn{display:block;width:100%}
+  @media (max-width:860px){
+    .wrap{grid-template-columns:minmax(0,1fr)}
+    .side{position:static}
+    #top-sub{display:none}
+    .bar{display:block}
+    .stats{gap:.4rem}.stat{padding:.6rem}.stat strong{font-size:1.35rem}
+    .body{padding:1.2rem 1.1rem 1.5rem}.chrome{padding:.9rem 1.1rem}
+  }
+  @media (prefers-reduced-motion: reduce){.mail{animation:none}.redact{animation:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11.5" fill="none" stroke="#14284B" stroke-width="2"/><circle cx="13" cy="13" r="6" fill="none" stroke="#2F6FB5" stroke-width="2"/><path d="M13 13 L22.5 6.5" stroke="#14284B" stroke-width="2" stroke-linecap="round"/></svg>Council Radar <span class="pill">Preview</span></a>
+  <a class="btn primary small" id="top-sub" href="index.html#pricing">Subscribe for $59 a month</a>
+</header>
+
+<div class="wrap">
+  <div class="lead">
+    <h1 id="lead-h">Your Monday email, previewed</h1>
+    <p id="lead-p">This is the email Council Radar would send you, built from the council documents we've read so far. Add or remove councils and it updates as you go.</p>
+  </div>
+
+  <main id="out" aria-live="polite">
+    <div class="empty"><p>Loading your councils…</p></div>
+  </main>
+
+  <aside class="side" aria-labelledby="side-h">
+    <h2 id="side-h">Your councils</h2>
+    <ul class="chips" id="chips"></ul>
+    <form id="add">
+      <label for="add-q">Add a council</label>
+      <input id="add-q" list="all-councils" autocomplete="off" placeholder="Type a municipality">
+      <datalist id="all-councils"></datalist>
+      <p class="hint">Any of Ontario's 441 municipalities.</p>
+    </form>
+    <button class="btn secondary small" type="button" id="copy">Copy link for your team</button>
+    <p class="copied" id="copied" role="status"></p>
+  </aside>
+</div>
+
+<div class="bar" id="bar"><a class="btn primary" id="bar-trial" href="#">Get this free for your councils</a></div>
+
+<script>
+(function () {
+  const TRIAL_TO = "councilradaron@gmail.com";
+  const PAID = "https://buy.stripe.com/eVqaEZ3ZGbwjc1Qdm38Vi00";
+  const LABEL = {support_granted: ["Support given", "t-granted"], support_denied: ["Refused or not yet given", "t-refused"], policy_protocol: ["New rules", "t-rules"], delegation: ["Early signal", "t-signal"]};
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+  const fold = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+  const slug = s => fold(s).replace(/ /g, "-");
+  const core = n => fold(n.replace(/^(City|Town|Township|Municipality|County|Village|Region|United Counties|Regional Municipality) of /, "").replace(/ County$/, ""));
+  const nf = new Intl.NumberFormat("en-CA");
+  const params = new URLSearchParams(location.search);
+  const forWho = (params.get("for") || "").replace(/[^\p{L}\p{N} .,&'()-]/gu, "").trim().slice(0, 60);
+  let C = [], META = {}, bySlug = {}, byCore = {}, picked = [];
+
+  function resolve(token) {
+    const t = slug(token || ""); if (!t) return null;
+    if (bySlug[t]) return bySlug[t];
+    const list = byCore[t.replace(/-/g, " ")] || [];
+    return list.find(c => c.c) || list[0] || null;
+  }
+  function nextMonday() {
+    const d = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Toronto"}));
+    d.setDate(d.getDate() + ((8 - d.getDay()) % 7 || 7));
+    return d.toLocaleDateString("en-CA", {weekday: "long", month: "long", day: "numeric", year: "numeric"});
+  }
+  function lastRead() {
+    if (!META.last_run) return "";
+    const tz = {timeZone: "America/Toronto"};
+    return new Date(META.last_run).toLocaleString("en-CA", {...tz, weekday: "long", hour: "numeric", minute: "2-digit"});
+  }
+  const bar = w => `<span class="redact" style="width:${w}%"></span>`;
+
+  function links() {
+    const lines = picked.map(c => "- " + c.n + (c.c ? "" : " (not read yet, please add it)")).join("\n");
+    const who = forWho ? forWho : "my team";
+    const body = `Hi Huxley,\n\nI saw the Monday email preview and I'd like a free trial issue for ${who}. Councils:\n${lines}\n\nName: \nRole: \n`;
+    const subj = `Free trial: ${forWho || "Council Radar"} (${picked.length} ${picked.length === 1 ? "council" : "councils"})`;
+    const trial = `mailto:${TRIAL_TO}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
+    const ref = ("b_" + picked.map(c => core(c.n).replace(/ /g, "-")).join("_")).slice(0, 200);
+    const sub = PAID + "?client_reference_id=" + encodeURIComponent(ref);
+    return {trial, sub};
+  }
+
+  function render() {
+    const q = [];
+    if (forWho) q.push("for=" + encodeURIComponent(forWho));
+    if (picked.length) q.push("c=" + picked.map(c => slug(c.n)).join(","));
+    history.replaceState(null, "", location.pathname + (q.length ? "?" + q.join("&") : ""));
+    $("chips").innerHTML = picked.map((c, i) => `<li>${esc(c.n)}<button type="button" data-rm="${i}" aria-label="Remove ${esc(c.n)}">×</button></li>`).join("");
+    $("bar").hidden = !picked.length;
+    const L = links();
+    $("bar-trial").href = L.trial; $("top-sub").href = picked.length ? L.sub : "index.html#pricing";
+    if (forWho) $("lead-h").textContent = `Prepared for ${forWho}: your Monday email`;
+
+    if (!picked.length) {
+      const sugg = ["Haldimand County", "Municipality of Chatham-Kent", "Township of Wellesley", "Township of Puslinch", "City of Ottawa", "Bruce County"]
+        .map(n => C.find(c => c.n === n)).filter(Boolean);
+      $("out").innerHTML = `<div class="empty"><h2>Which councils do your projects depend on?</h2>
+        <p>Add them on the right, or start with one of these. You'll see the email we'd send you next Monday.</p>
+        <div class="picks">${sugg.map(c => `<button type="button" data-add="${esc(c.n)}">${esc(c.n)}</button>`).join("")}</div></div>`;
+      return;
+    }
+
+    const pub = picked.reduce((a, c) => a + (c.i || []).length, 0);
+    const lock = picked.reduce((a, c) => a + (c.l || 0), 0);
+    const meet = picked.reduce((a, c) => a + (c.u || []).length, 0);
+    const names = picked.map(c => c.n);
+    const subj = names.length <= 2 ? names.join(" and ") : `${names[0]}, ${names[1]} and ${names.length - 2} more`;
+    let h = `<article class="mail"><div class="chrome">
+      <div><b>From</b><span>Council Radar &lt;${TRIAL_TO}&gt;</span></div>
+      <div><b>To</b><span>${esc(forWho || "You")}</span></div>
+      <div><b>Date</b><span>${esc(nextMonday())}, 6:45 a.m.</span></div>
+      <div><b>Subject</b><span class="subj">This week at ${esc(subj)}</span></div></div><div class="body">`;
+    h += `<p class="hello">Good morning${forWho ? ", " + esc(forWho) + " team" : ""}. Here's where your ${picked.length === 1 ? "council stands" : picked.length + " councils stand"} on energy projects, from the agendas, staff reports and minutes we read${lastRead() ? " up to " + esc(lastRead()) : ""}`.replace(/\.?$/, ".") + `</p>`;
+    h += `<div class="stats"><div class="stat"><strong>${pub}</strong><span>public ${pub === 1 ? "item" : "items"}</span></div>
+      <div class="stat"><strong>${lock}</strong><span>subscriber ${lock === 1 ? "item" : "items"}, last ${META.locked_days || 90} days</span></div>
+      <div class="stat"><strong>${meet}</strong><span>${meet === 1 ? "meeting" : "meetings"} coming up</span></div></div>`;
+
+    for (const c of picked) {
+      const stats = c.c ? [c.m ? `${nf.format(c.m)} meetings tracked` : "", c.d ? `${nf.format(c.d)} documents read` : ""].filter(Boolean).join(" · ") : "";
+      h += `<section class="council"><h2>${esc(c.n)} <span class="badge ${c.c ? "on" : "off"}">${c.c ? "Read daily" : "Not read yet"}</span></h2>`;
+      if (stats) h += `<p class="sub">${esc(stats)}</p>`;
+      if ((c.i || []).length) {
+        h += `<h3>Decisions, rules and signals</h3><ul class="rows">` + c.i.map(([cat, date, head, src]) => {
+          const [lab, cls] = LABEL[cat] || ["Item", "t-rules"];
+          return `<li><span class="tag ${cls}">${lab}</span><span class="h">${esc(head)}</span><span class="m">${esc(date)}${src ? ` · <a href="${esc(src)}" rel="nofollow" target="_blank">Source</a>` : ""}</span></li>`;
+        }).join("") + `</ul>`;
+      }
+      if (c.l) {
+        h += `<h3>New for subscribers</h3><ul class="rows locked">`;
+        for (let k = 0; k < Math.min(c.l, 3); k++) h += `<li><span class="tag t-lock">Subscriber item</span>${bar(88 - k * 9)}${bar(54 + k * 7)}<span class="unlock">In your trial issue. <a href="${esc(links().trial)}">Unlock it free</a></span></li>`;
+        h += `</ul>`;
+      }
+      if (c.c) {
+        h += `<h3>Coming up</h3>`;
+        h += (c.u || []).length ? `<ul class="rows">` + c.u.map(([name, when, url]) => `<li><span class="h">${esc(name)}</span><span class="m">${esc(when)}${url ? ` · <a href="${esc(url)}" rel="nofollow" target="_blank">Agenda</a>` : ""}</span></li>`).join("") + `</ul>`
+          : `<p class="none">No upcoming meetings posted yet. We check the portal every morning.</p>`;
+        if (!(c.i || []).length && !c.l) h += `<p class="none">Nothing on energy projects yet this term. A new council took office November 15, so the first support requests are still ahead. You'll hear the week one is filed.</p>`;
+      } else {
+        h += `<p class="none">We don't read this council's agendas yet. Start a trial and we'll prioritize adding it, so it's in your Monday email.</p>`;
+      }
+      h += `</section>`;
+    }
+    if (META.week && META.week.items) {
+      h += `<div class="ontario"><p><strong>Also across Ontario this week:</strong> ${META.week.items} ${META.week.items === 1 ? "item" : "items"} from ${META.week.councils} ${META.week.councils === 1 ? "council" : "councils"} in the full issue.</p>${bar(92)}${bar(70)}</div>`;
+    }
+    const L2 = links();
+    h += `<div class="incta"><h2>Get this every Monday</h2><p>Your first issue is free. We'll set it up for ${picked.length === 1 ? "this council" : "these " + picked.length + " councils"}, with every item linked to the council's own document.</p>
+      <div class="acts"><a class="btn primary" href="${esc(L2.trial)}">Start my free trial</a><a class="btn secondary" href="${esc(L2.sub)}">Subscribe for $59 a month</a></div></div>`;
+    h += `<p class="foot">This is a preview. Live issues add requests, delegations and zoning items the week they appear. Council Radar summarizes public municipal records and isn't legal advice.</p></div></article>`;
+    $("out").innerHTML = h;
+  }
+
+  function add(c) { if (c && !picked.includes(c)) { picked.push(c); render(); } }
+  document.addEventListener("click", e => {
+    const a = e.target.closest("[data-add]"); if (a) return add(C.find(c => c.n === a.dataset.add));
+    const r = e.target.closest("[data-rm]"); if (r) { picked.splice(+r.dataset.rm, 1); render(); }
+  });
+  $("add").addEventListener("submit", e => { e.preventDefault(); const v = $("add-q").value; const c = C.find(x => x.n === v) || resolve(v); if (c) { add(c); $("add-q").value = ""; } });
+  $("add-q").addEventListener("change", () => { const c = C.find(x => x.n === $("add-q").value); if (c) { add(c); $("add-q").value = ""; } });
+  $("copy").addEventListener("click", async () => {
+    const u = new URL(location.href); u.searchParams.delete("for");
+    try { await navigator.clipboard.writeText(u.href); $("copied").textContent = "Link copied. Anyone with it sees this preview."; }
+    catch (e) { $("copied").textContent = u.href; }
+  });
+
+  fetch("councils.json").then(r => r.json()).then(d => {
+    C = d.councils; META = d.meta;
+    for (const c of C) { bySlug[slug(c.n)] = c; (byCore[core(c.n)] = byCore[core(c.n)] || []).push(c); }
+    $("all-councils").innerHTML = C.map(c => `<option value="${esc(c.n)}">`).join("");
+    let want = (params.get("c") || "").split(",").map(resolve).filter(Boolean);
+    if (!want.length) { try { want = JSON.parse(localStorage.getItem("cr-watch") || "[]").map(n => C.find(c => c.n === n)).filter(Boolean); } catch (e) {} }
+    picked = [...new Set(want)].slice(0, 12);
+    render();
+  }).catch(() => {
+    $("out").innerHTML = `<div class="empty"><h2>We couldn't load the council data.</h2><p>Try again in a minute, or <a href="index.html#check">check a council on the home page</a>.</p></div>`;
+  });
+})();
+</script>
+</body>
+</html>

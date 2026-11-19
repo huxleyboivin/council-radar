@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from radar import digest  # noqa: E402
 
 INTRO = (
-    "**Sample issue.** Live issues cover the past week of council documents across every monitored "
+    "**Sample issue.** [See it for your own councils](brief.html). Live issues cover the past week of council documents across every monitored "
     "Ontario municipality and link to the council's own files. This sample pulls together items from "
     "recent months so you can see the format.\n\n"
     "**Why this matters now:** Ontario's new councils took office after the October 26 municipal "

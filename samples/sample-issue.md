@@ -1,7 +1,7 @@
 # Council Radar: Ontario Energy Projects
 *Week of November 16, 2026*
 
-**Sample issue.** Live issues cover the past week of council documents across every monitored Ontario municipality and link to the council's own files. This sample pulls together items from recent months so you can see the format.
+**Sample issue.** [See it for your own councils](brief.html). Live issues cover the past week of council documents across every monitored Ontario municipality and link to the council's own files. This sample pulls together items from recent months so you can see the format.
 
 **Why this matters now:** Ontario's new councils took office after the October 26 municipal election. For LT2 Window 2, the IESO expects the final RFP in Q1 2027 and proposals in Q2/Q3 2027, and municipal support is still mandatory. Every one of those support confirmations will go through a council that has just changed.
 

@@ -53,8 +53,12 @@ Files: `outreach/prospects.csv` (research list), `outreach/log.csv` (every email
    law and consulting energy groups (B) > associations (C, at most 1 a month).
    Add new organizations to `prospects.csv` with an evidence URL.
 5. **Send** one email per prospect from `emails.md`, filling every bracket with real, sourced details.
-   Use the sample link https://huxleyboivin.github.io/council-radar/sample.html. Plain text, no
-   attachments, no tracking. Log each send in `log.csv`, including the Gmail `thread_id`.
+   Template A (developer with a known project): use a personalized preview link,
+   `https://huxleyboivin.github.io/council-radar/brief.html?for=<Company>&c=<municipality>[,<municipality>]`,
+   e.g. `brief.html?for=Prowind%20Canada&c=minto,wellesley`. `c` takes the short municipality name
+   (or the full slug, e.g. `township-of-wellesley`); open the link once to confirm each council resolves.
+   Templates B and C: use the sample link https://huxleyboivin.github.io/council-radar/sample.html.
+   Plain text, no attachments, no tracking. Log each send in `log.csv`, including the Gmail `thread_id`.
 6. Commit `outreach/` and push (rebase first).
 7. **Notify the owner** (push notification and one email to councilradaron@gmail.com): new emails sent
    (organization, person, why), follow-ups sent, replies needing them, opt-outs, bounces, and anything

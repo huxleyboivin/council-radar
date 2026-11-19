@@ -17,7 +17,7 @@ My name is Huxley Boivin, and I run Council Radar, a weekly brief that tracks wh
 
 Every week it reads council agendas, staff reports and minutes and pulls out support requests, refusals, new IESO protocols, zoning changes and early delegations, each linked to the council's own document. With the new councils just sworn in and LT2 Window 2 coming, a lot of these decisions are about to be made by people who haven't voted on one before.
 
-Here is a sample issue: [sample link]. If it looks useful, I'm offering a founding rate of $59 a month to the first 25 subscribers, and I'm happy to add any councils on your list.
+Here is what your Monday email would look like for [municipality]: [preview link]. If it looks useful, I'm offering a founding rate of $59 a month to the first 25 subscribers, and I'm happy to add any councils on your list.
 
 Thank you for your time,
 Huxley Boivin

@@ -190,6 +190,19 @@ def council_index(public: list[dict], today: date | None = None) -> dict:
         entry(it.get("municipality", "")).setdefault("i", []).append(
             [it.get("category"), _pretty_date(it.get("meeting_date", "")), it.get("headline", ""), it.get("source_url", "")])
 
+    # Early signals already published in the public sample issue (delegations, pitches).
+    try:
+        from samples.build_sample import ITEMS as SAMPLE_ITEMS
+    except Exception:
+        SAMPLE_ITEMS = []
+    for it in SAMPLE_ITEMS:
+        key = (it.get("municipality"), (it.get("headline") or "").lower())
+        if it.get("category") in dict(PUBLIC_CATEGORIES) or key in public_keys:
+            continue
+        public_keys.add(key)
+        entry(it.get("municipality", "")).setdefault("i", []).append(
+            ["delegation", _pretty_date(it.get("meeting_date", "")), it.get("headline", ""), it.get("source_url", "")])
+
     # Subscriber-only items: count them, never show them.
     since = today - timedelta(days=LOCKED_WINDOW_DAYS)
     locked: set[tuple[str, str]] = set()
@@ -218,6 +231,14 @@ def council_index(public: list[dict], today: date | None = None) -> dict:
         e["l"] = e.get("l", 0) + 1
 
     meta = {"built": today.isoformat(), "public_delay": PUBLIC_DELAY_DAYS, "locked_days": LOCKED_WINDOW_DAYS}
+    latest = sorted((config.DATA_DIR / "issues").glob("*-findings.json"))
+    if latest:
+        try:
+            week = json.loads(latest[-1].read_text())
+            meta["week"] = {"date": latest[-1].name[:10], "items": len(week),
+                            "councils": len({w.get("municipality") for w in week})}
+        except Exception:
+            pass
     if db is not None:
         try:
             q = ("SELECT m.municipality, COUNT(DISTINCT m.meeting_id), COUNT(d.doc_key) "
@@ -348,7 +369,10 @@ def build(today: date | None = None) -> Path:
     if idx.exists():
         s = idx.read_text()
         s = re.sub(r"<!--COVERAGE-->.*?<!--/COVERAGE-->", f"<!--COVERAGE-->{len(councils)}<!--/COVERAGE-->", s)
-        data = json.dumps(council_index(items, today), separators=(",", ":"), ensure_ascii=False).replace("</", "<\\/")
+        index = council_index(items, today)
+        raw = json.dumps(index, separators=(",", ":"), ensure_ascii=False)
+        (config.ROOT / "site" / "councils.json").write_text(raw)  # read by brief.html
+        data = raw.replace("</", "<\\/")
         s = re.sub(r"<!--COUNCILDATA-->.*?<!--/COUNCILDATA-->",
                    lambda _: f'<!--COUNCILDATA--><script type="application/json" id="council-data">{data}</script><!--/COUNCILDATA-->',
                    s, flags=re.S)
