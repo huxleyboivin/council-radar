@@ -181,6 +181,8 @@ def council_index(public: list[dict], today: date | None = None) -> dict:
         if name in portals:
             e["p"] = portals[name]
 
+    covered = set(coverage())
+
     def entry(muni: str) -> dict:
         return entries.setdefault(_muni_key(muni), {"n": muni})
 
@@ -247,14 +249,32 @@ def council_index(public: list[dict], today: date | None = None) -> dict:
                 e = entry(muni)
                 e["m"], e["d"] = meetings, docs
             seen_meetings, upcoming = set(), {}
-            for muni, name, start, url in db.execute(
-                    "SELECT municipality, name, start, url FROM meetings WHERE start >= ? ORDER BY start, name",
+            flagged = flagged_meetings()
+            for mid, muni, name, start, url in db.execute(
+                    "SELECT meeting_id, municipality, name, start, url FROM meetings WHERE start >= ? ORDER BY start, name",
                     (today.isoformat(),)):
                 k = (muni, start, re.sub(r"\W|of|meeting", "", (name or "").lower()))
                 if k in seen_meetings:
                     continue
                 seen_meetings.add(k)
                 upcoming.setdefault(muni, []).append((_meeting_rank(name), start, name, url))
+            # "This week" for the calendar showcase: flagged meetings first, then main council meetings.
+            monday = today - timedelta(days=today.weekday())
+            week = []
+            for mid, muni, name, start, url in db.execute(
+                    "SELECT meeting_id, municipality, name, start, url FROM meetings WHERE start >= ? AND start < ? "
+                    "ORDER BY start", (monday.isoformat(), (monday + timedelta(days=7)).isoformat())):
+                if muni in covered and _meeting_rank(name) == 0:
+                    week.append(((mid or "").lower() in flagged, start, muni, name, url))
+            pick = [w for w in week if w[0]][:3]
+            used, days = {w[2] for w in pick}, {}
+            for w in week:  # then one main council meeting per day, different councils
+                if not w[0] and re.search(r"council", w[3], re.I) and w[2] not in used and w[1][:10] not in days:
+                    days[w[1][:10]] = w
+                    used.add(w[2])
+            pick += list(days.values())[: 7 - len(pick)]
+            meta["week_cal"] = [[_short_council(m), n, st[:10], _when(st), int(f), u]
+                                for f, st, m, n, u in sorted(pick, key=lambda w: w[1])]
             for muni, rows in upcoming.items():
                 best, kinds = [], set()  # where energy items land first, one per kind, then soonest
                 for r in sorted(rows):
@@ -359,6 +379,136 @@ const pre=new URLSearchParams(location.search).get("q");if(pre){{q.value=pre;f()
 </script></body></html>"""
 
 
+# ---------------------------------------------------------------------------
+# Free calendar feeds: one .ics per council we read, rebuilt on every deploy.
+# Meetings with an energy item we found are marked; what the item is stays in
+# the subscriber email.
+# ---------------------------------------------------------------------------
+SITE_URL = "https://huxleyboivin.github.io/council-radar/"
+CAL_PAST_DAYS = 30
+_TZ_BLOCK = (
+    "BEGIN:VTIMEZONE\r\nTZID:America/Toronto\r\n"
+    "BEGIN:DAYLIGHT\r\nTZOFFSETFROM:-0500\r\nTZOFFSETTO:-0400\r\nTZNAME:EDT\r\nDTSTART:19700308T020000\r\n"
+    "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU\r\nEND:DAYLIGHT\r\n"
+    "BEGIN:STANDARD\r\nTZOFFSETFROM:-0400\r\nTZOFFSETTO:-0500\r\nTZNAME:EST\r\nDTSTART:19701101T020000\r\n"
+    "RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU\r\nEND:STANDARD\r\nEND:VTIMEZONE\r\n")
+
+
+def council_slug(name: str) -> str:
+    """Same slug the site's JavaScript builds: 'Township of Wellesley' -> 'township-of-wellesley'."""
+    import unicodedata
+    s = "".join(ch for ch in unicodedata.normalize("NFD", name or "") if not unicodedata.combining(ch))
+    return re.sub(r"[^a-z0-9]+", " ", s.lower()).strip().replace(" ", "-")
+
+
+def _ics_text(s: str) -> str:
+    return (s or "").replace("\\", "\\\\").replace(";", "\\;").replace(",", "\\,").replace("\r", "").replace("\n", "\\n")
+
+
+def _ics_fold(line: str) -> str:
+    out, cur = [], b""
+    for ch in line:
+        b = ch.encode("utf-8")
+        if len(cur) + len(b) > (75 if not out else 74):
+            out.append(cur.decode("utf-8"))
+            cur = b""
+        cur += b
+    out.append(cur.decode("utf-8"))
+    return "\r\n ".join(out) + "\r\n"
+
+
+def _short_council(name: str) -> str:
+    core, kind = _muni_key(name)
+    m = _KIND_RE.match(name)
+    short = m[2] if m else (name[:-7] if name.endswith(" County") else name)
+    return short + (" County" if kind == "county" else "")
+
+
+def flagged_meetings() -> set[str]:
+    """Meeting IDs where we found an energy item (from live findings and the database)."""
+    urls = []
+    for f in sorted((config.DATA_DIR / "issues").glob("*-findings.json")):
+        try:
+            urls += [it.get("source_url", "") for it in json.loads(f.read_text())]
+        except Exception:
+            continue
+    if config.DB_PATH.exists():
+        import sqlite3
+        db = sqlite3.connect(config.DB_PATH)
+        try:
+            urls += [u for (u,) in db.execute("SELECT source_url FROM findings")]
+        except sqlite3.Error:
+            pass
+        db.close()
+    return {m[1].lower() for u in urls if u and (m := re.search(r"[?&]Id=([0-9a-fA-F-]{36})", u))}
+
+
+def write_calendars(today: date | None = None, out_dir: Path | None = None) -> int:
+    from datetime import datetime, timezone
+    import sqlite3
+    today = today or date.today()
+    out_dir = out_dir or SITE / "cal"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    flagged = flagged_meetings()
+    meetings: dict[str, list] = {}
+    if config.DB_PATH.exists():
+        db = sqlite3.connect(config.DB_PATH)
+        since = (today - timedelta(days=CAL_PAST_DAYS)).isoformat()
+        for mid, muni, name, start, url in db.execute(
+                "SELECT meeting_id, municipality, name, start, url FROM meetings WHERE start >= ? ORDER BY start", (since,)):
+            if _meeting_rank(name) < 2 and start:
+                meetings.setdefault(muni, []).append((mid, name, start, url))
+        db.close()
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    n = 0
+    for council in coverage():
+        slug = council_slug(council)
+        short = _short_council(council)
+        brief = f"{SITE_URL}brief.html?c={slug}"
+        lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Council Radar//Council meetings//EN",
+                 "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
+                 f"X-WR-CALNAME:{_ics_text(short + ' council meetings')}",
+                 f"X-WR-CALDESC:{_ics_text(f'Upcoming {council} meetings with agenda links, updated every morning by Council Radar. Meetings marked ⚡ have an energy item on the agenda.')}",
+                 "X-WR-TIMEZONE:America/Toronto", "REFRESH-INTERVAL;VALUE=DURATION:PT12H", "X-PUBLISHED-TTL:PT12H"]
+        body = "".join(_ics_fold(l) for l in lines) + _TZ_BLOCK
+        seen = set()
+        for mid, name, start, url in meetings.get(council, []):
+            key = (start, re.sub(r"\W|of|meeting", "", (name or "").lower()))
+            if key in seen:
+                continue
+            seen.add(key)
+            try:
+                d = datetime.fromisoformat(start[:19])
+            except ValueError:
+                continue
+            flag = (mid or "").lower() in flagged
+            summary = f"{'⚡ ' if flag else ''}{short}: {name}"
+            if flag:
+                note = (f"Council Radar found an energy item on this agenda. Subscribers get what it is, "
+                        f"who is behind it and what council decided in Monday's email.\n\n"
+                        f"Get it free in a trial issue: {brief}")
+            else:
+                note = (f"Council Radar reads this agenda when it's posted and flags solar, wind, battery storage "
+                        f"and gas projects. If one comes up, this event gets a ⚡.\n\n"
+                        f"See what we'd send you for {council}: {brief}")
+            desc = f"Agenda and documents: {url}\n\n{note}\n\nTimes as posted by the municipality. Not legal advice."
+            ev = ["BEGIN:VEVENT", f"UID:{mid}@council-radar", f"DTSTAMP:{stamp}"]
+            if d.hour == 0 and d.minute == 0:
+                ev += [f"DTSTART;VALUE=DATE:{d:%Y%m%d}", f"DTEND;VALUE=DATE:{d + timedelta(days=1):%Y%m%d}"]
+            else:
+                ev += [f"DTSTART;TZID=America/Toronto:{d:%Y%m%dT%H%M%S}",
+                       f"DTEND;TZID=America/Toronto:{d + timedelta(hours=2):%Y%m%dT%H%M%S}"]
+            ev += [f"SUMMARY:{_ics_text(summary)}", f"DESCRIPTION:{_ics_text(desc)}"]
+            if url:
+                ev.append(f"URL:{url}")
+            ev += ["TRANSP:TRANSPARENT", "END:VEVENT"]
+            body += "".join(_ics_fold(l) for l in ev)
+        body += "END:VCALENDAR\r\n"
+        (out_dir / f"{slug}.ics").write_bytes(body.encode("utf-8"))
+        n += 1
+    return n
+
+
 def build(today: date | None = None) -> Path:
     today = today or date.today()
     items = collect_items(today)
@@ -382,5 +532,6 @@ def build(today: date | None = None) -> Path:
         + "".join(f"<url><loc>https://huxleyboivin.github.io/council-radar/{p}</loc><lastmod>{today}</lastmod></url>\n"
                   for p in ("", "tracker.html", "sample.html"))
         + "</urlset>\n")
-    print(json.dumps({"tracker": str(out), "items": len(items), "councils": len(councils)}))
+    cals = write_calendars(today)
+    print(json.dumps({"tracker": str(out), "items": len(items), "councils": len(councils), "calendars": cals}))
     return out

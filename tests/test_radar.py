@@ -250,3 +250,26 @@ def test_council_lookup_includes_published_sample_signals():
     wellesley = next(c for c in data["councils"] if c["n"] == "Township of Wellesley")
     assert any(i[0] == "delegation" for i in wellesley.get("i", []))
     assert not wellesley.get("l")  # a published signal is never counted as subscriber-only
+
+
+def test_calendar_feeds_are_valid_and_never_reveal_findings(tmp_path):
+    import json
+    from datetime import date
+    from radar import config, tracker
+    n = tracker.write_calendars(date(2026, 11, 19), tmp_path)
+    assert n == len(tracker.coverage())
+    flagged = tracker.flagged_meetings()
+    headlines = []
+    for f in sorted((config.DATA_DIR / "issues").glob("*-findings.json")):
+        headlines += [it["headline"] for it in json.loads(f.read_text()) if it.get("headline")]
+    for ics in tmp_path.glob("*.ics"):
+        raw = ics.read_bytes()
+        text = raw.decode("utf-8")
+        assert text.startswith("BEGIN:VCALENDAR\r\n") and text.endswith("END:VCALENDAR\r\n")
+        assert all(len(line) <= 75 for line in raw.split(b"\r\n"))
+        unfolded = text.replace("\r\n ", "")
+        assert not any(h in unfolded for h in headlines)
+        for block in unfolded.split("BEGIN:VEVENT")[1:]:
+            uid = block.split("UID:")[1].split("@")[0].lower()
+            assert ("SUMMARY:⚡" in block) == (uid in flagged)
+    assert tracker.council_slug("Township of Wellesley") == "township-of-wellesley"

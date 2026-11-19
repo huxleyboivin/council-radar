@@ -68,6 +68,8 @@
   .incta .btn.primary{background:#fff;color:var(--ink);border-color:#fff}
   .incta .btn.secondary{background:transparent;color:#fff;border-color:#8FA3C3}
   .incta .acts{display:flex;flex-wrap:wrap;gap:.6rem}
+  .calrow{margin:.6rem 0 0;font-size:.88rem;color:var(--muted)}
+  .calrow a{font-weight:600;margin-right:.15rem}
   .foot{margin:1.4rem 0 0;font-size:.82rem;color:var(--muted)}
 
   /* side: edit councils */
@@ -166,6 +168,12 @@
     return new Date(META.last_run).toLocaleString("en-CA", {...tz, weekday: "long", hour: "numeric", minute: "2-digit"});
   }
   const bar = w => `<span class="redact" style="width:${w}%"></span>`;
+  function calRow(n) {
+    const https = new URL("cal/" + slug(n) + ".ics", location.href).href, webcal = https.replace(/^https?:/, "webcal:");
+    const outlook = "https://outlook.office.com/calendar/0/addfromweb?url=" + encodeURIComponent(https) + "&name=" + encodeURIComponent(n + " meetings");
+    const google = "https://calendar.google.com/calendar/r?cid=" + encodeURIComponent(webcal);
+    return `<p class="calrow">\u{1F4C5} Free: put these meetings in your calendar, with a ⚡ when we find an energy item. <a href="${esc(outlook)}" target="_blank" rel="noopener">Outlook</a> · <a href="${esc(google)}" target="_blank" rel="noopener">Google</a> · <a href="${esc(webcal)}">Apple</a></p>`;
+  }
 
   function links() {
     const lines = picked.map(c => "- " + c.n + (c.c ? "" : " (not read yet, please add it)")).join("\n");
@@ -232,6 +240,7 @@
         h += `<h3>Coming up</h3>`;
         h += (c.u || []).length ? `<ul class="rows">` + c.u.map(([name, when, url]) => `<li><span class="h">${esc(name)}</span><span class="m">${esc(when)}${url ? ` · <a href="${esc(url)}" rel="nofollow" target="_blank">Agenda</a>` : ""}</span></li>`).join("") + `</ul>`
           : `<p class="none">No upcoming meetings posted yet. We check the portal every morning.</p>`;
+        h += calRow(c.n);
         if (!(c.i || []).length && !c.l) h += `<p class="none">Nothing on energy projects yet this term. A new council took office November 15, so the first support requests are still ahead. You'll hear the week one is filed.</p>`;
       } else {
         h += `<p class="none">We don't read this council's agendas yet. Start a trial and we'll prioritize adding it, so it's in your Monday email.</p>`;
