@@ -17,7 +17,7 @@ from pathlib import Path
 
 from . import config
 
-SITE_URL = "https://huxleyboivin.github.io/council-radar/"
+SITE_URL = config.SITE_URL
 LABEL = {"support_granted": ("Support given", "t-granted"), "support_denied": ("Refused or not yet given", "t-refused"),
          "policy_protocol": ("New rules", "t-rules"), "delegation": ("Early signal", "t-signal")}
 
@@ -42,6 +42,7 @@ main{max-width:62rem;margin:0 auto;padding:0 1.5rem 4rem}
 .crumbs{font-size:.88rem;color:var(--muted);margin:.6rem 0 0}.crumbs a{color:var(--muted)}
 h1{font:700 clamp(2rem,4.2vw,2.9rem)/1.1 "Public Sans",sans-serif;letter-spacing:-.025em;color:var(--ink);margin:.7rem 0 .7rem;max-width:20ch}
 .lede{font-size:1.15rem;color:var(--muted);max-width:42rem;margin:0 0 1.2rem}
+.nextmtg{font-size:1.02rem;margin:-.4rem 0 1rem;padding:.6rem .85rem;background:var(--mist);border-radius:8px;display:inline-block}
 .status{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;font-size:.92rem;color:var(--muted);margin:0 0 1.8rem}
 .badge{font:600 .72rem/1 "Public Sans",sans-serif;letter-spacing:.03em;text-transform:uppercase;padding:.32rem .45rem;border-radius:4px}
 .badge.on{background:#DDF1E4;color:#1D5C38}.badge.off{background:#E7EBF1;color:#3F4B60}
@@ -107,10 +108,10 @@ def _shell(title: str, desc: str, canonical: str, root: str, body: str, ld: dict
 <style>{CSS}</style>{ld_tag}
 </head><body>
 <header class="top"><a class="brand" href="{root}index.html">{LOGO}Council Radar</a>
-<nav class="nav" aria-label="Main"><a href="{root}councils/">Councils</a><a class="hide-sm" href="{root}sample.html">Sample issue</a><a class="hide-sm" href="{root}tracker.html">Tracker</a>
+<nav class="nav" aria-label="Main"><a href="{root}councils/">Councils</a><a href="{root}guides/">Guides</a><a class="hide-sm" href="{root}sample.html">Sample issue</a><a class="hide-sm" href="{root}tracker.html">Tracker</a>
 <a class="btn primary small" href="{root}index.html#pricing">Subscribe</a></nav></header>
 {body}
-<footer>Council Radar reads public municipal records and summarizes them. It isn't legal advice. <a href="{root}index.html">Home</a> · <a href="{root}councils/">All councils</a> · <a href="mailto:councilradaron@gmail.com">councilradaron@gmail.com</a></footer>
+<footer>Council Radar reads public municipal records and summarizes them. It isn't legal advice. <a href="{root}index.html">Home</a> · <a href="{root}councils/">All councils</a> · <a href="{root}guides/">Guides</a> · <a href="mailto:councilradaron@gmail.com">councilradaron@gmail.com</a></footer>
 <script src="{root}start.js"></script>
 <script>
 (function(){{
@@ -181,10 +182,54 @@ def clock_box(meta: dict, name: str, upcoming: list, when, today: date) -> str:
         if pl:
             out += f'<p>Pre-engagement with the municipality: {_e(pl)} ({_e(pre.get("when", ""))}).</p>'
     if nxt:
-        out += f'<p><strong>Next council meeting:</strong> {_e(nxt[0])}, {_e(when(nxt[1]))}.</p>'
+        out += f'<p><strong>Next council meeting:</strong> {_e(nxt[0])}, {_e(when(nxt[1]).rstrip("."))}.</p>'
     out += (f'<p class="w2s">IESO timeline, approximate. <a href="{_e(webcal)}">Window 2 dates in your calendar</a> · '
             f'<a href="{_e(due.get("source", ""))}" rel="nofollow">Source</a></p></div>')
     return out
+
+
+TITLE_MAX = 70  # Semrush flags titles over 70 characters; Google shows about 60
+
+
+def _short_name(name: str) -> str:
+    """'Municipality of Southwest Middlesex' -> 'Southwest Middlesex'; 'Haldimand County' stays."""
+    return name.split(" of ", 1)[1] if " of " in name else name
+
+
+def page_title(name: str) -> str:
+    """Matches how people search ("<town> council meeting") and stays short enough not to be cut off."""
+    for t in (f"{name} council: meetings & energy decisions | Council Radar",
+              f"{name} council: meetings & energy decisions",
+              f"{_short_name(name)} council: meetings & energy decisions"):
+        if len(t) <= TITLE_MAX:
+            return t
+    return f"{_short_name(name)} council meetings"
+
+
+def _next_council(upcoming: list):
+    """The next meeting of council itself, else the next meeting of any kind."""
+    return next((u for u in upcoming if "council" in (u[0] or "").lower()), upcoming[0] if upcoming else None)
+
+
+def how_support_works(name: str, root: str, covered: bool, n_meetings: int) -> str:
+    """Plain-language background for every council page, with links to the guides."""
+    g = f"{root}guides/"
+    read = (f"Council Radar reads every {_e(name)} council, committee and planning agenda as it's posted"
+            f"{f', {n_meetings:,} meetings so far' if n_meetings else ''}, so a support request shows up here and in the "
+            f"Monday email before council votes.") if covered else (
+            f"Council Radar doesn't read {_e(name)}'s agendas yet. Decisions shown here come from public reports and news.")
+    return (f'<h2>How energy projects get support in {_e(name)}</h2>'
+            f'<p>Under the IESO\'s Long-Term 2 (LT2) procurement, a solar, wind, battery storage or gas project in {_e(name)} '
+            f'needs a <a href="{g}municipal-support-resolution/">municipal support resolution</a> from this council before the '
+            f'developer can submit a proposal. Without it, the IESO won\'t consider the project. Council can vote on each project, '
+            f'pass a blanket resolution for projects that meet its criteria, or delegate the decision to staff.</p>'
+            f'<p>Proposals for <a href="{g}lt2-window-2/">LT2 Window 2</a> are expected to be due in mid-2027, and developers '
+            f'must contact the municipality before that. The council elected on October 26, 2026 will make these decisions. '
+            f'{read}</p>'
+            f'<p>Related: <a href="{g}lt2-window-1-results/">LT2 Window 1 results by municipality</a> · '
+            f'<a href="{g}solar-and-battery-projects-ontario/">Solar and battery storage projects in Ontario</a> · '
+            f'<a href="{g}where-ontario-councils-stand/">Where Ontario councils stand</a> · '
+            f'<a href="{root}tracker.html">Municipal support tracker</a></p>')
 
 
 def council_page(c: dict, meta: dict, upcoming: list, slug: str, when, today: date) -> str:
@@ -196,10 +241,10 @@ def council_page(c: dict, meta: dict, upcoming: list, slug: str, when, today: da
     covered = bool(c.get("c"))
     n_up = len(upcoming)
 
-    title = f"{name} council and energy projects: decisions and meetings | Council Radar"
+    title = page_title(name)
     if covered:
-        desc = (f"{name} council's decisions on solar, wind, battery storage and gas projects, its next meetings with "
-                f"agenda links, and a free calendar feed. Read every morning by Council Radar.")
+        desc = (f"{name} council meetings and agendas, plus its decisions on solar, wind, battery storage and gas "
+                f"projects. Free calendar feed. Read every morning by Council Radar.")
     else:
         desc = f"What {name} council has decided on energy projects, from public records. Council Radar doesn't read this council's agendas yet."
 
@@ -280,10 +325,16 @@ def council_page(c: dict, meta: dict, upcoming: list, slug: str, when, today: da
              f'energy projects.{portal_line} Public decisions appear on this page {meta.get("public_delay", 14)} days after '
              f'subscribers get them. <a href="{root}sample.html">See a sample issue</a>.</p>')
 
+    nxt = _next_council(upcoming) if covered else None
+    next_line = ""
+    if nxt:
+        agenda = f' · <a href="{_e(nxt[2])}" rel="nofollow">Agenda</a>' if nxt[2] else ""
+        next_line = f'<p class="nextmtg"><strong>Next meeting:</strong> {_e(nxt[0])}, {_e(when(nxt[1]))}{agenda}</p>'
     body = f"""<main>
 <p class="crumbs"><a href="{root}index.html">Home</a> › <a href="{root}councils/">Councils</a> › {_e(name)}</p>
 <h1>{_e(name)} and energy projects</h1>
 <p class="lede">Where {_e(name)} council stands on solar, wind, battery storage and gas projects, and when it meets next.</p>
+{next_line}
 <p class="status">{" · ".join(status)}</p>
 <div class="grid"><div>
 {stats}
@@ -291,6 +342,7 @@ def council_page(c: dict, meta: dict, upcoming: list, slug: str, when, today: da
 {decisions}
 <h2>Coming up</h2>
 {meetings}
+{how_support_works(name, root, covered, c.get("m", 0))}
 {about}
 </div><aside class="side">{clock_box(meta, name, upcoming, when, today) if covered else ""}{start_box}{cal_box}{share_box}</aside></div>
 </main>"""
@@ -330,7 +382,7 @@ def directory_page(entries: list[tuple[str, dict]], meta: dict) -> str:
 (function(){{var q=document.getElementById("dir-q");q.addEventListener("input",function(){{var v=q.value.trim().toLowerCase();
 document.querySelectorAll("#dir li").forEach(function(li){{li.hidden=v?(!li.dataset.q||li.dataset.q.indexOf(v)<0):false;}});}});}})();
 </script>"""
-    title = "Ontario councils and energy projects: decisions and meetings | Council Radar"
+    title = "Ontario council meetings & energy decisions | Council Radar"
     desc = (f"Decisions, early signals and upcoming meetings on solar, wind, battery storage and gas projects for "
             f"{meta.get('covered', 150)} Ontario councils. Updated every morning.")
     return _shell(title, desc, SITE_URL + "councils/", root, body, image=SITE_URL + "og/councils.png")

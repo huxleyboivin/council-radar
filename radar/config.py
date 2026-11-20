@@ -3,6 +3,22 @@ import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+
+# The public site's address. Today it's the GitHub Pages project URL. To move to a custom domain, put the
+# bare host name (e.g. councilradar.ca) in site/CNAME and set the same domain in the repo's Settings > Pages:
+# every canonical URL, share card, calendar link, sitemap entry and robots.txt line follows on the next deploy.
+GITHUB_PAGES_URL = "https://huxleyboivin.github.io/council-radar/"
+
+
+def _site_url() -> str:
+    cname = ROOT / "site" / "CNAME"
+    host = cname.read_text().strip() if cname.exists() else ""
+    if host:
+        return f"https://{host.strip('/')}/"
+    return os.environ.get("RADAR_SITE_URL", GITHUB_PAGES_URL)
+
+
+SITE_URL = _site_url()
 DATA_DIR = Path(os.environ.get("RADAR_DATA_DIR", ROOT / "data"))
 DB_PATH = Path(os.environ.get("RADAR_DB", DATA_DIR / "radar.db"))
 

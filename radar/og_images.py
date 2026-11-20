@@ -125,7 +125,7 @@ def card(path: Path, title: str, subtitle: str = "", stats: list[tuple[str, str]
 
     if note:
         d.text((x, 506), note, font=_font("SemiBold", 26), fill=WHITE)
-    d.text((x, 562), footer or "huxleyboivin.github.io/council-radar", font=_font("Medium", 24), fill=DIM)
+    d.text((x, 562), footer or config.SITE_URL.split("://", 1)[1].rstrip("/"), font=_font("Medium", 24), fill=DIM)
     path.parent.mkdir(parents=True, exist_ok=True)
     img.convert("RGB").quantize(colors=96, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).save(path, "PNG", optimize=True)
     return path
