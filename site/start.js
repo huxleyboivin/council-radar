@@ -15,8 +15,8 @@
   const core = n => fold(n.replace(/^(City|Town|Township|Municipality|County|Village|Region|United Counties|Regional Municipality) of /, "").replace(/ County$/, ""));
 
   const css = `
-  .crs-dock{position:fixed;right:1.25rem;bottom:1.25rem;z-index:40;display:flex;align-items:center;gap:.8rem;background:#14284B;color:#fff;border-radius:14px;padding:.6rem .6rem .6rem 1rem;box-shadow:0 20px 40px -18px rgba(10,20,40,.6);font:500 .95rem/1.3 "Public Sans",system-ui,sans-serif;transform:translateY(140%);transition:transform .3s ease}
-  .crs-dock.on{transform:none}
+  .crs-dock{position:fixed;right:1.25rem;bottom:1.25rem;z-index:40;display:flex;align-items:center;gap:.8rem;background:#14284B;color:#fff;border-radius:14px;padding:.6rem .6rem .6rem 1rem;box-shadow:0 20px 40px -18px rgba(10,20,40,.6);font:500 .95rem/1.3 "Public Sans",system-ui,sans-serif;transform:translateY(140%);visibility:hidden;transition:transform .3s ease,visibility 0s linear .3s}
+  .crs-dock.on{transform:none;visibility:visible;transition:transform .3s ease,visibility 0s}
   .crs-dock b{font-weight:700}
   .crs-dock small{display:block;color:#AFC0DA;font-size:.8rem}
   .crs-dock button{font:700 .95rem/1 "Public Sans",system-ui,sans-serif;background:#fff;color:#14284B;border:0;border-radius:9px;padding:.75rem 1rem;cursor:pointer;white-space:nowrap}

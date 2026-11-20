@@ -280,6 +280,7 @@
     </a>
     <nav aria-label="Main">
       <a class="hide-sm" href="#how">How it works</a>
+      <a class="hide-sm" href="councils/">Councils</a>
       <a class="hide-sm" href="tracker.html">Free tracker</a>
       <a href="#pricing">Pricing</a>
       <a class="nav-cta" data-trial-link href="mailto:councilradaron@gmail.com?subject=Free%20trial%20issue&amp;body=Hi%20Huxley%2C%20I%27d%20like%20a%20free%20trial%20issue%20of%20Council%20Radar.%20Councils%20I%20care%20about%3A%20">Free trial</a>
@@ -513,6 +514,7 @@
       <div>
         <p><strong>Council Radar</strong>, 230 Regina Street North, Waterloo, ON</p>
         <p>Questions: <a href="mailto:councilradaron@gmail.com">councilradaron@gmail.com</a></p>
+        <p><a href="councils/">All Ontario councils we read</a></p>
       </div>
       <div>
         <p><a href="sample.html">Sample issue</a> &nbsp; <a href="tracker.html">Free tracker</a> &nbsp; <a href="https://billing.stripe.com/p/login/eVqaEZ3ZGbwjc1Qdm38Vi00">Manage subscription</a></p>
@@ -626,6 +628,7 @@
     } else {
       h += `<p class="term">We don't read this council's agendas yet. Add it to your councils and we'll prioritize adding it.</p>`;
     }
+    if (c.c || (c.i || []).length) h += `<p class="term"><a href="councils/${calSlug(c.n)}/">Open ${esc(c.n)}'s full page</a>: every upcoming meeting, decisions and sources.</p>`;
     h += `</div><div class="card-f"><button type="button" class="btn" data-watch="${esc(c.n)}"></button><a class="btn secondary" data-card-trial hidden href="#"></a></div></article>`;
     return h;
   }

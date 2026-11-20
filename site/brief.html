@@ -223,7 +223,7 @@
 
     for (const c of picked) {
       const stats = c.c ? [c.m ? `${nf.format(c.m)} meetings tracked` : "", c.d ? `${nf.format(c.d)} documents read` : ""].filter(Boolean).join(" · ") : "";
-      h += `<section class="council"><h2>${esc(c.n)} <span class="badge ${c.c ? "on" : "off"}">${c.c ? "Read daily" : "Not read yet"}</span></h2>`;
+      h += `<section class="council"><h2>${(c.c || (c.i || []).length) ? `<a href="councils/${slug(c.n)}/" style="color:inherit">${esc(c.n)}</a>` : esc(c.n)} <span class="badge ${c.c ? "on" : "off"}">${c.c ? "Read daily" : "Not read yet"}</span></h2>`;
       if (stats) h += `<p class="sub">${esc(stats)}</p>`;
       if ((c.i || []).length) {
         h += `<h3>Decisions, rules and signals</h3><ul class="rows">` + c.i.map(([cat, date, head, src]) => {

@@ -340,7 +340,7 @@ def render(items: list[dict], councils: list[str], built: date) -> str:
                 f'<p class="where">{" / ".join(_e(b) for b in bits if b)}</p>'
                 f'<p>{_e(i.get("summary"))}{src}</p></li>')
         sections.append(f'<section><h2>{label} <span class="n">{len(rows)}</span></h2><ul class="feed">{"".join(lis)}</ul></section>')
-    council_list = "".join(f"<li>{_e(c)}</li>" for c in councils)
+    council_list = "".join(f'<li><a href="councils/{council_slug(c)}/">{_e(c)}</a></li>' for c in councils)
     return PAGE.format(
         sections="".join(sections) or "<p>No public decisions yet.</p>",
         n_items=len(items), n_councils=len(councils), councils=council_list,
@@ -533,10 +533,12 @@ def build(today: date | None = None) -> Path:
     out = SITE / "tracker.html"
     out.write_text(render(items, councils, today))
     idx = SITE / "index.html"
+    index = council_index(items, today)
+    from . import council_pages
+    pages = council_pages.write(index, today, council_slug, _when, _meeting_rank)
     if idx.exists():
         s = idx.read_text()
         s = re.sub(r"<!--COVERAGE-->.*?<!--/COVERAGE-->", f"<!--COVERAGE-->{len(councils)}<!--/COVERAGE-->", s)
-        index = council_index(items, today)
         raw = json.dumps(index, separators=(",", ":"), ensure_ascii=False)
         (config.ROOT / "site" / "councils.json").write_text(raw)  # read by brief.html
         data = raw.replace("</", "<\\/")
@@ -547,8 +549,8 @@ def build(today: date | None = None) -> Path:
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"<url><loc>https://huxleyboivin.github.io/council-radar/{p}</loc><lastmod>{today}</lastmod></url>\n"
-                  for p in ("", "tracker.html", "sample.html"))
+                  for p in ("", "tracker.html", "sample.html", *pages))
         + "</urlset>\n")
     cals = write_calendars(today)
-    print(json.dumps({"tracker": str(out), "items": len(items), "councils": len(councils), "calendars": cals}))
+    print(json.dumps({"tracker": str(out), "items": len(items), "councils": len(councils), "calendars": cals, "council_pages": len(pages) - 1}))
     return out

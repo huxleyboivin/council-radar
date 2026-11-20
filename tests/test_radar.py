@@ -284,3 +284,27 @@ def test_by_hand_calculator_totals_match_council_counts():
     assert month["meetings"] == sum(c.get("k", 0) for c in data["councils"])
     assert month["documents"] == sum(c.get("r", 0) for c in data["councils"])
     assert all(c.get("c") for c in data["councils"] if c.get("k"))  # only councils we read
+
+
+def test_council_pages_are_written_linked_and_never_reveal_findings(tmp_path):
+    import json
+    from datetime import date
+    from radar import config, council_pages, tracker
+    today = date(2026, 11, 19)
+    index = tracker.council_index(tracker.collect_items(today), today)
+    paths = council_pages.write(index, today, tracker.council_slug, tracker._when, tracker._meeting_rank, tmp_path)
+    covered = tracker.coverage()
+    assert paths[0] == "councils/" and len(paths) - 1 >= len(covered)
+    for name in covered:
+        assert (tmp_path / tracker.council_slug(name) / "index.html").exists()
+    headlines = []
+    for f in sorted((config.DATA_DIR / "issues").glob("*-findings.json")):
+        headlines += [it["headline"] for it in json.loads(f.read_text()) if it.get("headline")]
+    public = {i[2] for c in index["councils"] for i in c.get("i", [])}
+    secret = [h for h in headlines if h not in public]
+    for page in tmp_path.rglob("index.html"):
+        text = page.read_text()
+        assert not any(h in text for h in secret)
+        assert 'rel="canonical"' in text and "start.js" in text
+    hald = (tmp_path / "haldimand-county" / "index.html").read_text()
+    assert 'data-councils="Haldimand County"' in hald and "cal/haldimand-county.ics" in hald
