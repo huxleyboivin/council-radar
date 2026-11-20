@@ -1,0 +1,53 @@
+{
+  "_note": "LT2 Window 2 milestones shown on the site (homepage clock, previews, council pages) and in site/cal/lt2-window-2.ics. Edit this file when the IESO confirms dates; set approx to false once a date is final. 'plot' is the date used to place an approximate milestone on the timeline.",
+  "name": "LT2 Window 2",
+  "updated": "2026-11-20",
+  "milestones": [
+    {
+      "key": "term",
+      "plot": "2026-11-15",
+      "label": "New councils take office",
+      "when": "Nov 15, 2026",
+      "approx": false,
+      "detail": "Council terms begin on November 15 in an election year (Municipal Elections Act, s. 6(1)). These councils will make the support decisions for Window 2.",
+      "source": "https://www.ontario.ca/laws/statute/96m32#BK8"
+    },
+    {
+      "key": "rfp",
+      "plot": "2027-02-15",
+      "label": "Final RFP and contract posted",
+      "when": "Q1 2027, expected",
+      "approx": true,
+      "detail": "IESO's approximate timeline; subject to change.",
+      "source": "https://www.ieso.ca/-/media/Files/IESO/Document-Library/engage/long-term-rfp/iesolt2-20260615-engagement-presentation.pdf"
+    },
+    {
+      "key": "pre",
+      "plot": "2027-04-15",
+      "label": "Pre-engagement with each municipality",
+      "when": "about April 2027",
+      "approx": true,
+      "detail": "In Window 1, pre-engagement had to be confirmed at least 60 days before proposals were due.",
+      "source": "https://engage.ottawa.ca/independent-electricity-service-operator-ieso-long-term-2-lt2-procurement-process"
+    },
+    {
+      "key": "due",
+      "plot": "2027-06-15",
+      "label": "Proposals due, each with council support",
+      "when": "June/July 2027, expected",
+      "approx": true,
+      "deadline": true,
+      "detail": "A project without its municipality's support at submission isn't eligible for a contract.",
+      "source": "https://documents.ottawa.ca/sites/default/files/2025%2007%2004%20Memo%20-%20Independent%20Electricity%20Systems%20Operator%20%28IESO%29%20Long%20term%202%20%28LT2%29%20Procurement_EN-AODA.pdf"
+    },
+    {
+      "key": "award",
+      "plot": "2027-10-15",
+      "label": "Contracts awarded",
+      "when": "Q3/Q4 2027, expected",
+      "approx": true,
+      "detail": "IESO's approximate timeline; subject to change.",
+      "source": "https://www.ieso.ca/-/media/Files/IESO/Document-Library/engage/long-term-rfp/iesolt2-20260615-engagement-presentation.pdf"
+    }
+  ]
+}

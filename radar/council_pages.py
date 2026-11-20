@@ -69,6 +69,10 @@ ul.rows li{padding:.75rem 0;border-bottom:1px solid #EDF1F6}ul.rows li:last-chil
 .box .btn{display:block;width:100%;margin-top:.5rem}
 .box.dark .btn.primary{background:#fff;color:var(--ink);border-color:#fff}
 .box.dark .btn.secondary{background:transparent;color:#fff;border-color:#8FA3C3}
+.box.w2{border-left:4px solid #B23A3A}.box.w2 p{margin:0 0 .55rem}
+.w2k{font:700 .74rem/1 "Public Sans",sans-serif!important;letter-spacing:.07em;text-transform:uppercase;color:#B23A3A}
+.w2n{font:700 1.7rem/1.1 "Public Sans",sans-serif!important;color:var(--ink);letter-spacing:-.02em;margin:.2rem 0 .2rem!important}
+.w2s{font-size:.84rem!important;color:var(--muted)}
 .cal a,.share .links a,.linkish{display:inline-block;margin:0 .7rem .3rem 0;font-weight:600;font-size:.94rem}
 .linkish{background:none;border:0;padding:0;color:var(--blue);text-decoration:underline;cursor:pointer;font-family:inherit}
 .share .btn{margin:0 0 .7rem;width:auto;display:inline-block}.share .links{margin:0}.copied{font-size:.86rem;color:var(--granted);margin:.3rem 0 0;min-height:1.2em}
@@ -142,6 +146,44 @@ def _upcoming(db_path: Path, today: date, rank) -> dict[str, list]:
                 out[muni].append((name, start, url))
     finally:
         db.close()
+    return out
+
+
+def _span(today: date, to: date) -> str | None:
+    days = (to - today).days
+    if days <= 0:
+        return None
+    if days < 21:
+        return f"{days} day{'s' if days != 1 else ''}"
+    if days < 60:
+        return f"about {round(days / 7)} weeks"
+    return f"about {round(days / 30.44)} months"
+
+
+def clock_box(meta: dict, name: str, upcoming: list, when, today: date) -> str:
+    """Window 2 countdown for one council (static; rebuilt every deploy)."""
+    lt2 = meta.get("lt2") or {}
+    ms = lt2.get("milestones") or []
+    due = next((m for m in ms if m.get("deadline")), None)
+    if not due:
+        return ""
+    left = _span(today, date.fromisoformat(due["plot"]))
+    pre = next((m for m in ms if m.get("key") == "pre"), None)
+    nxt = next((u for u in upcoming if "council" in (u[0] or "").lower()), upcoming[0] if upcoming else None)
+    ics = f"{SITE_URL}cal/lt2-window-2.ics"
+    webcal = "webcal://" + ics.split("://", 1)[1]
+    head = f"{left[0].upper() + left[1:]}" if left else "Due now"
+    out = (f'<div class="box w2"><p class="w2k">{_e(lt2.get("name", "LT2 Window 2"))} clock</p>'
+           f'<p class="w2n">{_e(head)}</p><p>until proposals are due ({_e(due.get("when", ""))}). Every proposal for a project in '
+           f'{_e(name)} needs this council\'s support when it\'s submitted.</p>')
+    if pre:
+        pl = _span(today, date.fromisoformat(pre["plot"]))
+        if pl:
+            out += f'<p>Pre-engagement with the municipality: {_e(pl)} ({_e(pre.get("when", ""))}).</p>'
+    if nxt:
+        out += f'<p><strong>Next council meeting:</strong> {_e(nxt[0])}, {_e(when(nxt[1]))}.</p>'
+    out += (f'<p class="w2s">IESO timeline, approximate. <a href="{_e(webcal)}">Window 2 dates in your calendar</a> · '
+            f'<a href="{_e(due.get("source", ""))}" rel="nofollow">Source</a></p></div>')
     return out
 
 
@@ -250,7 +292,7 @@ def council_page(c: dict, meta: dict, upcoming: list, slug: str, when, today: da
 <h2>Coming up</h2>
 {meetings}
 {about}
-</div><aside class="side">{start_box}{cal_box}{share_box}</aside></div>
+</div><aside class="side">{clock_box(meta, name, upcoming, when, today) if covered else ""}{start_box}{cal_box}{share_box}</aside></div>
 </main>"""
     ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Council Radar", "item": SITE_URL},

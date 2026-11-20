@@ -233,6 +233,9 @@ def council_index(public: list[dict], today: date | None = None) -> dict:
         e["l"] = e.get("l", 0) + 1
 
     meta = {"built": today.isoformat(), "public_delay": PUBLIC_DELAY_DAYS, "locked_days": LOCKED_WINDOW_DAYS}
+    lt2 = lt2_timeline()
+    if lt2:
+        meta["lt2"] = lt2
     latest = sorted((config.DATA_DIR / "issues").glob("*-findings.json"))
     if latest:
         try:
@@ -462,6 +465,44 @@ def flagged_meetings() -> set[str]:
     return {m[1].lower() for u in urls if u and (m := re.search(r"[?&]Id=([0-9a-fA-F-]{36})", u))}
 
 
+def lt2_timeline() -> dict | None:
+    """Window 2 milestones from data/lt2_timeline.json (edited by hand as the IESO confirms dates)."""
+    f = config.DATA_DIR / "lt2_timeline.json"
+    if not f.exists():
+        return None
+    try:
+        data = json.loads(f.read_text())
+    except ValueError:
+        return None
+    return {k: v for k, v in data.items() if not k.startswith("_")}
+
+
+def write_lt2_calendar(out_dir: Path) -> bool:
+    """site/cal/lt2-window-2.ics: the Window 2 milestones as all-day events."""
+    from datetime import datetime, timezone
+    lt2 = lt2_timeline()
+    if not lt2:
+        return False
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Council Radar//LT2 Window 2//EN", "CALSCALE:GREGORIAN",
+             "METHOD:PUBLISH", f"X-WR-CALNAME:{_ics_text(lt2.get('name', 'LT2 Window 2') + ' milestones')}",
+             f"X-WR-CALDESC:{_ics_text('IESO LT2 Window 2 milestones, kept current by Council Radar. Dates marked expected are approximate.')}",
+             "REFRESH-INTERVAL;VALUE=DURATION:PT12H", "X-PUBLISHED-TTL:PT12H"]
+    body = "".join(_ics_fold(l) for l in lines)
+    for m in lt2.get("milestones", []):
+        d = date.fromisoformat(m["plot"])
+        desc = f"{m.get('when', '')}. {m.get('detail', '')}\n\nSource: {m.get('source', '')}\n\nCouncil Radar: {SITE_URL}"
+        ev = ["BEGIN:VEVENT", f"UID:lt2w2-{m['key']}@council-radar", f"DTSTAMP:{stamp}",
+              f"DTSTART;VALUE=DATE:{d:%Y%m%d}", f"DTEND;VALUE=DATE:{d + timedelta(days=1):%Y%m%d}",
+              f"SUMMARY:{_ics_text(('Window 2: ' + m['label']) + (' (expected)' if m.get('approx') else ''))}",
+              f"DESCRIPTION:{_ics_text(desc.replace(chr(92) + 'n', chr(10)))}", "TRANSP:TRANSPARENT", "END:VEVENT"]
+        body += "".join(_ics_fold(l) for l in ev)
+    body += "END:VCALENDAR\r\n"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "lt2-window-2.ics").write_bytes(body.encode("utf-8"))
+    return True
+
+
 def write_calendars(today: date | None = None, out_dir: Path | None = None) -> int:
     from datetime import datetime, timezone
     import sqlite3
@@ -525,6 +566,7 @@ def write_calendars(today: date | None = None, out_dir: Path | None = None) -> i
         body += "END:VCALENDAR\r\n"
         (out_dir / f"{slug}.ics").write_bytes(body.encode("utf-8"))
         n += 1
+    write_lt2_calendar(out_dir)
     return n
 
 
