@@ -52,7 +52,12 @@ Files: `outreach/prospects.csv` (research list), `outreach/log.csv` (every email
    Priority: developers with an active Ontario project needing municipal support (template A) >
    law and consulting energy groups (B) > associations (C, at most 1 a month).
    Add new organizations to `prospects.csv` with an evidence URL.
-5. **Send** one email per prospect from `emails.md`, filling every bracket with real, sourced details.
+5. **Check, then send.** Before each email run
+   `python tools/outreach_check.py --email <address> --org "<organization>" --source <address_source_url> [--stage followup] [--municipality "<council>"]`.
+   It enforces the hard limits above (role inboxes, personal/government domains, filing sources, suppression,
+   one initial and one follow-up). If it prints `DO NOT SEND`, don't send. If it warns that the prospect's council
+   is not read, use the sample link, not a preview link, and don't imply we track that council.
+   Send one email per prospect from `emails.md`, filling every bracket with real, sourced details.
    Template A (developer with a known project): use a personalized preview link,
    `https://huxleyboivin.github.io/council-radar/brief.html?for=<Company>&c=<municipality>[,<municipality>]`,
    e.g. `brief.html?for=Prowind%20Canada&c=minto,wellesley`. `c` takes the short municipality name
