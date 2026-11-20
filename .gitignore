@@ -4,3 +4,4 @@ __pycache__/
 .env
 site/cal/
 site/councils/
+site/og/

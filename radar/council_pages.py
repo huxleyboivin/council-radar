@@ -12,6 +12,7 @@ import json
 import shutil
 import sqlite3
 from datetime import date, timedelta
+from urllib.parse import quote
 from pathlib import Path
 
 from . import config
@@ -68,7 +69,9 @@ ul.rows li{padding:.75rem 0;border-bottom:1px solid #EDF1F6}ul.rows li:last-chil
 .box .btn{display:block;width:100%;margin-top:.5rem}
 .box.dark .btn.primary{background:#fff;color:var(--ink);border-color:#fff}
 .box.dark .btn.secondary{background:transparent;color:#fff;border-color:#8FA3C3}
-.cal a{display:inline-block;margin:0 .6rem .3rem 0;font-weight:600;font-size:.94rem}
+.cal a,.share .links a,.linkish{display:inline-block;margin:0 .7rem .3rem 0;font-weight:600;font-size:.94rem}
+.linkish{background:none;border:0;padding:0;color:var(--blue);text-decoration:underline;cursor:pointer;font-family:inherit}
+.share .btn{margin:0 0 .7rem;width:auto;display:inline-block}.share .links{margin:0}.copied{font-size:.86rem;color:var(--granted);margin:.3rem 0 0;min-height:1.2em}
 .about{font-size:.94rem;color:var(--muted);margin-top:2.4rem;padding-top:1rem;border-top:1px solid var(--line)}
 footer{border-top:1px solid var(--line);padding:1.6rem 1.5rem;text-align:center;font-size:.9rem;color:var(--muted)}
 /* directory */
@@ -85,14 +88,15 @@ LOGO = ('<svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><cir
         '<path d="M13 13 L22.5 6.5" stroke="#14284B" stroke-width="2" stroke-linecap="round"/></svg>')
 
 
-def _shell(title: str, desc: str, canonical: str, root: str, body: str, ld: dict | None = None) -> str:
+def _shell(title: str, desc: str, canonical: str, root: str, body: str, ld: dict | None = None, image: str = "") -> str:
     ld_tag = f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>' if ld else ""
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{_e(title)}</title>
 <meta name="description" content="{_e(desc)}">
 <link rel="canonical" href="{_e(canonical)}">
-<meta property="og:title" content="{_e(title)}"><meta property="og:description" content="{_e(desc)}"><meta property="og:url" content="{_e(canonical)}"><meta property="og:type" content="website">
+<meta property="og:title" content="{_e(title)}"><meta property="og:description" content="{_e(desc)}"><meta property="og:url" content="{_e(canonical)}"><meta property="og:type" content="website"><meta property="og:site_name" content="Council Radar">
+<meta property="og:image" content="{_e(image or SITE_URL + "og/councils.png")}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Ccircle cx='13' cy='13' r='11.5' fill='none' stroke='%2314284B' stroke-width='2'/%3E%3Ccircle cx='13' cy='13' r='6' fill='none' stroke='%232F6FB5' stroke-width='2'/%3E%3Cpath d='M13 13 L22.5 6.5' stroke='%2314284B' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -104,6 +108,18 @@ def _shell(title: str, desc: str, canonical: str, root: str, body: str, ld: dict
 {body}
 <footer>Council Radar reads public municipal records and summarizes them. It isn't legal advice. <a href="{root}index.html">Home</a> · <a href="{root}councils/">All councils</a> · <a href="mailto:councilradaron@gmail.com">councilradaron@gmail.com</a></footer>
 <script src="{root}start.js"></script>
+<script>
+(function(){{
+  document.querySelectorAll("[data-share]").forEach(function(b){{
+    if(!navigator.share){{b.hidden=true;return;}}
+    b.addEventListener("click",function(){{navigator.share({{title:b.dataset.title,url:b.dataset.url}}).catch(function(){{}});}});
+  }});
+  document.querySelectorAll("[data-copy-url]").forEach(function(b){{
+    b.addEventListener("click",function(){{var n=b.closest(".box").querySelector(".copied");
+      (navigator.clipboard?navigator.clipboard.writeText(b.dataset.copyUrl):Promise.reject()).then(function(){{n.textContent="Link copied.";}},function(){{n.textContent=b.dataset.copyUrl;}});}});
+  }});
+}})();
+</script>
 </body></html>
 """
 
@@ -191,7 +207,6 @@ def council_page(c: dict, meta: dict, upcoming: list, slug: str, when, today: da
 
     ics = f"{SITE_URL}cal/{slug}.ics"
     webcal = "webcal://" + ics.split("://", 1)[1]
-    from urllib.parse import quote
     cal_box = ""
     if covered:
         cal_box = (f'<div class="box cal"><h3>Meetings in your calendar, free</h3><p>Every {_e(name)} council, committee and '
@@ -206,6 +221,16 @@ def council_page(c: dict, meta: dict, upcoming: list, slug: str, when, today: da
                  f'<a class="btn primary" href="mailto:councilradaron@gmail.com?subject=Free%20trial%20issue" data-start data-councils="{_e(name)}">Start free</a>'
                  f'<a class="btn secondary" href="{root}brief.html?c={slug}">Preview your Monday email</a></div>')
 
+    share_url = quote(canonical, safe="")
+    share_text = quote(f"{name} council and energy projects: decisions, next meetings and a free calendar feed", safe="")
+    share_box = (f'<div class="box share"><h3>Share this page</h3><p>Send it to your team, or post it where your project is being discussed.</p>'
+                 f'<button type="button" class="btn secondary small" data-share data-url="{_e(canonical)}" data-title="{_e(name)} and energy projects">Share</button>'
+                 f'<p class="links"><a href="https://www.linkedin.com/sharing/share-offsite/?url={share_url}" target="_blank" rel="noopener">LinkedIn</a>'
+                 f'<a href="https://bsky.app/intent/compose?text={share_text}%20{share_url}" target="_blank" rel="noopener">Bluesky</a>'
+                 f'<a href="https://www.reddit.com/submit?url={share_url}&amp;title={share_text}" target="_blank" rel="noopener">Reddit</a>'
+                 f'<a href="mailto:?subject={share_text}&amp;body={share_url}">Email</a>'
+                 f'<button type="button" class="linkish" data-copy-url="{_e(canonical)}">Copy link</button></p>'
+                 f'<p class="copied" role="status"></p></div>')
     portal_line = (f' It reads the <a href="{_e(c["p"])}" rel="nofollow">{_e(name)} meeting portal</a> every morning.'
                    if c.get("p") else "")
     about = (f'<p class="about">Council Radar is a weekly email for energy developers, their lawyers and consultants. '
@@ -225,13 +250,13 @@ def council_page(c: dict, meta: dict, upcoming: list, slug: str, when, today: da
 <h2>Coming up</h2>
 {meetings}
 {about}
-</div><aside class="side">{start_box}{cal_box}</aside></div>
+</div><aside class="side">{start_box}{cal_box}{share_box}</aside></div>
 </main>"""
     ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Council Radar", "item": SITE_URL},
         {"@type": "ListItem", "position": 2, "name": "Councils", "item": SITE_URL + "councils/"},
         {"@type": "ListItem", "position": 3, "name": name, "item": canonical}]}
-    return _shell(title, desc, canonical, root, body, ld)
+    return _shell(title, desc, canonical, root, body, ld, image=f"{SITE_URL}og/councils/{slug}.png")
 
 
 def directory_page(entries: list[tuple[str, dict]], meta: dict) -> str:
@@ -266,7 +291,7 @@ document.querySelectorAll("#dir li").forEach(function(li){{li.hidden=v?(!li.data
     title = "Ontario councils and energy projects: decisions and meetings | Council Radar"
     desc = (f"Decisions, early signals and upcoming meetings on solar, wind, battery storage and gas projects for "
             f"{meta.get('covered', 150)} Ontario councils. Updated every morning.")
-    return _shell(title, desc, SITE_URL + "councils/", root, body)
+    return _shell(title, desc, SITE_URL + "councils/", root, body, image=SITE_URL + "og/councils.png")
 
 
 def write(index: dict, today: date, slug, when, rank, out_dir: Path | None = None) -> list[str]:

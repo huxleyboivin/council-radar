@@ -308,3 +308,26 @@ def test_council_pages_are_written_linked_and_never_reveal_findings(tmp_path):
         assert 'rel="canonical"' in text and "start.js" in text
     hald = (tmp_path / "haldimand-county" / "index.html").read_text()
     assert 'data-councils="Haldimand County"' in hald and "cal/haldimand-county.ics" in hald
+
+
+def test_share_cards_exist_for_every_page_that_points_to_one(tmp_path):
+    import re
+    from datetime import date
+    from PIL import Image
+    from radar import config, council_pages, og_images, tracker
+    today = date(2026, 11, 19)
+    index = tracker.council_index(tracker.collect_items(today), today)
+    pages = tmp_path / "councils"
+    council_pages.write(index, today, tracker.council_slug, tracker._when, tracker._meeting_rank, pages)
+    og = tmp_path / "og"
+    n = og_images.write_all(index, council_pages._upcoming(config.DB_PATH, today, tracker._meeting_rank),
+                            tracker.council_slug, tracker._when, og)
+    assert n >= 5 + len(tracker.coverage())
+    with Image.open(og / "councils" / "haldimand-county.png") as im:
+        assert im.size == (1200, 630)
+    base = "https://huxleyboivin.github.io/council-radar/og/"
+    site_pages = [p for p in (config.ROOT / "site").glob("*.html") if p.name in ("index.html", "brief.html", "sample.html", "tracker.html")]
+    for page in list(pages.rglob("index.html")) + site_pages:
+        m = re.search(r'og:image" content="([^"]+)"', page.read_text())
+        assert m, page
+        assert (og / m.group(1).replace(base, "")).exists(), m.group(1)

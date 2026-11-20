@@ -352,6 +352,8 @@ PAGE = """<!DOCTYPE html>
 <title>Ontario municipal support tracker for IESO energy projects | Council Radar</title>
 <meta name="description" content="Which Ontario councils granted or refused municipal support for LT2 and LLT energy projects, and which have adopted protocols. Free, sourced, updated weekly. {n_councils} councils monitored.">
 <link rel="canonical" href="https://huxleyboivin.github.io/council-radar/tracker.html">
+<meta property="og:title" content="Ontario municipal support tracker for IESO energy projects"><meta property="og:description" content="Which Ontario councils gave or refused support for energy projects, and which adopted new rules. Free and sourced."><meta property="og:url" content="https://huxleyboivin.github.io/council-radar/tracker.html"><meta property="og:type" content="website"><meta property="og:site_name" content="Council Radar">
+<meta property="og:image" content="https://huxleyboivin.github.io/council-radar/og/tracker.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -536,6 +538,12 @@ def build(today: date | None = None) -> Path:
     index = council_index(items, today)
     from . import council_pages
     pages = council_pages.write(index, today, council_slug, _when, _meeting_rank)
+    try:  # share-card images; the site still works without them
+        from . import og_images
+        cards = og_images.write_all(index, council_pages._upcoming(config.DB_PATH, today, _meeting_rank), council_slug, _when)
+    except Exception as exc:  # noqa: BLE001
+        print(f"share cards skipped: {exc}")
+        cards = 0
     if idx.exists():
         s = idx.read_text()
         s = re.sub(r"<!--COVERAGE-->.*?<!--/COVERAGE-->", f"<!--COVERAGE-->{len(councils)}<!--/COVERAGE-->", s)
@@ -552,5 +560,5 @@ def build(today: date | None = None) -> Path:
                   for p in ("", "tracker.html", "sample.html", *pages))
         + "</urlset>\n")
     cals = write_calendars(today)
-    print(json.dumps({"tracker": str(out), "items": len(items), "councils": len(councils), "calendars": cals, "council_pages": len(pages) - 1}))
+    print(json.dumps({"tracker": str(out), "items": len(items), "councils": len(councils), "calendars": cals, "council_pages": len(pages) - 1, "share_cards": cards}))
     return out
