@@ -348,6 +348,7 @@ def render(items: list[dict], councils: list[str], built: date) -> str:
         sections.append(f'<section><h2>{label} <span class="n">{len(rows)}</span></h2><ul class="feed">{"".join(lis)}</ul></section>')
     council_list = "".join(f'<li><a href="councils/{council_slug(c)}/">{_e(c)}</a></li>' for c in councils)
     return PAGE.format(
+        analytics=config.analytics_snippet(),
         sections="".join(sections) or "<p>No public decisions yet.</p>",
         n_items=len(items), n_councils=len(councils), councils=council_list,
         built=built.strftime("%B %-d, %Y"), delay=PUBLIC_DELAY_DAYS, trial=TRIAL_MAILTO)
@@ -380,7 +381,7 @@ label{{display:block;font-weight:500;margin-top:1.2rem}}
 input{{font:inherit;padding:.6rem .8rem;border:1px solid var(--rule);border-radius:6px;width:min(100%,22rem);background:#fff;color:var(--ink)}}
 .councils{{columns:2 15rem;padding-left:1.1rem;font-size:.95rem}}
 .small{{font-size:.9rem;color:var(--muted)}}
-</style></head>
+</style>{analytics}</head>
 <body><main>
 <a href="index.html">Back to Council Radar</a>
 <h1>Ontario municipal support tracker</h1>
@@ -612,7 +613,7 @@ def build(today: date | None = None) -> Path:
         idx.write_text(s)
     from . import guides
     with_pages = {c["n"]: council_slug(c["n"]) for c in index["councils"] if c.get("c") or c.get("i")}
-    guide_pages = guides.write(today, with_pages)
+    guide_pages = guides.write(today, with_pages, items=items)
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"<url><loc>{SITE_URL}{p}</loc><lastmod>{today}</lastmod></url>\n"

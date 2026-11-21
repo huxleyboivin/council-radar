@@ -105,13 +105,13 @@ def _shell(title: str, desc: str, canonical: str, root: str, body: str, ld: dict
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Ccircle cx='13' cy='13' r='11.5' fill='none' stroke='%2314284B' stroke-width='2'/%3E%3Ccircle cx='13' cy='13' r='6' fill='none' stroke='%232F6FB5' stroke-width='2'/%3E%3Cpath d='M13 13 L22.5 6.5' stroke='%2314284B' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>{CSS}</style>{ld_tag}
+<style>{CSS}</style>{ld_tag}{config.analytics_snippet()}
 </head><body>
 <header class="top"><a class="brand" href="{root}index.html">{LOGO}Council Radar</a>
 <nav class="nav" aria-label="Main"><a href="{root}councils/">Councils</a><a href="{root}guides/">Guides</a><a class="hide-sm" href="{root}sample.html">Sample issue</a><a class="hide-sm" href="{root}tracker.html">Tracker</a>
 <a class="btn primary small" href="{root}index.html#pricing">Subscribe</a></nav></header>
 {body}
-<footer>Council Radar reads public municipal records and summarizes them. It isn't legal advice. <a href="{root}index.html">Home</a> · <a href="{root}councils/">All councils</a> · <a href="{root}guides/">Guides</a> · <a href="mailto:councilradaron@gmail.com">councilradaron@gmail.com</a></footer>
+<footer>Council Radar reads public municipal records and summarizes them. It isn't legal advice. We count visits with Google Analytics. <a href="{root}index.html">Home</a> · <a href="{root}councils/">All councils</a> · <a href="{root}guides/">Guides</a> · <a href="mailto:councilradaron@gmail.com">councilradaron@gmail.com</a></footer>
 <script src="{root}start.js"></script>
 <script>
 (function(){{

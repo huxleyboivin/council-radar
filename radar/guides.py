@@ -409,6 +409,47 @@ def where_councils_stand(today: date, slugs: dict, timeline) -> str:
                  body, today, crumb="Where councils stand", faq=faq)
 
 
+CATEGORY_LABELS = {"support_granted": "Support granted", "support_denied": "Support refused or not yet given",
+                   "policy_protocol": "New protocol or criteria"}
+
+
+def council_decisions(today: date, slugs: dict, items: list[dict]) -> str:
+    """Every public council decision, newest month first. Rebuilt on every deploy from the tracker's public items,
+    so it gains a new month section as decisions are published (14 days after subscribers get them)."""
+    root = "../../"
+    rows = sorted((i for i in items if i.get("meeting_date")), key=lambda i: i["meeting_date"], reverse=True)
+    months: dict[str, list[dict]] = {}
+    for i in rows:
+        months.setdefault(i["meeting_date"][:7], []).append(i)
+    sections = []
+    for ym, its in months.items():
+        label = date(int(ym[:4]), int(ym[5:7]), 1).strftime("%B %Y")
+        lis = "".join(
+            f'<li><strong>{_muni(i.get("municipality", ""), i.get("municipality"), slugs, root)}</strong>: {_e(i.get("headline"))}'
+            f'<br><span class="m">{_e(CATEGORY_LABELS.get(i.get("category"), ""))}'
+            f'{" · " + _e(i["technology"]) if i.get("technology") else ""}'
+            f'{" · " + _e(str(i["capacity_mw"])) + " MW" if i.get("capacity_mw") else ""}'
+            f'{" · " + _e(date.fromisoformat(i["meeting_date"][:10]).strftime("%B %-d")) if len(i["meeting_date"]) >= 10 else ""}'
+            f'{" · " + chr(60) + "a href=" + chr(34) + _e(i["source_url"]) + chr(34) + " rel=" + chr(34) + "nofollow" + chr(34) + ">Source</a>" if i.get("source_url") else ""}</span></li>'
+            for i in its)
+        sections.append(f'<h2>{label} <span class="m">({len(its)})</span></h2><ul class="declist">{lis}</ul>')
+    n_c = len({i.get("municipality") for i in rows})
+    body = (f'<p>{len(rows)} public decisions from {n_c} councils so far, newest first. Subscribers get each one in the Monday '
+            f'email; it appears here 14 days later. For every item with its full summary, see the '
+            f'<a href="{root}tracker.html">municipal support tracker</a>.</p>'
+            + "".join(sections) +
+            f'<p>Related: <a href="{root}guides/where-ontario-councils-stand/">Where Ontario councils stand</a> · '
+            f'<a href="{root}guides/lt2-window-2/">LT2 Window 2 guide</a></p>{_cta(root)}')
+    html_ = _page("council-decisions", "Ontario council energy decisions, by month",
+                  "Every public Ontario council decision on solar, wind, battery storage and gas projects, grouped by month, "
+                  "with a source link for each. Updated as decisions are published.",
+                  "Ontario council energy decisions, by month",
+                  "Support given, support refused and new rules on energy projects, month by month, from 150 Ontario councils.",
+                  body, today, crumb="Council decisions by month")
+    return html_.replace("</style>", ".declist{list-style:none;padding:0}.declist li{padding:.7rem 0;border-bottom:1px solid var(--line)}"
+                         ".declist .m{display:block;color:var(--muted);font-size:.88rem;margin-top:.2rem}</style>", 1)
+
+
 PAGES = [
     ("lt2-window-2", lt2_window_2, "IESO LT2 Window 2: dates, rules and municipal support",
      "When proposals are due, what's new compared with Window 1, and why council support decides which projects can bid."),
@@ -420,6 +461,8 @@ PAGES = [
      "Contracted projects by municipality, and recent council decisions on new proposals."),
     ("where-ontario-councils-stand", where_councils_stand, "Where Ontario councils stand on energy projects",
      "Wind refusals, solar and gas support, and councils with written rules."),
+    ("council-decisions", None, "Ontario council energy decisions, by month",
+     "Every public council decision, month by month, with a source for each."),
 ]
 
 
@@ -436,7 +479,7 @@ def index_page(today: date) -> str:
     return html_.replace("</style>", GUIDE_CSS + "</style>", 1)
 
 
-def write(today: date, council_slugs: dict[str, str], out_dir: Path | None = None) -> list[str]:
+def write(today: date, council_slugs: dict[str, str], out_dir: Path | None = None, items: list[dict] | None = None) -> list[str]:
     """Write the guides and their index. council_slugs maps council name -> page slug (only councils with a page).
     Returns site-relative paths for the sitemap."""
     out_dir = out_dir or (config.ROOT / "site" / "guides")
@@ -450,6 +493,6 @@ def write(today: date, council_slugs: dict[str, str], out_dir: Path | None = Non
     for slug, fn, _, _ in PAGES:
         p = out_dir / slug / "index.html"
         p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(fn(today, council_slugs, timeline))
+        p.write_text(council_decisions(today, council_slugs, items or []) if fn is None else fn(today, council_slugs, timeline))
         paths.append(f"guides/{slug}/")
     return paths
