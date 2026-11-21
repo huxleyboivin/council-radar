@@ -306,7 +306,7 @@ def council_page(c: dict, meta: dict, upcoming: list, slug: str, when, today: da
                  f'<p>Every agenda, staff report and set of minutes, read for solar, wind, battery storage and gas items. '
                  f'Your first issue is free.</p>'
                  f'<a class="btn primary" href="mailto:councilradaron@gmail.com?subject=Free%20trial%20issue" data-start data-councils="{_e(name)}">Start free</a>'
-                 f'<a class="btn secondary" href="{root}brief.html?c={slug}">Preview your Monday email</a></div>')
+                 f'<a class="btn secondary" href="{root}brief.html?c={slug}" rel="nofollow">Preview your Monday email</a></div>')
 
     share_url = quote(canonical, safe="")
     share_text = quote(f"{name} council and energy projects: decisions, next meetings and a free calendar feed", safe="")

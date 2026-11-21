@@ -257,7 +257,7 @@ def lt2_window_1_results(today: date, slugs: dict, timeline) -> str:
 {_faq_html(faq)}
 {_cta(root)}
 {_sources("e1_table", "e1_news", "c1_table", "w2_pres", "shuniah")}"""
-    return _page("lt2-window-1-results", "IESO LT2 Window 1 results by municipality",
+    return _page("lt2-window-1-results", "IESO LT2 Window 1 results by municipality (energy & capacity)",
                  "Every IESO LT2 Window 1 contract (energy and capacity streams) with its municipality, MW, zone and price, from the IESO's final result tables.",
                  "IESO LT2 Window 1 results by municipality",
                  "Every project that won an LT2 Window 1 contract, the municipality it's in, its size and its price, from the IESO's final tables.",
@@ -313,7 +313,7 @@ def municipal_support(today: date, slugs: dict, timeline) -> str:
 {_faq_html(faq)}
 {_cta(root)}
 {_sources("ottawa_memo", "amo_faq", "pembina", "ieso_form", "ottawa_engage", "amo_toolkit", "amo_dev", "haldimand", "richmondhill", "selwyn", "puslinch", "shuniah")}"""
-    return _page("municipal-support-resolution", "Municipal support resolutions for IESO energy projects",
+    return _page("municipal-support-resolution", "Municipal support resolutions (MSC) for IESO projects in Ontario",
                  "What a municipal support resolution (MSC) is, MRSPS versus blanket resolutions, how the process runs, and how Ontario councils like Haldimand, Richmond Hill and Selwyn handle it.",
                  "Municipal support resolutions for IESO energy projects",
                  "What a municipal support resolution is, the two kinds, how councils decide, and how Ontario councils are handling requests for LT2.",
@@ -358,7 +358,7 @@ def solar_battery(today: date, slugs: dict, timeline) -> str:
 {_faq_html(faq)}
 {_cta(root)}
 {_sources("e1_table", "c1_table", "ottawa_memo", "elt1", "canrea_lt1", "ottawa_engage", "shuniah", "elora", "puslinch", "minto")}"""
-    return _page("solar-and-battery-projects-ontario", "Solar farms and battery storage projects in Ontario",
+    return _page("solar-and-battery-projects-ontario", "Solar farms and battery storage projects in Ontario, by municipality",
                  "Ontario solar farms and battery storage projects with IESO LT2 contracts, by municipality, plus recent council support decisions on new proposals.",
                  "Solar farms and battery storage projects in Ontario",
                  "Which Ontario solar and battery storage projects hold IESO contracts, where they are, and how councils voted on recent proposals.",
@@ -472,7 +472,13 @@ def index_page(today: date) -> str:
     main = (f'<main class="prose"><p class="crumbs"><a href="{root}index.html">Home</a> › Guides</p>'
             f'<h1>Guides to Ontario energy procurement and council support</h1>'
             f'<p class="lede">Plain-language guides for developers, consultants and lawyers working on IESO projects in Ontario, '
-            f'built from IESO documents and council records.</p><ul class="guides">{items}</ul>{_cta(root)}</main>')
+            f'built from IESO documents and council records.</p>'
+            f'<p>Every project in the IESO\'s Long-Term 2 (LT2) procurement that sits on municipal land needs a support '
+            f'resolution from that council before it can bid. These guides cover the Window 2 timeline and rules, who won '
+            f'Window 1 and where, how municipal support resolutions work, and where each Ontario council stands on solar, '
+            f'wind, battery storage and gas. Each fact links to the IESO document or council record it comes from, and the '
+            f'pages are rebuilt every day from the same records Council Radar reads for its Monday email.</p>'
+            f'<ul class="guides">{items}</ul>{_cta(root)}</main>')
     html_ = _shell("Guides: IESO LT2 and Ontario council support | Council Radar",
                    "Guides to IESO LT2 Window 2, Window 1 results, municipal support resolutions and where Ontario councils stand on energy projects.",
                    SITE_URL + "guides/", root, main, image=SITE_URL + "og/home.png")
