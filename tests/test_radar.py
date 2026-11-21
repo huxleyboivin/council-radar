@@ -330,7 +330,8 @@ def test_share_cards_exist_for_every_page_that_points_to_one(tmp_path):
     for page in list(pages.rglob("index.html")) + site_pages:
         m = re.search(r'og:image" content="([^"]+)"', page.read_text())
         assert m, page
-        assert (og / m.group(1).replace(base, "")).exists(), m.group(1)
+        assert m.group(1).startswith((base, config.SITE_URL + "og/")), m.group(1)
+        assert (og / m.group(1).split("/og/", 1)[1]).exists(), m.group(1)
 
 
 def test_guides_are_written_sourced_and_linked(tmp_path):

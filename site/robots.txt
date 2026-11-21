@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://huxleyboivin.github.io/council-radar/sitemap.xml
+Sitemap: https://getcouncilradar.ca/sitemap.xml
