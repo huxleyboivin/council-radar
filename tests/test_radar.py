@@ -341,9 +341,14 @@ def test_guides_are_written_sourced_and_linked(tmp_path):
     today = date(2026, 11, 20)
     index = tracker.council_index(tracker.collect_items(today), today)
     with_pages = {c["n"]: tracker.council_slug(c["n"]) for c in index["councils"] if c.get("c") or c.get("i")}
-    paths = guides.write(today, with_pages, tmp_path)
+    items = tracker.collect_items(today)
+    paths = guides.write(today, with_pages, tmp_path, items=items)
     assert paths[0] == "guides/" and len(paths) == 1 + len(guides.PAGES)
-    for slug, *_ in guides.PAGES:
+    decisions = (tmp_path / "council-decisions" / "index.html").read_text()
+    assert decisions.count("<li>") == len([i for i in items if i.get("meeting_date")])  # every public decision listed
+    for slug, fn, *_ in guides.PAGES:
+        if fn is None:
+            continue
         html = (tmp_path / slug / "index.html").read_text()
         title = re.search(r"<title>(.*?)</title>", html).group(1)
         assert len(title.replace("&amp;", "&")) <= 70, title
@@ -370,3 +375,13 @@ def test_custom_domain_switch(tmp_path, monkeypatch):
     assert config._site_url() in (config.GITHUB_PAGES_URL, __import__("os").environ.get("RADAR_SITE_URL", config.GITHUB_PAGES_URL))
     (site / "CNAME").write_text("councilradar.ca\n")
     assert config._site_url() == "https://councilradar.ca/"
+
+
+def test_analytics_tag_on_every_kind_of_page(tmp_path):
+    from radar import config, council_pages
+    snippet = config.analytics_snippet()
+    assert config.ANALYTICS_TAG in snippet and "generate_lead" in snippet
+    page = council_pages._shell("t", "d", "https://example.com/", "../", "<main></main>")
+    assert snippet in page
+    for f in ("index.html", "sample.html", "brief.html"):
+        assert (config.ROOT / "site" / f).read_text().count(config.ANALYTICS_TAG) == 1, f

@@ -19,6 +19,21 @@ def _site_url() -> str:
 
 
 SITE_URL = _site_url()
+
+# Google tag (Google Analytics 4, account "Council Radar", property getcouncilradar.ca). Empty string turns it off.
+ANALYTICS_TAG = os.environ.get("RADAR_ANALYTICS_TAG", "GTM-WGW5NBGR")
+
+
+def analytics_snippet() -> str:
+    """The Google tag, plus a 'generate_lead' event when someone clicks a trial, subscribe or sample link."""
+    if not ANALYTICS_TAG:
+        return ""
+    return (f'<script async src="https://www.googletagmanager.com/gtm.js?id={ANALYTICS_TAG}"></script>'
+            "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());"
+            "document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a');if(!a)return;"
+            "var h=a.getAttribute('href')||'',k=a.hasAttribute('data-start')?'trial':h.indexOf('buy.stripe.com')>-1?'subscribe':"
+            "h.indexOf('sample.html')>-1?'sample':h.indexOf('.ics')>-1?'calendar':'';"
+            "if(k)gtag('event',k==='subscribe'||k==='trial'?'generate_lead':'select_content',{method:k,link_text:(a.textContent||'').trim().slice(0,60)});});</script>")
 DATA_DIR = Path(os.environ.get("RADAR_DATA_DIR", ROOT / "data"))
 DB_PATH = Path(os.environ.get("RADAR_DB", DATA_DIR / "radar.db"))
 
