@@ -30,5 +30,8 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v5
         with: { path: site }
+      # Since Nov 21 the artifact list sometimes comes back empty right after upload; give it a moment.
+      - name: Wait for the artifact to be listed
+        run: sleep 30
       - id: deployment
         uses: actions/deploy-pages@v5
