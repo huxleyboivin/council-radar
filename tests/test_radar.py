@@ -360,6 +360,15 @@ def test_guides_are_written_sourced_and_linked(tmp_path):
     assert "Simcoe Battery Project" in w1 and "Dunns Valley Solar" in w1
 
 
+def test_local_guides_link_both_ways():
+    from radar import council_pages, guides
+    slugs = {s for s, *_ in guides.PAGES}
+    for name, (slug, _) in council_pages.LOCAL_GUIDES.items():
+        assert slug in slugs, slug  # every council page points at a guide that exists
+        assert f'guides/{slug}/' in council_pages.how_support_works(name, "../../", True, 0)
+    assert council_pages.how_support_works("City of Ottawa", "../../", True, 0).count("Local project") == 0
+
+
 def test_council_page_titles_fit_and_match_meeting_searches():
     from radar import council_pages
     for name in ("Haldimand County", "Municipality of Southwest Middlesex", "Township of Adelaide Metcalfe", "City of Ottawa"):

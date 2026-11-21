@@ -212,6 +212,29 @@ def _next_council(upcoming: list):
     return next((u for u in upcoming if "council" in (u[0] or "").lower()), upcoming[0] if upcoming else None)
 
 
+# Councils with a guide about a project in or next to them. Searches like "wesleyville nuclear" and "darlington smr"
+# outnumber searches for the council itself, so the council page points to the guide and the guide links back.
+LOCAL_GUIDES = {
+    "Municipality of Port Hope": ("new-nuclear-ontario", "OPG is studying up to 10,000 MWe of new nuclear at its Wesleyville site here"),
+    "Municipality of Clarington": ("new-nuclear-ontario", "OPG is building the first Darlington small modular reactor here"),
+    "Municipality of Kincardine": ("new-nuclear-ontario", "Bruce Power's proposed Bruce C project, up to 4,800 MWe, is here"),
+    "Town of Saugeen Shores": ("new-nuclear-ontario", "Bruce Power's proposed Bruce C project is in neighbouring Kincardine"),
+    "Town of Cobourg": ("new-nuclear-ontario", "OPG's proposed Wesleyville nuclear project is in neighbouring Port Hope"),
+    "Municipality of West Grey": ("agrivoltaics-ontario", "The Cedar Agrivoltaics project here won an LT2 contract"),
+    "Town of Minto": ("wind-projects-ontario", "A 70 MW wind proposal has been presented to this council"),
+    "Township of Wellesley": ("wind-projects-ontario", "A 200 MW wind proposal has been presented to this council"),
+}
+
+
+def _local_guide(name: str, g: str) -> str:
+    if name not in LOCAL_GUIDES:
+        return ""
+    slug, line = LOCAL_GUIDES[name]
+    label = {"new-nuclear-ontario": "New nuclear projects in Ontario", "agrivoltaics-ontario": "Agrivoltaics in Ontario",
+             "wind-projects-ontario": "Wind farms in Ontario"}[slug]
+    return f'<p><strong>Local project:</strong> {_e(line)}. See <a href="{g}{slug}/">{label}</a>.</p>'
+
+
 def how_support_works(name: str, root: str, covered: bool, n_meetings: int) -> str:
     """Plain-language background for every council page, with links to the guides."""
     g = f"{root}guides/"
@@ -227,6 +250,7 @@ def how_support_works(name: str, root: str, covered: bool, n_meetings: int) -> s
             f'<p>Proposals for <a href="{g}lt2-window-2/">LT2 Window 2</a> are expected to be due in mid-2027, and developers '
             f'must contact the municipality before that. The council elected on October 26, 2026 will make these decisions. '
             f'{read}</p>'
+            f'{_local_guide(name, g)}'
             f'<p>Related: <a href="{g}lt2-window-1-results/">LT2 Window 1 results by municipality</a> · '
             f'<a href="{g}solar-and-battery-projects-ontario/">Solar and battery storage projects in Ontario</a> · '
             f'<a href="{g}where-ontario-councils-stand/">Where Ontario councils stand</a> · '

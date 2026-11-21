@@ -66,6 +66,45 @@ S = {
                    "https://renewablesassociation.ca/canrea-members-successful-in-ontario-energy-storage-rfp/"),
     "elt1": ("IESO, E-LT1 RFP selected proponents (September 18, 2023)",
              "https://www.IESO.ca/-/media/Files/IESO/Document-Library/long-term-rfp/ELT1-RFP-Selected-Proponents.pdf"),
+    # Nuclear
+    "cnsc_dnnp": ("Canadian Nuclear Safety Commission, Darlington New Nuclear Project",
+                  "https://www.cnsc-ccsn.gc.ca/eng/reactors/new-reactor-power-plant-projects/new-reactor-power-plant-facilities/darlington-new-nuclear-project/"),
+    "power_dnnp": ("POWER Magazine, Ontario authorizes OPG to start construction of first commercial SMR (May 2025)",
+                   "https://www.powermag.com/ontario-authorizes-opg-to-start-construction-of-first-commercial-nuclear-smr"),
+    "iaac_wes": ("Impact Assessment Agency of Canada, New Nuclear at Wesleyville information session (April 2026)",
+                 "https://aeic-iaac.gc.ca/050/documents/p89802/165949E.pdf"),
+    "iaac_wes_notice": ("Impact Assessment Agency of Canada, New Nuclear at Wesleyville public notice (January 12, 2026)",
+                        "https://iaac-aeic.gc.ca/050/evaluations/document/164781"),
+    "opg_wes_letter": ("OPG, Wesleyville community letter (spring 2026)",
+                       "https://www.opg.com/documents/wesleyville-community-letter-spring-2026-pdf/"),
+    "ans_wes": ("American Nuclear Society, Agreement signed to bring new nuclear to Port Hope (February 17, 2026)",
+                "https://www.ans.org/news/2026-02-17/article-7760/agreement-signed-to-bring-worlds-largest-nuclear-station-to-port-hope-ontario/"),
+    "bnn_wes": ("BNN Bloomberg, Port Hope's radioactive past fuels pushback against proposed nuclear reactor (August 21, 2026)",
+                "https://www.bnnbloomberg.ca/business/2026/08/21/port-hopes-radioactive-past-fuels-pushback-against-proposed-nuclear-reactor/"),
+    "cnsc_bruce": ("Canadian Nuclear Safety Commission, Bruce C Nuclear Project",
+                   "https://www.cnsc-ccsn.gc.ca/eng/reactors/new-reactor-power-plant-projects/new-reactor-power-plant-facilities/bruce-c-nuclear-project/"),
+    "iaac_bruce": ("Impact Assessment Agency of Canada, Bruce C Nuclear Project registry page",
+                   "https://www.iaac-aeic.gc.ca/050/evaluations/proj/88771"),
+    "iaac_bruce_dec": ("Impact Assessment Agency of Canada, Bruce C notice of impact assessment decision (December 20, 2024)",
+                       "https://iaac-aeic.gc.ca/050/evaluations/document/160141"),
+    "ieso_w1_overview": ("IESO, Results of the Long-Term 2 Window 1 energy stream (April 2026)",
+                         "https://www.ieso.ca/-/media/Files/IESO/Document-Library/long-term-rfp/LT2-W1-results-overview.pdf"),
+    # Wind
+    "ieso_apr21": ("IESO, LT2 RFP Window 2 engagement presentation (April 21, 2026)",
+                   "https://www.ieso.ca/-/media/Files/IESO/Document-Library/engage/long-term-rfp/lt2-rfp-20260421-Presentation.pdf"),
+    "ieso_llt_jun": ("IESO, Long Lead-Time RFP community engagement presentation (June 24, 2026)",
+                     "https://www.ieso.ca/-/media/Files/IESO/Document-Library/engage/long-term-rfp-community/llt-community-20260624-presentation.pdf"),
+    # Agriculture and agrivoltaics
+    "omafa_23": ("OMAFA, Guidelines for the LT2 AIA Components Two and Three Requirement",
+                 "https://ieso.ca/-/media/Files/IESO/Document-Library/long-term-rfp/lt2-rfp-Guidelines-for-the-LT2-AIA-Components-Two-and-Three-Requirement.pdf"),
+    "ieso_aia_qa": ("IESO, Q&A on the LT2 Agricultural Impact Assessment (November 2024)",
+                    "https://ieso.ca/-/media/Files/IESO/Document-Library/engage/long-term-rfp/lt2-rfp-AIA-Q-and-A-revised-for-20241126.pdf"),
+    "amo_lt2req": ("AMO, LT2 steps and requirements for municipalities",
+                   "https://www.amo.on.ca/sites/default/files/assets/DOCUMENTS/Energy/2025/LT2%20Requirements%20for%20Municipalities%20Final.pdf"),
+    "opg_wes_council": ("OPG, Exploring new nuclear in Port Hope: council update (April 21, 2026)",
+                        "https://www.opg.com/documents/wesleyville-presentation-to-port-hope-council-april-2026-pdf/"),
+    "agv_canada": ("Agrivoltaics Canada, response to Ontario's Affordable Energy Future (December 2024)",
+                   "https://ero.ontario.ca/public/public_uploads/2024-12/Agrivoltaics%20Canada%20-%20Response%20to%20Ontario%27s%20Affordable%20Energy%20Future.pdf"),
 }
 
 # --- IESO LT2 Window 1 results (final tables) ------------------------------------------------------------
@@ -251,7 +290,7 @@ def lt2_window_1_results(today: date, slugs: dict, timeline) -> str:
 <h2>What the results mean for Window 2</h2>
 <ul>
 <li><strong>Council support was the first filter.</strong> Every project in these tables that sits in a municipality had that council's support at submission. Councils that said no, like <a href="{root}councils/{slugs.get('Municipality of Shuniah', 'municipality-of-shuniah')}/">Shuniah</a> on a 400 MW storage project, kept those projects out of the competition. {_src("shuniah")}</li>
-<li><strong>Southern projects were small.</strong> The southern winners were all agrivoltaic or small solar projects under 20 MW. {_src("e1_table")}</li>
+<li><strong>Southern projects were small.</strong> The southern winners were all agrivoltaic or small solar projects under 20 MW. {_src("e1_table")} See <a href="{root}guides/agrivoltaics-ontario/">agrivoltaics in Ontario</a>.</li>
 <li><strong>The Window 2 target is larger.</strong> It covers the Window 1 shortfall, and repowered projects can compete. See the <a href="{root}guides/lt2-window-2/">LT2 Window 2 guide</a>.</li>
 </ul>
 {_faq_html(faq)}
@@ -338,7 +377,7 @@ def solar_battery(today: date, slugs: dict, timeline) -> str:
 <p>Ontario is adding solar and battery storage through the IESO's competitive procurements, and every project inside a municipality needs that council's support to bid. This page lists the projects with IESO contracts from LT2 Window 1 and the council decisions we've confirmed on others. {_src("e1_table", "c1_table")}</p>
 
 <h2>Solar farms with LT2 contracts</h2>
-<p>{len(solar)} solar projects, {sum(r[5] for r in solar):,.1f} MW in total, signed 20-year contracts in April–May 2026. The four southern projects are agrivoltaic or small solar, each under 20 MW. {_src("e1_table")}</p>
+<p>{len(solar)} solar projects, {sum(r[5] for r in solar):,.1f} MW in total, signed 20-year contracts in April–May 2026. The four southern projects are agrivoltaic or small solar, each under 20 MW. {_src("e1_table")} More: <a href="{root}guides/agrivoltaics-ontario/">agrivoltaics in Ontario</a>.</p>
 <div class="scroll"><table class="tbl"><thead><tr><th>Municipality or location</th><th>Project</th><th class="n">MW</th></tr></thead><tbody>{s_rows}</tbody></table></div>
 <p>Ground-mounted solar isn't allowed in prime agricultural areas under these procurements. {_src("ottawa_memo")} Prices and proponents: <a href="{root}guides/lt2-window-1-results/">LT2 Window 1 results</a>.</p>
 
@@ -377,7 +416,7 @@ def where_councils_stand(today: date, slugs: dict, timeline) -> str:
            ("Do Ontario councils support natural gas plants?",
             "More than 20 municipal support resolutions for new natural gas projects had passed under LT2 by December 2025, including in Leamington and St. Clair Township.")]
     body = f"""
-<p>Each Ontario council decides which energy projects can bid in IESO procurements, and their positions differ sharply by technology. Wind faces the most blanket refusals; solar, storage and gas have more paths to support. {_src("taf")}</p>
+<p>Each Ontario council decides which energy projects can bid in IESO procurements, and their positions differ sharply by technology. Wind faces the most blanket refusals; solar, storage and gas have more paths to support. {_src("taf")} Technology guides: <a href="{root}guides/wind-projects-ontario/">wind</a>, <a href="{root}guides/solar-and-battery-projects-ontario/">solar and batteries</a>, <a href="{root}guides/agrivoltaics-ontario/">agrivoltaics</a>, <a href="{root}guides/new-nuclear-ontario/">new nuclear</a>.</p>
 
 <h2>By technology</h2>
 <div class="scroll"><table class="tbl"><thead><tr><th>Technology</th><th>What councils have done</th><th>Source</th></tr></thead><tbody>
@@ -407,6 +446,158 @@ def where_councils_stand(today: date, slugs: dict, timeline) -> str:
                  "Where Ontario councils stand on energy projects",
                  "Which councils reject wind, support solar, back gas or have written rules for IESO projects, with a source for each.",
                  body, today, crumb="Where councils stand", faq=faq)
+
+
+def new_nuclear(today: date, slugs: dict, timeline) -> str:
+    root = "../../"
+
+    def m(name, label=None):
+        slug = slugs.get(name)
+        return f'<a href="{root}councils/{slug}/">{_e(label or name)}</a>' if slug else _e(label or name)
+    faq = [("Where is the Wesleyville nuclear project?",
+            "At Ontario Power Generation's Wesleyville site in the Municipality of Port Hope, on Lake Ontario. OPG is studying up to "
+            "10,000 MWe of new nuclear there; the federal impact assessment is under way and no reactor technology has been chosen."),
+           ("Is the Darlington SMR under construction?",
+            "Yes. The Canadian Nuclear Safety Commission lists one BWRX-300 unit under construction at Darlington in Clarington. "
+            "The licence to construct was granted in April 2025, and OPG has said the first unit should be in commercial service by 2030."),
+           ("How big is the Bruce C project?",
+            "Up to 4,800 MWe of new nuclear capacity at the existing Bruce Power site in the Municipality of Kincardine. It is going "
+            "through an integrated federal impact assessment by a review panel.")]
+    body = f"""
+<div class="keyfacts">
+<div class="stat"><strong>3</strong><span>new nuclear projects, three host councils</span></div>
+<div class="stat"><strong>Up to 10,000 MWe</strong><span>proposed at Wesleyville, Port Hope</span></div>
+<div class="stat"><strong>1 unit</strong><span>under construction at Darlington</span></div>
+</div>
+<p>Ontario is planning new nuclear generation alongside the wind, solar and storage it buys through the IESO. The IESO says the province's electricity demand could grow by as much as 90% by 2050. {_src("ieso_w1_overview")} Three new nuclear projects are moving, each at an existing nuclear site and each with a host council: {m("Municipality of Clarington", "Clarington")}, {m("Municipality of Port Hope", "Port Hope")} and {m("Municipality of Kincardine", "Kincardine")}.</p>
+
+<h2>The three projects</h2>
+<div class="scroll"><table class="tbl"><thead><tr><th>Project and host council</th><th>Proponent</th><th>Size</th><th>Where it stands</th></tr></thead><tbody>
+<tr><td><strong>Darlington New Nuclear Project</strong><span class="m">{m("Municipality of Clarington")}</span></td><td>Ontario Power Generation</td><td>Up to 4 BWRX-300 small modular reactors, 300 MWe each</td><td>Licence to construct one unit granted April 2025 (valid to March 31, 2035). One unit under construction. OPG applied for a 20-year operating licence on March 25, 2026. {_src("cnsc_dnnp")}</td></tr>
+<tr><td><strong>New Nuclear at Wesleyville</strong><span class="m">{m("Municipality of Port Hope")}</span></td><td>Ontario Power Generation</td><td>Up to 10,000 MWe; technology not yet selected</td><td>Federal impact assessment started with OPG's Initial Project Description (public notice January 12, 2026). {_src("iaac_wes_notice", "iaac_wes")}</td></tr>
+<tr><td><strong>Bruce C Nuclear Project</strong><span class="m">{m("Municipality of Kincardine")}</span></td><td>Bruce Power</td><td>Up to 4,800 MWe; reactor-neutral assessment</td><td>Integrated impact assessment by a review panel, now in Phase 2 (impact statement). {_src("cnsc_bruce", "iaac_bruce")}</td></tr>
+</tbody></table></div>
+
+<h2>Darlington SMRs (Clarington)</h2>
+<p>OPG chose the GE Vernova Hitachi BWRX-300 for the Darlington site in December 2021 and applied for a licence to construct in October 2022. The Commission authorized construction of one reactor in April 2025, and the first regulatory hold point (the reactor building foundation) was lifted on March 30, 2026. A future application could cover up to three more units. {_src("cnsc_dnnp")} The province approved construction of the first of four units in May 2025, with commercial service targeted by 2030. {_src("power_dnnp")}</p>
+
+<h2>Wesleyville (Port Hope)</h2>
+<p>OPG is studying up to 10,000 MWe at its Wesleyville site, assessed for a 78-year operating life with on-site storage of used fuel. The federal assessment uses a bounding approach because no technology has been chosen. {_src("iaac_wes")} OPG and the Municipality of Port Hope signed a memorandum of understanding on February 12, 2026, and OPG's own timeline puts regulatory approvals and agreements with Port Hope and First Nations in the late 2020s. {_src("opg_wes_letter")} OPG updated Port Hope council on April 21, 2026 and held public sessions in Port Hope and {m("Town of Cobourg", "Cobourg")} that May. {_src("opg_wes_council")} Some residents have pushed back, citing the town's history of radioactive waste cleanup; the mayor has said that cleanup and the Wesleyville project are separate. {_src("bnn_wes")}</p>
+
+<h2>Bruce C (Kincardine)</h2>
+<p>Bruce Power proposes up to 4,800 MWe of new capacity at its existing site in Kincardine. {_src("cnsc_bruce")} The Impact Assessment Agency decided on December 20, 2024 that a federal impact assessment is required, and the assessment is being run by a review panel. {_src("iaac_bruce_dec", "iaac_bruce")} Nearby councils we read include {m("Town of Saugeen Shores", "Saugeen Shores")}, {m("Township of Huron-Kinloss", "Huron-Kinloss")} and {m("Bruce County")}.</p>
+
+<h2>What host councils decide</h2>
+<p>Nuclear projects are licensed by the Canadian Nuclear Safety Commission, but host councils are involved through agreements with the proponent and the federal impact assessment, as Port Hope's memorandum with OPG shows. {_src("opg_wes_letter")} Council Radar reads the agendas and minutes of these councils every morning and reports new nuclear items alongside solar, wind, storage and gas. See <a href="{root}guides/where-ontario-councils-stand/">where Ontario councils stand on energy projects</a>.</p>
+{_faq_html(faq)}
+{_cta(root)}
+{_sources("cnsc_dnnp", "power_dnnp", "iaac_wes", "iaac_wes_notice", "opg_wes_letter", "opg_wes_council", "bnn_wes", "cnsc_bruce", "iaac_bruce", "iaac_bruce_dec", "ieso_w1_overview")}"""
+    return _page("new-nuclear-ontario", "New nuclear in Ontario: Wesleyville, Darlington SMR and Bruce C",
+                 "Ontario's three new nuclear projects: Darlington SMRs in Clarington, Wesleyville in Port Hope and Bruce C in Kincardine. Size, status and host councils, with sources.",
+                 "New nuclear projects in Ontario",
+                 "Where the Darlington SMRs, Wesleyville and Bruce C stand, how big each is, and which councils host them.",
+                 body, today, crumb="New nuclear", faq=faq)
+
+
+def wind_projects(today: date, slugs: dict, timeline) -> str:
+    root = "../../"
+
+    def m(name, label=None):
+        slug = slugs.get(name)
+        return f'<a href="{root}councils/{slug}/">{_e(label or name)}</a>' if slug else _e(label or name)
+    wind = [r for r in ENERGY_W1 if r[4] == "Wind"]
+    w_rows = "".join(f"<tr><td>{_muni(r[0], r[1], slugs, root)}</td><td>{_e(r[2])}<br><span class='m'>{_e(r[3])}</span></td>"
+                     f"<td class='n'>{r[5]:,.0f}</td><td class='n'>${r[7]:,.2f}</td></tr>" for r in wind)
+    faq = [("How many wind farms won IESO LT2 contracts?",
+            "The IESO selected two wind projects (400 MW) in LT2 Window 1. One signed its contract: Northern Breeze, 200 MW, "
+            "in the Unorganized District of Thunder Bay."),
+           ("Can existing Ontario wind farms bid for new contracts?",
+            "Yes. LT2 Window 2 allows repowering of existing facilities over 1 MW that meet the IESO's eligibility paths, for new "
+            "20-year contracts. Repowering proposals still need municipal support."),
+           ("Do Ontario councils support wind turbines?",
+            "Mostly not. The Atmospheric Fund reported in December 2025 that at least 159 councils had passed blanket resolutions "
+            "rejecting all wind projects, and only 3 of 20 recent wind proposals got municipal approval.")]
+    body = f"""
+<div class="keyfacts">
+<div class="stat"><strong>1</strong><span>new wind contract signed in LT2 Window 1</span></div>
+<div class="stat"><strong>159+</strong><span>councils with blanket wind refusals</span></div>
+<div class="stat"><strong>Repowering</strong><span>allowed in Window 2</span></div>
+</div>
+<p>New wind in Ontario comes through the IESO's procurements, and every wind project on municipal land needs that council's support before it can bid. That is the hardest step for wind: more councils have refused wind outright than any other technology. {_src("taf", "ottawa_memo")}</p>
+
+<h2>Wind in LT2 Window 1</h2>
+<p>The IESO selected 2 wind projects, 400 MW in total, alongside 12 solar projects. {_src("ieso_w1_overview")} Twelve solar contracts and one wind contract were signed. {_src("ieso_llt_jun")} The wind contract is in the north, on Crown land:</p>
+<div class="scroll"><table class="tbl"><thead><tr><th>Location</th><th>Project and proponent</th><th class="n">MW</th><th class="n">$/MWh</th></tr></thead><tbody>{w_rows}</tbody></table></div>
+<p>Source for prices and locations: the IESO's final result table. {_src("e1_table")} Every project: <a href="{root}guides/lt2-window-1-results/">LT2 Window 1 results by municipality</a>.</p>
+
+<h2>Other recent wind contracts</h2>
+<p>The IESO's medium-term procurements have also contracted wind: MT1 included 1 wind facility, and MT2(e) contracted 995 MW, including 16 wind facilities, on 5-year contracts starting between 2026 and 2029. {_src("ieso_apr21")}</p>
+
+<h2>Window 2: repowering existing wind farms</h2>
+<p>For the first time, LT2 Window 2 lets existing facilities over 1 MW rebuild or upgrade and compete for a new 20-year contract, if they meet one of the IESO's eligibility paths. The mandatory municipal support requirement applies to repowering too. {_src("w2_pres")} Dates and rules: <a href="{root}guides/lt2-window-2/">LT2 Window 2 guide</a>.</p>
+
+<h2>Where councils stand on wind</h2>
+<div class="scroll"><table class="tbl"><thead><tr><th>Council</th><th>Position or proposal</th><th>Source</th></tr></thead><tbody>
+<tr><td>Across Ontario</td><td>At least 159 councils have blanket resolutions rejecting all wind projects. Of 20 recent wind proposals, 3 got municipal approval, and 2 of those were later withdrawn.</td><td>{_src("taf")}</td></tr>
+<tr><td>{m("Haldimand County")}</td><td>Blanket support for energy projects that meet its criteria, but wind isn't eligible.</td><td>{_src("haldimand")}</td></tr>
+<tr><td>{m("Town of Minto")}</td><td>Prowind presented 70 MW of wind and 24 MW of solar; residents raised concerns and council hasn't taken a position.</td><td>{_src("minto")}</td></tr>
+<tr><td>{m("Township of Wellesley")}</td><td>RES Canada presented an early-stage 200 MW wind proposal; the mayor described opinion as roughly split.</td><td>{_src("wellesley")}</td></tr>
+</tbody></table></div>
+<p>New councils elected on October 26, 2026 will hear Window 2 requests, and some may revisit earlier refusals. More: <a href="{root}guides/where-ontario-councils-stand/">where Ontario councils stand</a> and <a href="{root}guides/council-decisions/">council decisions by month</a>.</p>
+{_faq_html(faq)}
+{_cta(root)}
+{_sources("ieso_w1_overview", "ieso_llt_jun", "e1_table", "ieso_apr21", "w2_pres", "taf", "ottawa_memo", "haldimand", "minto", "wellesley")}"""
+    return _page("wind-projects-ontario", "Wind farms in Ontario: IESO contracts and council positions",
+                 "Ontario wind farms with IESO contracts, repowering in LT2 Window 2, and where councils stand on wind turbines, from IESO tables and council records.",
+                 "Wind farms and wind turbines in Ontario",
+                 "Which new wind projects hold IESO contracts, how repowering works in Window 2, and why council support is the hardest step for wind.",
+                 body, today, crumb="Wind projects", faq=faq)
+
+
+def agrivoltaics(today: date, slugs: dict, timeline) -> str:
+    root = "../../"
+    agv = [r for r in ENERGY_W1 if "Agrivoltaics" in r[2]]
+    a_rows = "".join(f"<tr><td>{_muni(r[0], r[1], slugs, root)}</td><td>{_e(r[2])}<br><span class='m'>{_e(r[3])}</span></td>"
+                     f"<td class='n'>{r[5]:,.2f}</td><td class='n'>${r[7]:,.2f}</td></tr>" for r in agv)
+    total = sum(r[5] for r in agv)
+    faq = [("What is agrivoltaics?",
+            "A dual land use where solar panels and farming share the same land, designed so the land stays in agricultural production."),
+           ("Did agrivoltaic projects win IESO contracts in Ontario?",
+            f"Yes. {len(agv)} projects named as agrivoltaics signed LT2 Window 1 contracts, {total:,.1f} MW in total, in "
+            + ", ".join(r[0] for r in agv) + "."),
+           ("Can solar be built on prime farmland under LT2?",
+            "No new ground-mounted solar is permitted in prime agricultural areas, and no new electricity projects in specialty crop areas. "
+            "Other projects in prime agricultural areas need an Agricultural Impact Assessment completed to the local municipality's satisfaction.")]
+    body = f"""
+<div class="keyfacts">
+<div class="stat"><strong>{len(agv)}</strong><span>agrivoltaic projects with LT2 contracts</span></div>
+<div class="stat"><strong>{total:,.1f} MW</strong><span>combined capacity</span></div>
+<div class="stat"><strong>Council</strong><span>decides on Agricultural Impact Assessments</span></div>
+</div>
+<p>Agrivoltaics combines solar panels and farming on the same land, designed to keep it in agricultural production. {_src("agv_canada")} In Ontario's LT2 procurement, the southern solar projects that won were small, and three of them are agrivoltaic. {_src("e1_table")}</p>
+
+<h2>Agrivoltaic projects with LT2 contracts</h2>
+<div class="scroll"><table class="tbl"><thead><tr><th>Municipality</th><th>Project and proponent</th><th class="n">MW</th><th class="n">$/MWh</th></tr></thead><tbody>{a_rows}</tbody></table></div>
+<p>All signed 20-year contracts in the LT2 energy stream. {_src("e1_table")} Every project: <a href="{root}guides/lt2-window-1-results/">LT2 Window 1 results by municipality</a>.</p>
+
+<h2>The farmland rules in LT2</h2>
+<ul>
+<li><strong>Specialty crop areas are off limits</strong> to new electricity projects, and <strong>new ground-mounted solar isn't permitted in prime agricultural areas.</strong> {_src("omafa_23")}</li>
+<li><strong>The council decides on the Agricultural Impact Assessment.</strong> Projects proposed in prime agricultural areas need an AIA completed to the satisfaction of the local municipality; the agriculture ministry advises but doesn't approve. {_src("ieso_aia_qa")}</li>
+<li><strong>Two stages.</strong> The first (avoid) is done before the bid; the second and third (minimize and mitigate) must be met within 18 months of the contract award. {_src("amo_lt2req")}</li>
+</ul>
+<p>Agrivoltaics Canada argued in December 2024 that the IESO's framework treats agrivoltaics the same as ground-mounted solar, without recognizing its farming benefits, and asked the province to change that. {_src("agv_canada")} The IESO is also reviewing how the AIA applies to repowered sites in Window 2. {_src("w2_pres")}</p>
+
+<h2>Why it matters for Window 2</h2>
+<p>For solar on farmland in southern Ontario, the site's designation and the council's view of the AIA decide whether a project can bid. Councils set their own protocols for support requests, and new councils took office on November 15, 2026. See <a href="{root}guides/municipal-support-resolution/">how municipal support resolutions work</a> and <a href="{root}guides/solar-and-battery-projects-ontario/">solar and battery projects in Ontario</a>.</p>
+{_faq_html(faq)}
+{_cta(root)}
+{_sources("agv_canada", "e1_table", "omafa_23", "ieso_aia_qa", "amo_lt2req", "w2_pres")}"""
+    return _page("agrivoltaics-ontario", "Agrivoltaics in Ontario: LT2 projects and farmland rules",
+                 "Ontario agrivoltaic solar projects with IESO LT2 contracts, plus the prime agricultural area and Agricultural Impact Assessment rules councils apply.",
+                 "Agrivoltaics in Ontario",
+                 "The agrivoltaic projects that won LT2 contracts, the farmland rules that apply, and the council's role in the Agricultural Impact Assessment.",
+                 body, today, crumb="Agrivoltaics", faq=faq)
 
 
 CATEGORY_LABELS = {"support_granted": "Support granted", "support_denied": "Support refused or not yet given",
@@ -461,6 +652,12 @@ PAGES = [
      "Contracted projects by municipality, and recent council decisions on new proposals."),
     ("where-ontario-councils-stand", where_councils_stand, "Where Ontario councils stand on energy projects",
      "Wind refusals, solar and gas support, and councils with written rules."),
+    ("wind-projects-ontario", wind_projects, "Wind farms and wind turbines in Ontario",
+     "New wind contracts, repowering in Window 2, and where councils stand on wind."),
+    ("agrivoltaics-ontario", agrivoltaics, "Agrivoltaics in Ontario",
+     "Agrivoltaic projects with LT2 contracts and the farmland rules councils apply."),
+    ("new-nuclear-ontario", new_nuclear, "New nuclear projects in Ontario",
+     "Darlington SMRs, Wesleyville and Bruce C: size, status and host councils."),
     ("council-decisions", None, "Ontario council energy decisions, by month",
      "Every public council decision, month by month, with a source for each."),
 ]
@@ -475,8 +672,8 @@ def index_page(today: date) -> str:
             f'built from IESO documents and council records.</p>'
             f'<p>Every project in the IESO\'s Long-Term 2 (LT2) procurement that sits on municipal land needs a support '
             f'resolution from that council before it can bid. These guides cover the Window 2 timeline and rules, who won '
-            f'Window 1 and where, how municipal support resolutions work, and where each Ontario council stands on solar, '
-            f'wind, battery storage and gas. Each fact links to the IESO document or council record it comes from, and the '
+            f'Window 1 and where, how municipal support resolutions work, where each Ontario council stands on solar, '
+            f'wind, battery storage and gas, and the new nuclear projects at Darlington, Wesleyville and Bruce. Each fact links to the IESO document or council record it comes from, and the '
             f'pages are rebuilt every day from the same records Council Radar reads for its Monday email.</p>'
             f'<ul class="guides">{items}</ul>{_cta(root)}</main>')
     html_ = _shell("Guides: IESO LT2 and Ontario council support | Council Radar",
