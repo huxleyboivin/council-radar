@@ -28,7 +28,7 @@ jobs:
       - name: Refresh tracker and council lookup data
         run: python -m radar tracker || echo "Tracker build failed; publishing the committed site as is."
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with: { path: site }
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
