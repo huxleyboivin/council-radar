@@ -26,7 +26,8 @@ def _e(s) -> str:
     return html.escape(str(s or ""))
 
 
-CSS = """
+CSS = """@view-transition{navigation:auto}
+
 :root{--ink:#14284B;--text:#1F2D44;--muted:#52607A;--line:#D5DCE5;--mist:#EEF3F8;--blue:#2F6FB5;--granted:#2E7D4F;--refused:#B23A3A}
 *{box-sizing:border-box}[hidden]{display:none!important}
 body{margin:0;background:#fff;color:var(--text);font:400 1.0625rem/1.65 "Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}

@@ -8,6 +8,7 @@
 <link rel="canonical" href="https://getcouncilradar.ca/">
 <meta property="og:title" content="Council Radar: where does your council stand on energy projects?"><meta property="og:description" content="Ontario council decisions on solar, wind, battery storage and gas projects, read every morning and emailed every Monday. Look up any council free."><meta property="og:url" content="https://getcouncilradar.ca/"><meta property="og:type" content="website"><meta property="og:site_name" content="Council Radar">
 <meta property="og:image" content="https://getcouncilradar.ca/og/home.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://upload.wikimedia.org" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Barlow+Semi+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,10 +20,15 @@
     --sans:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
     --display:"Barlow Semi Condensed", "Public Sans", system-ui, sans-serif;
     --plan:"Barlow Condensed", "Barlow Semi Condensed", system-ui, sans-serif;
+    /* Motion: one curve for things arriving, one for things moving between states. */
+    --ease-out:cubic-bezier(.2,.8,.2,1); --ease-in-out:cubic-bezier(.65,0,.35,1); --ease-in:cubic-bezier(.4,0,1,1);
+    --t-quick:140ms; --t-base:200ms; --t-move:280ms;
   }
   *{box-sizing:border-box}
   [hidden]{display:none!important}
-  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;interpolate-size:allow-keywords}
+  @view-transition{navigation:auto}
+  ::view-transition-old(root),::view-transition-new(root){animation-duration:var(--t-base);animation-timing-function:var(--ease-out)}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
   body{margin:0;background:var(--paper);color:var(--text);font:400 1.125rem/1.6 var(--sans)}
   a{color:var(--blue)}
@@ -36,19 +42,30 @@
   header.top{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 0;gap:1rem}
   .brand{font:700 1.08rem/1 var(--sans);color:var(--ink);text-decoration:none;display:flex;gap:.6rem;align-items:center}
   .top nav{display:flex;align-items:center;gap:1.6rem}
-  .top nav a{color:var(--muted);text-decoration:none;font-size:.98rem;font-weight:500}
+  .top nav a{color:var(--muted);text-decoration:none;font-size:.98rem;font-weight:500;transition:color var(--t-quick) var(--ease-out),background-color var(--t-quick) var(--ease-out)}
   .top nav a:hover{color:var(--ink)}
-  .top nav a.nav-cta{color:var(--ink);border:1.5px solid var(--ink);padding:.5rem .85rem;border-radius:6px}
+  .top nav a.nav-cta{color:var(--ink);border:1.5px solid var(--ink);padding:.5rem .85rem;border-radius:6px;background:rgba(255,255,255,.7)}
+  .top nav a.nav-cta:hover{background:#fff}
 
   /* Buttons */
-  .btn{display:inline-block;font:600 1.02rem/1 var(--sans);padding:1rem 1.35rem;border-radius:6px;text-decoration:none;border:1.5px solid var(--ink);cursor:pointer;text-align:center}
+  .btn{display:inline-block;font:600 1.02rem/1 var(--sans);padding:1rem 1.35rem;border-radius:6px;text-decoration:none;border:1.5px solid var(--ink);cursor:pointer;text-align:center;transition:background-color var(--t-quick) var(--ease-out),color var(--t-quick) var(--ease-out),border-color var(--t-quick) var(--ease-out),transform var(--t-quick) var(--ease-out)}
+  .btn:active{transform:scale(.97);transition-duration:60ms}
   .btn.primary{background:var(--ink);color:#fff}
   .btn.primary:hover{background:#0d1c36;color:#fff}
   .btn.secondary{background:#fff;color:var(--ink)}
   .btn.secondary:hover{background:var(--mist);color:var(--ink)}
 
+  /* Hero stage: a real Ontario site (Wolfe Island) behind the header and hero, washed to paper so the type stays first. */
+  .stage-photo{position:absolute;z-index:-1;top:0;left:0;right:0;height:var(--stage-h,60rem);overflow:hidden;background:#E9EEF3;pointer-events:none}
+  .stage-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 38%;filter:saturate(1.06) contrast(1.03);opacity:0;transform:scale(1.03);transition:opacity 900ms var(--ease-out),transform 1400ms var(--ease-out)}
+  .stage-photo.on img{opacity:1;transform:none}
+  .stage-photo::after{content:"";position:absolute;inset:0;background:
+      linear-gradient(180deg,rgba(255,255,255,.55) 0,rgba(255,255,255,0) 7rem),
+      linear-gradient(90deg,rgba(255,255,255,.95) 0,rgba(255,255,255,.93) 45%,rgba(255,255,255,.6) 59%,rgba(255,255,255,.2) 80%,rgba(255,255,255,.08) 100%),
+      linear-gradient(180deg,rgba(255,255,255,0) 62%,#fff 100%)}
+  .credit-pin{position:absolute;right:.9rem;bottom:.6rem;margin:0;font:500 .72rem/1 var(--sans);color:rgba(20,40,75,.55)}
   /* Hero */
-  .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,32rem);gap:3rem;align-items:start;padding:3.5rem 0 4.5rem}
+  .hero{--muted:#43506A;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,32rem);gap:3rem;align-items:start;padding:3.5rem 0 4.5rem}
   .hero h1{font:700 clamp(2.6rem,5vw,3.9rem)/1.02 var(--display);letter-spacing:-.012em;color:var(--ink);margin:0 0 1.25rem;max-width:15ch}
   .hero .sub{font-size:1.22rem;line-height:1.55;color:var(--muted);margin:0 0 2rem;max-width:34rem}
   .actions{display:flex;flex-wrap:wrap;gap:.75rem}
@@ -119,6 +136,10 @@
   .faq summary::after{content:"+";font-weight:400;font-size:1.4rem;line-height:1;color:var(--muted)}
   .faq details[open] summary::after{content:"\2212"}
   .faq details p{margin:.6rem 0 0;color:var(--muted);max-width:42rem}
+  .faq summary::after{transition:transform var(--t-base) var(--ease-out)}
+  .faq details[open] summary::after{transform:rotate(180deg)}
+  .faq details::details-content{height:0;overflow:clip;transition:height var(--t-move) var(--ease-out),content-visibility var(--t-move) allow-discrete}
+  .faq details[open]::details-content{height:auto}
 
   .final{background:var(--ink);color:#fff;border-radius:16px;padding:3rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;margin:1rem 0 4rem}
   .final h2{color:#fff;margin:0 0 .4rem}
@@ -141,25 +162,35 @@
   .combo input{flex:1;min-width:0;border:0;outline:0;font:500 1.12rem/1.2 var(--sans);color:var(--ink);padding:.8rem 0;background:transparent}
   .combo input::placeholder{color:#7C889C;font-weight:400}
   .combo .btn{padding:.85rem 1.15rem;border-radius:7px}
-  .list{position:absolute;z-index:5;left:0;right:0;top:calc(100% + .4rem);margin:0;padding:.35rem;list-style:none;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 18px 40px -16px rgba(20,40,75,.35);max-height:22rem;overflow:auto}
-  .list li{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.6rem .7rem;border-radius:6px;cursor:pointer;font-size:1rem;color:var(--ink)}
+  .list{position:absolute;z-index:5;left:0;right:0;top:calc(100% + .4rem);margin:0;padding:.35rem;list-style:none;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 18px 40px -16px rgba(20,40,75,.35);max-height:22rem;overflow:auto;transform-origin:top center;animation:drop var(--t-quick) var(--ease-out)}
+  @keyframes drop{from{opacity:0;transform:translateY(-4px) scale(.99)}}
+  .list li{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.6rem .7rem;border-radius:6px;cursor:pointer;font-size:1rem;color:var(--ink);transition:background-color 90ms linear}
   .list li[aria-selected="true"],.list li:hover{background:var(--mist)}
   .list li small{flex:none;font-size:.8rem;color:var(--muted)}
   .list li small.on{color:var(--granted);font-weight:600}
   .list li.none{cursor:default;color:var(--muted)}
   .try{margin:.9rem 0 0;font-size:.95rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.45rem;align-items:center}
-  .try button{font:500 .92rem/1 var(--sans);color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:.45rem .75rem;cursor:pointer}
+  .try button{font:500 .92rem/1 var(--sans);color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:.45rem .75rem;cursor:pointer;transition:border-color var(--t-quick) var(--ease-out),transform var(--t-quick) var(--ease-out)}
+  .try button:active{transform:scale(.96)}
   .try button:hover{border-color:var(--ink)}
-  .watch{margin-top:1.6rem;padding:1.1rem 1.2rem 1.2rem;border:1px solid var(--line);border-radius:12px;background:var(--mist);max-width:34rem}
+  .watch{animation:rise var(--t-move) var(--ease-out);margin-top:1.6rem;padding:1.1rem 1.2rem 1.2rem;border:1px solid var(--line);border-radius:12px;background:var(--mist);max-width:34rem}
   .watch-h{margin:0 0 .6rem;font:700 1rem/1.3 var(--sans);color:var(--ink)}
   .chips{list-style:none;margin:0 0 1rem;padding:0;display:flex;flex-wrap:wrap;gap:.45rem}
+  .chips li.new{animation:pop var(--t-base) var(--ease-out)}
+  @keyframes pop{from{opacity:0;transform:scale(.85)}}
   .chips li{display:inline-flex;align-items:center;gap:.35rem;background:#fff;border:1px solid var(--line);border-radius:999px;padding:.32rem .4rem .32rem .75rem;font-size:.92rem;color:var(--ink)}
   .chips button{border:0;background:none;color:var(--muted);font-size:1.1rem;line-height:1;cursor:pointer;padding:0 .2rem;border-radius:50%}
   .chips button:hover{color:var(--refused)}
   .watch .fine-sm{margin:.7rem 0 0;font-size:.88rem;color:var(--muted)}
   .panel{position:relative;min-height:27rem}
-  .card{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 2px rgba(20,40,75,.06),0 18px 40px -18px rgba(20,40,75,.28);overflow:hidden;animation:rise .35s ease-out}
-  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 2px rgba(20,40,75,.06),0 18px 40px -18px rgba(20,40,75,.28);overflow:hidden;animation:rise var(--t-move) var(--ease-out);view-transition-name:council-card}
+  .card.swap{animation:none}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  ::view-transition-group(council-card){animation-duration:var(--t-move);animation-timing-function:var(--ease-in-out)}
+  ::view-transition-old(council-card){animation:vt-out var(--t-base) var(--ease-in) both}
+  ::view-transition-new(council-card){animation:vt-in var(--t-move) var(--ease-out) both}
+  @keyframes vt-out{to{opacity:0;transform:translateY(-4px)}}
+  @keyframes vt-in{from{opacity:0;transform:translateY(6px)}}
   .card-h{display:flex;gap:.9rem;align-items:flex-start;padding:1.1rem 1.25rem;background:var(--ink);color:#fff}
   .card-h h2{font:700 1.45rem/1.15 var(--display);color:#fff;margin:0 0 .35rem;letter-spacing:-.01em}
   .card-h p{margin:0;font-size:.9rem;color:#C9D4E6}
@@ -192,7 +223,11 @@
 
 
   /* Free calendar feeds */
-  .calband{background:var(--ink);color:#DCE4F0;padding:4.2rem 0}
+  .calband{background:var(--ink);color:#DCE4F0;padding:4.2rem 0;position:relative;isolation:isolate;overflow:hidden}
+  .calband-photo{position:absolute;inset:0;z-index:-1;pointer-events:none}
+  .calband-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 55%;filter:grayscale(.35) contrast(1.05);opacity:0;transition:opacity 900ms var(--ease-out)}
+  .calband-photo.on img{opacity:1}
+  .calband-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,40,75,.95) 0,rgba(20,40,75,.9) 45%,rgba(20,40,75,.72) 100%)}
   .calgrid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:3.5rem;align-items:center}
   .calband h2{color:#fff;max-width:22ch}
   .calband p{color:#C9D4E6;max-width:36rem}
@@ -245,7 +280,7 @@
   .bh-row strong{font:700 1.9rem/1.1 var(--sans);color:var(--ink);letter-spacing:-.02em}
   .bh-row em{font-style:normal;color:var(--muted);margin-left:.35rem}
   .bh-bar{height:.6rem;border-radius:99px;background:var(--mist);margin-top:.5rem;overflow:hidden}
-  .bh-bar i{display:block;height:100%;border-radius:99px;background:#B23A3A;transition:width .35s ease}
+  .bh-bar i{display:block;height:100%;width:100%;background:#B23A3A;transform-origin:left center;transform:scaleX(var(--s,0));transition:transform 350ms var(--ease-out)}
   .bh-row.us .bh-bar i{background:var(--granted)}
   .bh-save{margin:0;font-weight:600;color:var(--ink)}
   .bh-note{grid-column:1/-1;margin:0;font-size:.84rem;color:var(--muted);border-top:1px solid var(--line);padding-top:.9rem}
@@ -298,6 +333,12 @@
   @media (max-width:900px){.how{grid-template-columns:minmax(0,1fr);gap:2.2rem}}
   @media (prefers-reduced-motion: reduce){.pl-parcel.hl{animation:none}}
 
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}
+    ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}
+    .stage-photo img{transform:none}
+  }
+  footer .credits{font-size:.84rem;margin-top:.6rem}
   footer{border-top:1px solid var(--line);padding:2rem 0 3rem;color:var(--muted);font-size:.95rem}
   footer .cols{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
   footer p{margin:.2rem 0}
@@ -306,6 +347,9 @@
     .hero{grid-template-columns:minmax(0,1fr);gap:2.5rem;padding-top:2rem}
     .why{grid-template-columns:1fr;gap:2rem}
     .who,.steps{grid-template-columns:1fr;gap:2rem}
+    .stage-photo::after{background:
+      linear-gradient(180deg,rgba(255,255,255,.62) 0,rgba(255,255,255,.88) 22%,rgba(255,255,255,.93) 74%,rgba(255,255,255,.7) 88%,#fff 100%)}
+    .stage-photo img{object-position:62% 40%}
   }
   @media (max-width:700px){
     body{font-size:1.0625rem}
@@ -323,6 +367,7 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="stage-photo" id="stage-photo" aria-hidden="true"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Smart_Energy_Farm_in_Canada_%28best_-_full_size%29_-_panoramio.jpg/1280px-Smart_Energy_Farm_in_Canada_%28best_-_full_size%29_-_panoramio.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Smart_Energy_Farm_in_Canada_%28best_-_full_size%29_-_panoramio.jpg/960px-Smart_Energy_Farm_in_Canada_%28best_-_full_size%29_-_panoramio.jpg 960w, https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Smart_Energy_Farm_in_Canada_%28best_-_full_size%29_-_panoramio.jpg/1280px-Smart_Energy_Farm_in_Canada_%28best_-_full_size%29_-_panoramio.jpg 1280w, https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Smart_Energy_Farm_in_Canada_%28best_-_full_size%29_-_panoramio.jpg/1920px-Smart_Energy_Farm_in_Canada_%28best_-_full_size%29_-_panoramio.jpg 1920w" sizes="100vw" alt="" fetchpriority="high" decoding="async"></div>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#" aria-label="Council Radar home">
@@ -400,6 +445,7 @@
   </section>
 
   <section class="calband" id="calendar" aria-labelledby="cal-h">
+    <div class="calband-photo" aria-hidden="true"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Toronto_City_Council_chambers.jpg/1280px-Toronto_City_Council_chambers.jpg" srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Toronto_City_Council_chambers.jpg/960px-Toronto_City_Council_chambers.jpg 960w, https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Toronto_City_Council_chambers.jpg/1280px-Toronto_City_Council_chambers.jpg 1280w, https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Toronto_City_Council_chambers.jpg/1920px-Toronto_City_Council_chambers.jpg 1920w" sizes="100vw" alt="" loading="lazy" decoding="async"></div>
     <div class="wrap calgrid">
       <div>
         <h2 id="cal-h">Your councils' meetings, in your calendar</h2>
@@ -561,7 +607,7 @@
   <div class="wrap">
     <div class="final">
       <div>
-        <h2>Know where councils stand on your projects</h2>
+        <h2>We read the agendas. You make the call.</h2>
         <p>Your first Monday email arrives within a week.</p>
       </div>
       <div class="actions">
@@ -587,6 +633,7 @@
         <p><a href="sample.html">Sample issue</a> &nbsp; <a href="tracker.html">Free tracker</a> &nbsp; <a href="https://billing.stripe.com/p/login/eVqaEZ3ZGbwjc1Qdm38Vi00">Manage subscription</a></p>
       </div>
     </div>
+    <p class="credits">Photos: <a href="https://commons.wikimedia.org/wiki/File:Smart_Energy_Farm_in_Canada_(best_-_full_size)_-_panoramio.jpg">Wolfe Island farm and wind turbines</a> by Art Anderson and <a href="https://commons.wikimedia.org/wiki/File:Toronto_City_Council_chambers.jpg">Toronto City Council chamber</a> by Padraic Ryan, both <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>, via Wikimedia Commons, colour-adjusted with a tint.</p>
     <p style="margin-top:1rem">Council Radar summarizes public municipal records. It isn't affiliated with the IESO or any municipality, and it isn't legal advice.</p>
   </footer>
 </div>
@@ -602,6 +649,25 @@
   wire("[data-paid-link]", CONFIG.paidLink);
   wire("[data-team-link]", CONFIG.teamLink);
   wire("[data-trial-link]", CONFIG.trialLink);
+</script>
+<script>
+(function () {
+  // Photos fade in once decoded; the hero photo covers the header and hero (down to the plan on small screens).
+  document.querySelectorAll(".stage-photo img,.calband-photo img").forEach(img => {
+    const on = () => img.parentElement.classList.add("on");
+    if (img.complete && img.naturalWidth) on(); else img.addEventListener("load", on, {once: true});
+  });
+  const stage = document.getElementById("stage-photo"), hero = document.getElementById("check");
+  if (!stage || !hero) return;
+  const small = window.matchMedia("(max-width:900px)");
+  function size() {
+    const plan = document.getElementById("plan-art");
+    const end = small.matches && plan ? plan.getBoundingClientRect().top + plan.offsetHeight * .45 : hero.getBoundingClientRect().bottom;
+    stage.style.setProperty("--stage-h", Math.round(end + window.scrollY) + "px");
+  }
+  size();
+  if ("ResizeObserver" in window) new ResizeObserver(size).observe(hero); else window.addEventListener("resize", size);
+})();
 </script>
 <script src="clock.js"></script>
 <script src="plan.js"></script>
@@ -638,7 +704,7 @@
   }
 
   // ---- watchlist -------------------------------------------------------
-  let watch = [];
+  let watch = [], justAdded = null;
   try { watch = JSON.parse(localStorage.getItem("cr-watch") || "[]").filter(n => byName[n]); } catch (e) {}
   const save = () => { try { localStorage.setItem("cr-watch", JSON.stringify(watch)); } catch (e) {} };
   // Start panel (start.js): knows the watchlist; a dock follows the visitor once they have one.
@@ -649,7 +715,7 @@
   function renderWatch() {
     watchBox.hidden = !watch.length; plain.hidden = !!watch.length;
     $("watch-h").textContent = watch.length === 1 ? "Your council" : `Your ${watch.length} councils`;
-    chips.innerHTML = watch.map(n => `<li>${esc(n)}<button type="button" data-unwatch="${esc(n)}" aria-label="Remove ${esc(n)}">×</button></li>`).join("");
+    chips.innerHTML = watch.map(n => `<li${n === justAdded ? ' class="new"' : ""}>${esc(n)}<button type="button" data-unwatch="${esc(n)}" aria-label="Remove ${esc(n)}">×</button></li>`).join("");
     const lines = watch.map(n => "- " + n + (byName[n].c ? "" : " (not read yet, please add it)")).join("\n");
     const body = `Hi Huxley,\n\nI'd like a free trial issue of Council Radar for these councils:\n${lines}\n\nMy company: \nWhat I'm working on: \n`;
     $("watch-trial").href = `mailto:${TRIAL_TO}?subject=${encodeURIComponent("Free trial issue: " + watch.length + (watch.length === 1 ? " council" : " councils"))}&body=${encodeURIComponent(body)}`;
@@ -672,8 +738,9 @@
     btn.textContent = on ? "✓ Added to your councils" : "+ Add to my councils";
   }
   function toggle(n) {
+    justAdded = watch.includes(n) ? null : n;
     watch = watch.includes(n) ? watch.filter(x => x !== n) : watch.concat(n);
-    save(); renderWatch();
+    save(); renderWatch(); justAdded = null;
   }
 
   // ---- council card ----------------------------------------------------
@@ -703,10 +770,13 @@
     h += `</div><div class="card-f"><button type="button" class="btn" data-watch="${esc(c.n)}"></button><a class="btn secondary" data-card-trial hidden href="#"></a></div></article>`;
     return h;
   }
+  const calm = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   function show(c) {
-    slot.innerHTML = card(c);
-    if (window.CRPlan) CRPlan.highlight(c);
-    renderWatch();
+    const swap = () => { slot.innerHTML = card(c); if (window.CRPlan) CRPlan.highlight(c); renderWatch(); };
+    if (slot.firstElementChild && document.startViewTransition && !calm()) {
+      // One card morphs into the next instead of blinking out and back in.
+      document.startViewTransition(() => { swap(); const a = slot.querySelector(".card"); if (a) a.classList.add("swap"); });
+    } else swap();
     if (window.matchMedia("(max-width:900px)").matches) {
       const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       slot.scrollIntoView({behavior: smooth ? "smooth" : "auto", block: "start"});
@@ -714,7 +784,11 @@
   }
   slot.addEventListener("click", e => {
     const w = e.target.closest("[data-watch]"); if (w) return toggle(w.dataset.watch);
-    if (e.target.closest("[data-close]")) { slot.innerHTML = ""; if (window.CRPlan) CRPlan.highlight(null); input.focus(); }
+    if (e.target.closest("[data-close]")) {
+      const clear = () => { slot.innerHTML = ""; if (window.CRPlan) CRPlan.highlight(null); };
+      if (document.startViewTransition && !calm()) document.startViewTransition(clear); else clear();
+      input.focus();
+    }
   });
   chips.addEventListener("click", e => { const b = e.target.closest("[data-unwatch]"); if (b) toggle(b.dataset.unwatch); });
 
@@ -823,7 +897,7 @@
     $("bh-hours").textContent = fmtH(hours).replace(" minutes", " min");
     $("bh-cost").textContent = "$" + nf.format(cost);
     const max = Math.max(cost, 59, 1);
-    $("bh-bar-you").style.width = Math.max(2, cost / max * 100) + "%"; $("bh-bar-us").style.width = Math.max(2, 59 / max * 100) + "%";
+    $("bh-bar-you").style.setProperty("--s", Math.max(.02, cost / max)); $("bh-bar-us").style.setProperty("--s", Math.max(.02, 59 / max));
     const save = cost - 59;
     $("bh-save").textContent = save > 0
       ? `About $${nf.format(save)}${hours > 1/3 ? " and " + fmtH(hours - 1/3) : ""} back every month.`

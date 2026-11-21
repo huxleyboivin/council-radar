@@ -15,14 +15,19 @@
   const core = n => fold(n.replace(/^(City|Town|Township|Municipality|County|Village|Region|United Counties|Regional Municipality) of /, "").replace(/ County$/, ""));
 
   const css = `
-  .crs-dock{position:fixed;right:1.25rem;bottom:1.25rem;z-index:40;display:flex;align-items:center;gap:.8rem;background:#14284B;color:#fff;border-radius:14px;padding:.6rem .6rem .6rem 1rem;box-shadow:0 20px 40px -18px rgba(10,20,40,.6);font:500 .95rem/1.3 "Public Sans",system-ui,sans-serif;transform:translateY(140%);visibility:hidden;transition:transform .3s ease,visibility 0s linear .3s}
-  .crs-dock.on{transform:none;visibility:visible;transition:transform .3s ease,visibility 0s}
+  .crs-dock{position:fixed;right:1.25rem;bottom:1.25rem;z-index:40;display:flex;align-items:center;gap:.8rem;background:#14284B;color:#fff;border-radius:14px;padding:.6rem .6rem .6rem 1rem;box-shadow:0 20px 40px -18px rgba(10,20,40,.6);font:500 .95rem/1.3 "Public Sans",system-ui,sans-serif;transform:translateY(140%);visibility:hidden;transition:transform .32s cubic-bezier(.4,0,1,1),visibility 0s linear .32s}
+  .crs-dock.on{transform:none;visibility:visible;transition:transform .32s cubic-bezier(.2,.8,.2,1),visibility 0s}
   .crs-dock b{font-weight:700}
   .crs-dock small{display:block;color:#AFC0DA;font-size:.8rem}
   .crs-dock button{font:700 .95rem/1 "Public Sans",system-ui,sans-serif;background:#fff;color:#14284B;border:0;border-radius:9px;padding:.75rem 1rem;cursor:pointer;white-space:nowrap}
   .crs{border:0;padding:0;margin:0 0 0 auto;height:100%;max-height:100%;width:min(30rem,100%);max-width:100%;background:#fff;color:#1F2D44;font:400 1rem/1.55 "Public Sans",system-ui,sans-serif;box-shadow:-20px 0 60px -20px rgba(10,20,40,.5)}
-  .crs[open]{animation:crs-in .28s ease-out}
+  .crs[open]{animation:crs-in .28s cubic-bezier(.2,.8,.2,1)}
+  .crs[open]::backdrop{animation:crs-fade .28s cubic-bezier(.2,.8,.2,1)}
+  .crs.crs-closing{animation:crs-out .2s cubic-bezier(.4,0,1,1) forwards}
+  .crs.crs-closing::backdrop{animation:crs-fade .2s cubic-bezier(.4,0,1,1) reverse forwards}
   @keyframes crs-in{from{transform:translateX(30px);opacity:0}to{transform:none;opacity:1}}
+  @keyframes crs-out{to{transform:translateX(24px);opacity:0}}
+  @keyframes crs-fade{from{opacity:0}}
   .crs::backdrop{background:rgba(12,22,42,.45)}
   .crs-in{display:flex;flex-direction:column;min-height:100%}
   .crs-h{display:flex;align-items:flex-start;gap:1rem;padding:1.4rem 1.5rem 1rem;border-bottom:1px solid #D5DCE5}
@@ -58,7 +63,7 @@
   .crs-pay small{display:block;font-weight:500;color:#52607A;font-size:.82rem}
   .crs-f{padding:1rem 1.5rem 1.4rem;border-top:1px solid #D5DCE5;font-size:.82rem;color:#52607A}
   @media (max-width:640px){.crs{width:100%;margin:0}.crs-dock{left:.75rem;right:.75rem;bottom:.75rem;justify-content:space-between}}
-  @media (prefers-reduced-motion: reduce){.crs[open]{animation:none}.crs-dock{transition:none}}`;
+  @media (prefers-reduced-motion: reduce){.crs[open],.crs[open]::backdrop,.crs.crs-closing{animation:none}.crs-dock{transition:none}}`;
   document.head.insertAdjacentHTML("beforeend", `<style>${css}</style>`);
 
   // ---- council names (for the "add a council" box) ----
@@ -146,6 +151,7 @@
   }
 
   function open(opts) {
+    if (closing) shut();
     opts = opts || {};
     const ctx = Object.assign({}, cfg.context() || {}, opts);
     picked = [...new Set(ctx.councils || [])]; company = ctx.company || "";
@@ -157,7 +163,16 @@
     if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
     setTimeout(() => ($("crs-email").value ? dlg.querySelector(".crs-send .main") : $("crs-email")).focus(), 30);
   }
-  function close() { dlg.close ? dlg.close() : dlg.removeAttribute("open"); }
+  let closing = 0;
+  function shut() { clearTimeout(closing); closing = 0; dlg.classList.remove("crs-closing"); dlg.close ? dlg.close() : dlg.removeAttribute("open"); }
+  function close() {
+    // Slide out before closing, so the panel leaves the way it came in.
+    if (!dlg.open || closing) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return shut();
+    dlg.classList.add("crs-closing");
+    closing = setTimeout(shut, 200);
+  }
+  dlg.addEventListener("cancel", e => { e.preventDefault(); close(); });
   dlg.addEventListener("close", () => { if (lastFocus && lastFocus.focus) lastFocus.focus(); });
   dlg.addEventListener("click", e => {
     if (e.target === dlg) return close();                         // click on the backdrop
