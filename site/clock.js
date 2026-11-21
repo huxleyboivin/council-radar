@@ -4,22 +4,22 @@
 (function () {
   "use strict";
   const css = `
-  .clk{font-family:"Public Sans",system-ui,sans-serif;color:#1F2D44}
+  .clk{font-family:"Public Sans",system-ui,sans-serif;color:#1F2D44;container-type:inline-size}
   .clk-top{display:flex;flex-wrap:wrap;gap:.8rem 2.2rem;margin:0 0 1.4rem}
   .clk-n strong{display:block;font:700 2.3rem/1.05 "Public Sans",system-ui,sans-serif;letter-spacing:-.02em;color:#14284B}
   .clk-n.main strong{color:#B23A3A}
   .clk-n span{display:block;font-size:.92rem;color:#52607A;max-width:17rem;margin-top:.25rem}
-  .clk-track{position:relative;height:4.4rem;margin:0 .6rem 0}
-  .clk-bar{position:absolute;left:0;right:0;top:1.2rem;height:6px;border-radius:99px;background:#D5DCE5}
-  .clk-done{position:absolute;left:0;top:1.2rem;height:6px;border-radius:99px;background:#14284B}
-  .clk-dot{position:absolute;top:.85rem;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#fff;border:3px solid #8FA3C3}
+  .clk-track{position:relative;height:8.6rem;margin:0 .6rem}
+  .clk-bar{position:absolute;left:0;right:0;top:4.1rem;height:6px;border-radius:99px;background:#D5DCE5}
+  .clk-done{position:absolute;left:0;top:4.1rem;height:6px;border-radius:99px;background:#14284B}
+  .clk-dot{position:absolute;top:calc(4.1rem - 4px);width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#fff;border:3px solid #8FA3C3}
   .clk-dot.past{background:#14284B;border-color:#14284B}
-  .clk-dot.key{width:20px;height:20px;margin-left:-10px;top:.68rem;border-color:#B23A3A;background:#fff;box-shadow:0 0 0 5px rgba(178,58,58,.15)}
+  .clk-dot.key{width:20px;height:20px;margin-left:-10px;top:calc(4.1rem - 7px);border-color:#B23A3A;background:#fff;box-shadow:0 0 0 5px rgba(178,58,58,.15)}
   .clk-dot.approx{border-style:dashed}
-  .clk-now{position:absolute;top:-.1rem;transform:translateX(-50%);font:700 .7rem/1 "Public Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#2E7D4F;border-radius:4px;padding:.25rem .35rem;white-space:nowrap}
-  .clk-now::after{content:"";position:absolute;left:50%;top:100%;margin-left:-4px;border:4px solid transparent;border-top-color:#2E7D4F}
-  .clk-lab{position:absolute;top:2.35rem;transform:translateX(-50%);width:9.5rem;text-align:center;font-size:.8rem;line-height:1.3;color:#52607A}
+  .clk-now{position:absolute;top:calc(4.1rem + 3px);transform:translate(-50%,-50%);z-index:2;font:700 .7rem/1 "Public Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#2E7D4F;border-radius:4px;padding:.25rem .35rem;white-space:nowrap}
+  .clk-lab{position:absolute;top:5.1rem;transform:translateX(-50%);width:9.5rem;text-align:center;font-size:.8rem;line-height:1.3;color:#52607A}
   .clk-lab b{display:block;color:#14284B;font-weight:600}
+  .clk-lab.up{top:auto;bottom:5.5rem}
   .clk-lab.first{transform:none;text-align:left;margin-left:-.6rem}.clk-lab.last{transform:translateX(-100%);text-align:right;margin-left:.6rem}
   .clk-list{display:none;list-style:none;margin:0;padding:0}
   .clk-list li{display:grid;grid-template-columns:1.1rem 1fr;gap:.6rem;padding:.4rem 0;font-size:.92rem;color:#52607A}
@@ -27,8 +27,8 @@
   .clk-list li.past i{background:#14284B;border-color:#14284B}.clk-list li.key i{border-color:#B23A3A}
   .clk-list b{color:#14284B;font-weight:600}
   .clk-list li.now{color:#2E7D4F;font-weight:700}.clk-list li.now i{background:#2E7D4F;border-color:#2E7D4F}
-  .clk-mine{margin:2.6rem 0 0;border-top:1px solid #D5DCE5;padding-top:1rem}
-  .clk-mine h4{margin:0 0 .4rem;font:700 .78rem/1 "Public Sans",sans-serif;letter-spacing:.07em;text-transform:uppercase;color:#52607A}
+  .clk-mine{margin:.6rem 0 0;border-top:1px solid #D5DCE5;padding-top:1rem}
+  .clk-mine h4{margin:0 0 .4rem;font:700 .98rem/1.3 "Public Sans",sans-serif;color:#14284B}
   .clk-mine ul{list-style:none;margin:0;padding:0}
   .clk-mine li{padding:.45rem 0;border-bottom:1px solid #EDF1F6;font-size:.95rem}
   .clk-mine li:last-child{border-bottom:0}
@@ -36,7 +36,8 @@
   .clk-mine li span{color:#52607A}
   .clk-foot{margin:1rem 0 0;font-size:.84rem;color:#52607A}
   .clk-foot a{font-weight:600}
-  @media (max-width:640px){.clk-track{display:none}.clk-list{display:block}.clk-mine{margin-top:1rem}.clk-n strong{font-size:1.9rem}}`;
+  @media (max-width:640px){.clk-track{display:none}.clk-list{display:block}.clk-mine{margin-top:1rem}.clk-n strong{font-size:1.9rem}}
+  @container (max-width:720px){.clk-track{display:none}.clk-list{display:block}.clk-mine{margin-top:1rem}}`;
   document.head.insertAdjacentHTML("beforeend", `<style>${css}</style>`);
   const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
   const day = s => new Date(s + "T12:00:00");
@@ -62,7 +63,7 @@
     ms.forEach((m, i) => {
       const d = day(m.plot), cls = ["clk-dot", d <= now ? "past" : "", m.deadline ? "key" : "", m.approx ? "approx" : ""].join(" ");
       h += `<span class="${cls}" style="left:${pos(d)}%"></span>`;
-      h += `<span class="clk-lab${i === 0 ? " first" : i === ms.length - 1 ? " last" : ""}" style="left:${pos(d)}%"><b>${esc(m.label)}</b>${esc(m.when)}</span>`;
+      h += `<span class="clk-lab${i % 2 ? " up" : ""}${i === 0 ? " first" : i === ms.length - 1 ? " last" : ""}" style="left:${pos(d)}%"><b>${esc(m.label)}</b>${esc(m.when)}</span>`;
     });
     h += `<span class="clk-now" style="left:${pos(now)}%">Today</span></div>`;
     // list version (phones and screen readers)
@@ -76,7 +77,7 @@
     h += `</ol>`;
     const cs = (opts.councils || []).filter(c => c && c.c);
     if (cs.length) {
-      h += `<div class="clk-mine"><h4>${cs.length === 1 ? "Its next council meeting" : "Your councils' next council meetings"}</h4><ul>`;
+      h += `<div class="clk-mine"><h4>${cs.length === 1 ? "Its next council meeting" : "Your councils' next meetings"}</h4><ul>`;
       for (const c of cs.slice(0, 6)) {
         const m = (c.u || []).find(u => /council/i.test(u[0])) || (c.u || [])[0];
         h += `<li><b>${esc(c.n)}</b>: <span>${m ? `${esc(m[0])}, ${esc(m[1])}${m[2] ? ` · <a href="${esc(m[2])}" rel="nofollow" target="_blank">Agenda</a>` : ""}` : "no meeting posted yet"}</span></li>`;
