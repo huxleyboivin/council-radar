@@ -338,9 +338,12 @@ def render(items: list[dict], councils: list[str], built: date) -> str:
             if i.get("proponent"):
                 bits.append(i["proponent"])
             src = f' <a href="{_e(i["source_url"])}" rel="nofollow">Source</a>' if i.get("source_url") else ""
+            where = [_e(b) for b in bits if b]
+            if i.get("municipality"):  # link each decision to that council's page (internal links help search engines)
+                where[0] = f'<a href="councils/{council_slug(i["municipality"])}/">{_e(i["municipality"])}</a>'
             lis.append(
                 f'<li data-muni="{_e(i.get("municipality", "")).lower()}"><h3>{_e(i.get("headline"))}</h3>'
-                f'<p class="where">{" / ".join(_e(b) for b in bits if b)}</p>'
+                f'<p class="where">{" / ".join(where)}</p>'
                 f'<p>{_e(i.get("summary"))}{src}</p></li>')
         sections.append(f'<section><h2>{label} <span class="n">{len(rows)}</span></h2><ul class="feed">{"".join(lis)}</ul></section>')
     council_list = "".join(f'<li><a href="councils/{council_slug(c)}/">{_e(c)}</a></li>' for c in councils)
@@ -352,7 +355,7 @@ def render(items: list[dict], councils: list[str], built: date) -> str:
 
 PAGE = """<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ontario municipal support tracker for IESO energy projects | Council Radar</title>
+<title>Ontario municipal support tracker for IESO projects | Council Radar</title>
 <meta name="description" content="Which Ontario councils granted or refused municipal support for LT2 and LLT energy projects, and which have adopted protocols. Free, sourced, updated weekly. {n_councils} councils monitored.">
 <link rel="canonical" href="https://huxleyboivin.github.io/council-radar/tracker.html">
 <meta property="og:title" content="Ontario municipal support tracker for IESO energy projects"><meta property="og:description" content="Which Ontario councils gave or refused support for energy projects, and which adopted new rules. Free and sourced."><meta property="og:url" content="https://huxleyboivin.github.io/council-radar/tracker.html"><meta property="og:type" content="website"><meta property="og:site_name" content="Council Radar">
@@ -406,7 +409,7 @@ const pre=new URLSearchParams(location.search).get("q");if(pre){{q.value=pre;f()
 # Meetings with an energy item we found are marked; what the item is stays in
 # the subscriber email.
 # ---------------------------------------------------------------------------
-SITE_URL = "https://huxleyboivin.github.io/council-radar/"
+SITE_URL = config.SITE_URL
 CAL_PAST_DAYS = 30
 _TZ_BLOCK = (
     "BEGIN:VTIMEZONE\r\nTZID:America/Toronto\r\n"
@@ -570,6 +573,17 @@ def write_calendars(today: date | None = None, out_dir: Path | None = None) -> i
     return n
 
 
+def _rebase_static_pages() -> None:
+    """Hand-written pages (index, sample, brief, tracker) carry the GitHub Pages URL in canonical and share tags.
+    When the site moves to its own domain (site/CNAME), point them at the new address."""
+    if SITE_URL == config.GITHUB_PAGES_URL:
+        return
+    for page in ("index.html", "sample.html", "brief.html", "tracker.html"):
+        f = SITE / page
+        if f.exists():
+            f.write_text(f.read_text().replace(config.GITHUB_PAGES_URL, SITE_URL))
+
+
 def build(today: date | None = None) -> Path:
     today = today or date.today()
     items = collect_items(today)
@@ -596,11 +610,16 @@ def build(today: date | None = None) -> Path:
                    lambda _: f'<!--COUNCILDATA--><script type="application/json" id="council-data">{data}</script><!--/COUNCILDATA-->',
                    s, flags=re.S)
         idx.write_text(s)
+    from . import guides
+    with_pages = {c["n"]: council_slug(c["n"]) for c in index["councils"] if c.get("c") or c.get("i")}
+    guide_pages = guides.write(today, with_pages)
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + "".join(f"<url><loc>https://huxleyboivin.github.io/council-radar/{p}</loc><lastmod>{today}</lastmod></url>\n"
-                  for p in ("", "tracker.html", "sample.html", *pages))
+        + "".join(f"<url><loc>{SITE_URL}{p}</loc><lastmod>{today}</lastmod></url>\n"
+                  for p in ("", "tracker.html", "sample.html", *guide_pages, *pages))
         + "</urlset>\n")
+    (SITE / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}sitemap.xml\n")
+    _rebase_static_pages()
     cals = write_calendars(today)
     print(json.dumps({"tracker": str(out), "items": len(items), "councils": len(councils), "calendars": cals, "council_pages": len(pages) - 1, "share_cards": cards}))
     return out

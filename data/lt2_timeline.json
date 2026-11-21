@@ -34,7 +34,7 @@
       "key": "due",
       "plot": "2027-06-15",
       "label": "Proposals due, each with council support",
-      "when": "June/July 2027, expected",
+      "when": "Q2/Q3 2027, expected",
       "approx": true,
       "deadline": true,
       "detail": "A project without its municipality's support at submission isn't eligible for a contract.",
@@ -42,12 +42,12 @@
     },
     {
       "key": "award",
-      "plot": "2027-10-15",
+      "plot": "2028-02-15",
       "label": "Contracts awarded",
-      "when": "Q3/Q4 2027, expected",
+      "when": "Q1 2028, expected",
       "approx": true,
       "detail": "IESO's approximate timeline; subject to change.",
-      "source": "https://www.ieso.ca/-/media/Files/IESO/Document-Library/engage/long-term-rfp/iesolt2-20260615-engagement-presentation.pdf"
+      "source": "https://ieso.ca/-/media/Files/IESO/Document-Library/engage/long-term-rfp-community/lt2-rfp-window2-community-20260708-presentation.pdf"
     }
   ]
 }

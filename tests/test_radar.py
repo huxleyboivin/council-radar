@@ -331,3 +331,41 @@ def test_share_cards_exist_for_every_page_that_points_to_one(tmp_path):
         m = re.search(r'og:image" content="([^"]+)"', page.read_text())
         assert m, page
         assert (og / m.group(1).replace(base, "")).exists(), m.group(1)
+
+
+def test_guides_are_written_sourced_and_linked(tmp_path):
+    import re
+    from datetime import date
+    from radar import guides, tracker
+    today = date(2026, 11, 20)
+    index = tracker.council_index(tracker.collect_items(today), today)
+    with_pages = {c["n"]: tracker.council_slug(c["n"]) for c in index["councils"] if c.get("c") or c.get("i")}
+    paths = guides.write(today, with_pages, tmp_path)
+    assert paths[0] == "guides/" and len(paths) == 1 + len(guides.PAGES)
+    for slug, *_ in guides.PAGES:
+        html = (tmp_path / slug / "index.html").read_text()
+        title = re.search(r"<title>(.*?)</title>", html).group(1)
+        assert len(title.replace("&amp;", "&")) <= 70, title
+        assert html.count('rel="nofollow">[source]</a>') >= 3, slug  # every guide cites its facts
+        assert '"@type": "FAQPage"' in html and 'rel="canonical"' in html
+        for href in re.findall(r'href="\.\./\.\./councils/([^/"]+)/"', html):
+            assert href in with_pages.values(), href  # only link council pages that exist
+    w1 = (tmp_path / "lt2-window-1-results" / "index.html").read_text()
+    assert "Simcoe Battery Project" in w1 and "Dunns Valley Solar" in w1
+
+
+def test_council_page_titles_fit_and_match_meeting_searches():
+    from radar import council_pages
+    for name in ("Haldimand County", "Municipality of Southwest Middlesex", "Township of Adelaide Metcalfe", "City of Ottawa"):
+        t = council_pages.page_title(name)
+        assert len(t) <= council_pages.TITLE_MAX and "council" in t and "meetings" in t, t
+
+
+def test_custom_domain_switch(tmp_path, monkeypatch):
+    from radar import config
+    site = tmp_path / "site"
+    site.mkdir()
+    monkeypatch.setattr(config, "ROOT", tmp_path)
+    assert config._site_url() in (config.GITHUB_PAGES_URL, __import__("os").environ.get("RADAR_SITE_URL", config.GITHUB_PAGES_URL))
+    (site / "CNAME").write_text("councilradar.ca\n")
+    assert config._site_url() == "https://councilradar.ca/"
