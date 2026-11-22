@@ -49,12 +49,13 @@ Honest timeline: $100k/month is a 2028-scale goal. The plan is built so every mo
 | LT2 Window 2 watch | Mon 7:41 am | Watches the IESO for Window 2 changes, opens a PR | No |
 | Daily outreach | Weekdays 1:37 pm | Cold email within the hard limits in `ops/outreach_task.md` | Yes (approved limits) |
 | Weekly business review | Fri 2:43 pm | Finds the bottleneck, ships one improvement, reports | Report only |
-| **Chief of staff (logistics)** | Weekdays 7:52 am | Checks every agent's health, keeps the plan and scoreboard, prepares the named-contact list and LinkedIn notes, drafts replies to warm leads, gives Huxley a short "your 3 actions" list | Only to Huxley; everything else is a Gmail draft |
-| **Social drafts** | Tue 4:11 pm | 3–5 posts for Bluesky, LinkedIn and Reddit from that week's public decisions and guides | Only to Huxley |
+| **Chief of staff (logistics)** | Weekdays 7:52 am | Checks every agent's health and fixes what it can, keeps the plan and scoreboard, answers routine warm replies itself (trials, factual questions, booking calls on Huxley's calendar), hands named contacts with published emails to outreach, and sends a short "Needs you" list (at most 3 items) | Yes, replies to prospects who wrote in; escalations stay drafts |
+| **Social posts** | Tue 4:11 pm | 3–5 Bluesky posts a week, queued for the browser desk to publish; optional LinkedIn and Reddit drafts | Only to Huxley |
 | **Link building** | Wed 3:17 pm | Researches 3–5 link prospects and drafts pitches in Gmail | Drafts only |
-| **Expansion research** | Thu 7:26 pm | One sized, sourced memo a week on the path to $100k (new feed, province or tier). Prototypes a promising feed behind `enabled: false` in a PR | Only to Huxley |
+| **Expansion research** | Thu 7:26 pm | One sized, sourced memo a week on the path to $100k (new feed, province or tier). Prototypes a promising feed behind `enabled: false` and merges it if tests pass | Only to Huxley |
+| **Browser desk** | Daily 8:13 pm, on Huxley's Mac | Works `ops/browser_queue.md`: publishes Bluesky posts, submits organizations' contact forms (e.g. the CiviCweb request), checks Search Console and GA4 | Only to Huxley, when something needs him |
 
-Rules every new agent follows: no spending or sign-ups, no price changes, no new outbound categories without Huxley's yes, honour robots.txt, never get past bot checks, and never edit other scheduled tasks. Anything that needs a human goes on Huxley's list.
+**Owner directive (Nov 21): Huxley's intervention is a last resort.** Every agent tries to finish a task with its own tools first. Anything that needs a browser goes to `ops/browser_queue.md` for the browser desk. Still reserved for Huxley: passwords, 2FA codes and payment details; spending money; creating accounts; accepting terms; prices and Stripe; legal, contract or discount commitments; CAPTCHAs and bot checks; sending link-building pitches (one click each, from Gmail drafts); and his personal LinkedIn and Reddit. Agents also honour robots.txt and never edit scheduled tasks.
 
 ## Scoreboard (chief of staff updates weekly)
 Paying subscribers · MRR · trial readers · calls booked · named contacts sent · cold emails sent · replies · councils read · items per issue · organic clicks.
