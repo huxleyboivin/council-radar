@@ -1,0 +1,17 @@
+keyword,volume,kd,answered_on
+how much electricity does a wind turbine produce,260,43,not yet (generic; needs a sourced per-turbine figure)
+how much does a wind turbine cost,260,36,not yet
+what is smr,110,65,new-nuclear-ontario (partly)
+how many homes can an smr power,40,0,new-nuclear-ontario FAQ
+how much power does a smr produce,40,0,new-nuclear-ontario FAQ
+who makes smr nuclear reactors,40,0,new-nuclear-ontario (GE Vernova Hitachi BWRX-300)
+how long does it take to build an smr,30,0,new-nuclear-ontario timeline
+what is battery energy storage systems,30,0,not yet
+are battery energy storage systems safe,20,0,not yet (needs a sourced safety answer)
+are battery storage facilities safe,20,0,not yet
+how do battery storage systems work,20,0,not yet
+what is the ieso,20,0,lt2-window-2 FAQ
+is ieso a crown corporation,20,0,lt2-window-2 FAQ
+is ieso a government entity,20,0,lt2-window-2 FAQ
+what does ieso stand for,20,0,lt2-window-2 FAQ
+what is agrivoltaic farming,20,0,agrivoltaics-ontario FAQ

@@ -197,10 +197,31 @@ def _short_name(name: str) -> str:
     return name.split(" of ", 1)[1] if " of " in name else name
 
 
+def search_name(name: str) -> str:
+    """The council's name as people type it into Google (Semrush, Canada, November 2026).
+
+    Cities and counties are searched with the type after the name ("ottawa city council" 480/mo vs "ottawa council"
+    170; "oxford county council" 110 vs "oxford council" 20), regions as "<name> region council" ("peel region
+    council" 210), except Waterloo ("region of waterloo council" 170 vs 90). Towns, townships and municipalities are
+    searched by the bare name ("whitby council" 170 vs "whitby town council" 50)."""
+    short = _short_name(name)
+    if name.startswith("City of"):
+        return f"{short} City Council"
+    if name.startswith("County of"):
+        return f"{short} County Council"
+    if name == "Region of Waterloo":
+        return "Region of Waterloo Council"
+    if name.startswith("Region of"):
+        return f"{short} Region Council"
+    if name.endswith(" County"):
+        return f"{name} Council"
+    return f"{short} Council"
+
+
 def page_title(name: str) -> str:
     """Matches how people search ("<town> council meeting") and stays short enough not to be cut off."""
-    for t in (f"{name} council: meetings & energy decisions | Council Radar",
-              f"{name} council: meetings & energy decisions",
+    for t in (f"{search_name(name)}: meetings & energy decisions | Council Radar",
+              f"{search_name(name)}: meetings & energy decisions",
               f"{_short_name(name)} council: meetings & energy decisions"):
         if len(t) <= TITLE_MAX:
             return t
@@ -210,6 +231,29 @@ def page_title(name: str) -> str:
 def _next_council(upcoming: list):
     """The next meeting of council itself, else the next meeting of any kind."""
     return next((u for u in upcoming if "council" in (u[0] or "").lower()), upcoming[0] if upcoming else None)
+
+
+# Councils with a guide about a project in or next to them. Searches like "wesleyville nuclear" and "darlington smr"
+# outnumber searches for the council itself, so the council page points to the guide and the guide links back.
+LOCAL_GUIDES = {
+    "Municipality of Port Hope": ("new-nuclear-ontario", "OPG is studying up to 10,000 MWe of new nuclear at its Wesleyville site here"),
+    "Municipality of Clarington": ("new-nuclear-ontario", "OPG is building the first Darlington small modular reactor here"),
+    "Municipality of Kincardine": ("new-nuclear-ontario", "Bruce Power's proposed Bruce C project, up to 4,800 MWe, is here"),
+    "Town of Saugeen Shores": ("new-nuclear-ontario", "Bruce Power's proposed Bruce C project is in neighbouring Kincardine"),
+    "Town of Cobourg": ("new-nuclear-ontario", "OPG's proposed Wesleyville nuclear project is in neighbouring Port Hope"),
+    "Municipality of West Grey": ("agrivoltaics-ontario", "The Cedar Agrivoltaics project here won an LT2 contract"),
+    "Town of Minto": ("wind-projects-ontario", "A 70 MW wind proposal has been presented to this council"),
+    "Township of Wellesley": ("wind-projects-ontario", "A 200 MW wind proposal has been presented to this council"),
+}
+
+
+def _local_guide(name: str, g: str) -> str:
+    if name not in LOCAL_GUIDES:
+        return ""
+    slug, line = LOCAL_GUIDES[name]
+    label = {"new-nuclear-ontario": "New nuclear projects in Ontario", "agrivoltaics-ontario": "Agrivoltaics in Ontario",
+             "wind-projects-ontario": "Wind farms in Ontario"}[slug]
+    return f'<p><strong>Local project:</strong> {_e(line)}. See <a href="{g}{slug}/">{label}</a>.</p>'
 
 
 def how_support_works(name: str, root: str, covered: bool, n_meetings: int) -> str:
@@ -227,6 +271,7 @@ def how_support_works(name: str, root: str, covered: bool, n_meetings: int) -> s
             f'<p>Proposals for <a href="{g}lt2-window-2/">LT2 Window 2</a> are expected to be due in mid-2027, and developers '
             f'must contact the municipality before that. The council elected on October 26, 2026 will make these decisions. '
             f'{read}</p>'
+            f'{_local_guide(name, g)}'
             f'<p>Related: <a href="{g}lt2-window-1-results/">LT2 Window 1 results by municipality</a> · '
             f'<a href="{g}solar-and-battery-projects-ontario/">Solar and battery storage projects in Ontario</a> · '
             f'<a href="{g}where-ontario-councils-stand/">Where Ontario councils stand</a> · '
@@ -244,7 +289,7 @@ def council_page(c: dict, meta: dict, upcoming: list, slug: str, when, today: da
 
     title = page_title(name)
     if covered:
-        desc = (f"{name} council meetings and agendas, plus its decisions on solar, wind, battery storage and gas "
+        desc = (f"{search_name(name)} meetings and agendas, plus its decisions on solar, wind, battery storage and gas "
                 f"projects. Free calendar feed. Read every morning by Council Radar.")
     else:
         desc = f"What {name} council has decided on energy projects, from public records. Council Radar doesn't read this council's agendas yet."

@@ -360,11 +360,27 @@ def test_guides_are_written_sourced_and_linked(tmp_path):
     assert "Simcoe Battery Project" in w1 and "Dunns Valley Solar" in w1
 
 
+def test_local_guides_link_both_ways():
+    from radar import council_pages, guides
+    slugs = {s for s, *_ in guides.PAGES}
+    for name, (slug, _) in council_pages.LOCAL_GUIDES.items():
+        assert slug in slugs, slug  # every council page points at a guide that exists
+        assert f'guides/{slug}/' in council_pages.how_support_works(name, "../../", True, 0)
+    assert council_pages.how_support_works("City of Ottawa", "../../", True, 0).count("Local project") == 0
+
+
 def test_council_page_titles_fit_and_match_meeting_searches():
     from radar import council_pages
     for name in ("Haldimand County", "Municipality of Southwest Middlesex", "Township of Adelaide Metcalfe", "City of Ottawa"):
         t = council_pages.page_title(name)
-        assert len(t) <= council_pages.TITLE_MAX and "council" in t and "meetings" in t, t
+        assert len(t) <= council_pages.TITLE_MAX and "council" in t.lower() and "meetings" in t, t
+    sn = council_pages.search_name
+    assert sn("City of Ottawa") == "Ottawa City Council"
+    assert sn("County of Oxford") == "Oxford County Council"
+    assert sn("Haldimand County") == "Haldimand County Council"
+    assert sn("Region of Peel") == "Peel Region Council"
+    assert sn("Region of Waterloo") == "Region of Waterloo Council"
+    assert sn("Town of Whitby") == "Whitby Council"
 
 
 def test_custom_domain_switch(tmp_path, monkeypatch):

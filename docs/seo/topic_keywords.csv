@@ -1,0 +1,79 @@
+keyword,volume,kd,topic,site_page_fit
+ieso lt2,320,25,LT2,guides/lt2-window-2 (exists)
+ieso lt2 rfp,140,26,LT2,guides/lt2-window-2 (exists)
+lt2,170,31,LT2,guides/lt2-window-2 (exists)
+lt2 rfp,70,18,LT2,guides/lt2-window-2 (exists)
+lt2 ieso,50,0,LT2,guides/lt2-window-2 (exists)
+ieso lt2 results,40,0,LT2,guides/lt2-window-1-results (exists)
+ontario lt2 results,40,0,LT2,guides/lt2-window-1-results (exists)
+lt2 ontario,30,0,LT2,guides/lt2-window-2 (exists)
+ontario lt2,30,0,LT2,guides/lt2-window-2 (exists)
+ieso lt1,20,0,LT2,guides/lt2-window-1-results (mention LT1 history)
+ieso lt1 results,20,0,LT2,guides/lt2-window-1-results (mention LT1 history)
+ieso procurement,20,0,IESO,guides/lt2-window-2
+ieso lt2 window 2,10,0,LT2,guides/lt2-window-2 (exists)
+ieso annual planning outlook,40,0,IESO,new: ontario-electricity-demand guide
+ieso capacity auction,30,0,IESO,lt2-window-2 FAQ
+ieso 2027,30,0,IESO,lt2-window-2 timeline
+ontario integrated energy plan,90,13,Policy,new: ontario-integrated-energy-plan guide
+ontario energy minister,260,23,Policy,new: integrated energy plan guide (who decides)
+ontario electricity demand,30,0,Policy,new: integrated energy plan guide
+energy for generations ontario,20,0,Policy,new: integrated energy plan guide
+ontario energy plan,20,0,Policy,new: integrated energy plan guide
+wesleyville nuclear,210,26,Nuclear,new: nuclear-projects-ontario guide + Port Hope council page
+darlington smr,210,40,Nuclear,new: nuclear guide + Clarington council page
+port hope nuclear,110,24,Nuclear,new: nuclear guide + Port Hope council page
+bruce c project,70,32,Nuclear,new: nuclear guide + Kincardine/Saugeen Shores pages
+small modular reactor ontario,20,0,Nuclear,new: nuclear guide
+ontario nuclear expansion,20,0,Nuclear,new: nuclear guide
+wind turbines ontario,210,22,Wind,new: wind-projects-ontario guide
+wind farms in ontario,210,24,Wind,new: wind-projects-ontario guide
+ontario wind turbines,90,20,Wind,new: wind guide
+ontario wind farms,70,47,Wind,new: wind guide
+wind farm in ontario,50,0,Wind,new: wind guide
+wind farms in ontario map,30,0,Wind,new: wind guide
+how many wind farms in ontario,20,0,Wind,new: wind guide FAQ
+list of wind farms in ontario,20,0,Wind,new: wind guide
+ontario wind farm projects,20,0,Wind,new: wind guide
+solar farms in ontario,90,15,Solar,guides/solar-and-battery-projects-ontario (exists)
+solar farm ontario,50,13,Solar,guides/solar-and-battery-projects-ontario (exists)
+solar farms ontario,30,0,Solar,guides/solar-and-battery-projects-ontario (exists)
+list of solar farms in ontario,20,0,Solar,guides/solar-and-battery-projects-ontario (exists)
+how to start a solar farm in ontario,20,0,Solar,solar guide FAQ
+solar farm lease,20,0,Landowners,new: solar-farm-land-lease-ontario guide
+lease land for solar farm,20,0,Landowners,new: land lease guide
+lease my land for solar farm,20,0,Landowners,new: land lease guide
+how much do solar farms pay to lease land,20,0,Landowners,new: land lease guide
+solar farm lease rates per acre per month,20,0,Landowners,new: land lease guide
+are solar farms noisy,20,0,Community questions,solar guide FAQ
+are solar farms dangerous,20,0,Community questions,solar guide FAQ
+do solar farms damage the soil,20,0,Community questions,solar guide FAQ
+how big is a 100 mw solar farm,20,0,Community questions,solar guide FAQ
+how big is a 10 mw solar farm,20,0,Community questions,solar guide FAQ
+ontario battery storage,30,0,Battery,guides/solar-and-battery-projects-ontario (exists)
+ontario battery storage project,30,0,Battery,solar-and-battery guide
+battery energy storage system ontario,30,0,Battery,solar-and-battery guide
+bess ontario,30,0,Battery,solar-and-battery guide
+bess projects in ontario,30,0,Battery,solar-and-battery guide
+battery storage projects in ontario,20,0,Battery,solar-and-battery guide
+battery storage facility,30,0,Battery,solar-and-battery guide FAQ
+are battery storage facilities safe,20,0,Community questions,solar-and-battery guide FAQ
+battery storage fire,20,0,Community questions,solar-and-battery guide FAQ
+tilbury battery storage,50,0,Battery,Lakeshore council page / project list
+oneida energy storage,40,0,Battery,Haldimand council page / project list
+oneida battery storage,30,0,Battery,Haldimand council page / project list
+gas plants in ontario,20,0,Gas,new: gas guide (low priority)
+natural gas power plants in ontario,20,0,Gas,new: gas guide (low priority)
+agrivoltaics,320,53,Agrivoltaics,new: agrivoltaics-ontario guide
+agrivoltaics canada,40,0,Agrivoltaics,new: agrivoltaics-ontario guide
+elmbrook agrivoltaics,20,0,Agrivoltaics,new: agrivoltaics guide (Prince Edward County project)
+cedar agrivoltaics,10,0,Agrivoltaics,new: agrivoltaics guide (West Grey project)
+napanee bess,50,0,Battery,lt2-window-1-results (Napanee BESS Phase 2)
+energy storage ontario,50,0,Battery,solar-and-battery guide
+dunns valley solar,30,0,Solar,lt2-window-1-results
+simcoe battery project,20,0,Battery,lt2-window-1-results + Norfolk council page
+massey solar,20,0,Solar,lt2-window-1-results
+chatsworth solar,20,0,Solar,lt2-window-1-results + Chatsworth council page
+elora bess,20,0,Battery,solar-and-battery guide (Centre Wellington)
+chatham kent wind farm,20,0,Wind,wind guide + Chatham-Kent council page
+ottawa solar farm,20,0,Solar,solar guide + Ottawa council page
