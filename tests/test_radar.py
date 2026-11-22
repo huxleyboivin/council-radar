@@ -373,7 +373,14 @@ def test_council_page_titles_fit_and_match_meeting_searches():
     from radar import council_pages
     for name in ("Haldimand County", "Municipality of Southwest Middlesex", "Township of Adelaide Metcalfe", "City of Ottawa"):
         t = council_pages.page_title(name)
-        assert len(t) <= council_pages.TITLE_MAX and "council" in t and "meetings" in t, t
+        assert len(t) <= council_pages.TITLE_MAX and "council" in t.lower() and "meetings" in t, t
+    sn = council_pages.search_name
+    assert sn("City of Ottawa") == "Ottawa City Council"
+    assert sn("County of Oxford") == "Oxford County Council"
+    assert sn("Haldimand County") == "Haldimand County Council"
+    assert sn("Region of Peel") == "Peel Region Council"
+    assert sn("Region of Waterloo") == "Region of Waterloo Council"
+    assert sn("Town of Whitby") == "Whitby Council"
 
 
 def test_custom_domain_switch(tmp_path, monkeypatch):

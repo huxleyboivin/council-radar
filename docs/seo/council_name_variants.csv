@@ -1,0 +1,39 @@
+keyword,volume,kd,note
+ottawa city council,480,53,vs "ottawa council" 170
+mississauga city council,390,43,vs "mississauga council" 480
+hamilton city council,260,36,vs "hamilton council" 140
+kingston city council,260,32,vs "kingston council" 20
+brampton city council,210,23,vs "brampton council" 210
+niagara region council,210,29,vs "niagara council" 210
+niagara regional council,210,34,
+peel region council,210,29,vs "peel council" 20
+vaughan city council,170,30,vs "vaughan council" 140
+peterborough city council,170,36,vs "peterborough council" 140
+region of waterloo council,170,26,vs "waterloo region council" 90
+london city council,170,36,vs "london council" 10
+thunder bay city council,170,20,vs "thunder bay council" 50
+norfolk county council,170,29,vs "norfolk council" 140
+kitchener city council,140,25,vs "kitchener council" 40
+durham region council,140,26,vs "durham council" 10
+oshawa city council,110,20,vs "oshawa council" 110
+cornwall city council,110,23,vs "cornwall council" 90
+guelph city council,110,28,vs "guelph council" 50
+york region council,110,38,
+cambridge city council,110,28,vs "cambridge council" 70
+oxford county council,110,36,vs "oxford council" 20
+northumberland county council,110,27,vs "northumberland council" 20
+north bay city council,90,32,vs "north bay council" 90
+st catharines city council,90,22,vs "st. catharines council" 70
+city of brampton council,90,21,
+markham city council,70,26,vs "markham council" 70
+barrie city council,70,25,vs "barrie council" 30
+whitby town council,50,0,vs "whitby council" 170 (towns: bare name wins)
+brant county council,50,0,vs "brant council" 20
+elgin county council,50,0,vs "elgin council" 20
+prince edward county council,50,0,
+pickering city council,30,0,vs "pickering council" 90
+milton town council,30,0,vs "milton council" 90
+oakville town council,30,0,vs "oakville council" 10
+lambton county council,30,0,
+simcoe county council,30,0,
+essex county council,30,0,

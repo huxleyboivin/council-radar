@@ -101,6 +101,40 @@ S = {
                     "https://ieso.ca/-/media/Files/IESO/Document-Library/engage/long-term-rfp/lt2-rfp-AIA-Q-and-A-revised-for-20241126.pdf"),
     "amo_lt2req": ("AMO, LT2 steps and requirements for municipalities",
                    "https://www.amo.on.ca/sites/default/files/assets/DOCUMENTS/Energy/2025/LT2%20Requirements%20for%20Municipalities%20Final.pdf"),
+    # Integrated Energy Plan and the IESO
+    "iep_page": ("Ontario, Energy for Generations: Ontario's Integrated Plan to Power the Strongest Economy in the G7",
+                 "https://ontario.ca/page/energy-generations"),
+    "iep_oic": ("Ontario, Order in Council 801/2025 approving the Integrated Energy Plan (June 11, 2025)",
+                "https://www.ontario.ca/orders-in-council/oc-8012025"),
+    "iep_ieso_dir": ("Ontario, Minister's Directive to the IESO implementing the Integrated Energy Plan (O.C. 803/2025)",
+                     "https://www.ontario.ca/page/schedule-order-council-8032025"),
+    "iep_ieso_news": ("IESO, Ontario's Integrated Energy Plan outlines new actions (June 12, 2025)",
+                      "https://ieso.ca/Sector-Participants/IESO-News/2025/06/Ontarios-Integrated-Energy-Plan-Outlines"),
+    "blakes_iep": ("Blakes, Ontario releases Energy for Generations (June 17, 2025)",
+                   "https://www.blakes.com/insights/ontario-releases-energy-for-generations-the-province-s-inaugural-integrated-energy-plan/"),
+    "torys_iep": ("Torys, Ontario's Integrated Energy Plan: priorities for the next 25 years (July 3, 2025)",
+                  "https://www.torys.com/our-latest-thinking/publications/2025/07/on-integrated-energy-plan"),
+    "mccarthy_iep": ("McCarthy Tétrault, Planning for Power: overview of Ontario's Integrated Energy Plan",
+                     "https://www.mccarthy.ca/en/insights/blogs/canadian-energy-perspectives/planning-for-power-overview-of-ontario-s-integrated-energy-plan"),
+    "ngps_ero": ("Environmental Registry of Ontario, Natural Gas Policy Statement (ERO 019-9501)",
+                 "https://ero.ontario.ca/node/13353"),
+    "mep_ero": ("Environmental Registry of Ontario, Review of the Municipal Energy Plan grant program",
+                "https://ero.ontario.ca/node/16241"),
+    "ola_estimates": ("Legislative Assembly of Ontario, Standing Committee on the Interior: Ministry of Energy and Mines estimates (September 29, 2026)",
+                      "https://www.ola.org/en/legislative-business/committees/interior/parliament-44/transcripts/committee-transcript-2026-sept-29"),
+    "oic_rae": ("Ontario, Order in Council 1281/2026 (September 10, 2026)",
+                "https://www.ontario.ca/orders-in-council/oc-12812026"),
+    "ieso_municipal": ("IESO, LT2 RFP webinar for Indigenous communities and municipalities (July 17, 2025)",
+                       "https://www.ieso.ca/-/media/Files/IESO/Document-Library/engage/long-term-rfp-community/lt2rfp-community-20250717-presentation-municipal-session.pdf"),
+    "ieso_corp": ("IESO, Corporate IESO: regulatory accountability", "https://ieso.ca/Corporate-IESO"),
+    "elec_act": ("Electricity Act, 1998 (Ontario)", "https://www.ontario.ca/laws/statute/98e15"),
+    "dbrs_ieso": ("Morningstar DBRS, Independent Electricity System Operator issuer profile",
+                  "https://dbrs.morningstar.com/issuers/6599/independent-electricity-system-operator"),
+    "opg_smr": ("OPG, OPG ready to begin building North America's first small modular reactor (May 2025)",
+                "https://www.opg.com/story/opg-ready-to-begin-building-north-americas-first-small-modular-reactor"),
+    "opg_newnuclear": ("OPG, Darlington New Nuclear Project", "https://opg.com/newnuclear"),
+    "cbc_smr": ("CBC News, Ontario set to begin construction of Canada's 1st mini nuclear power plant (May 2025)",
+                "https://www.cbc.ca/lite/story/1.7529338"),
     "opg_wes_council": ("OPG, Exploring new nuclear in Port Hope: council update (April 21, 2026)",
                         "https://www.opg.com/documents/wesleyville-presentation-to-port-hope-council-april-2026-pdf/"),
     "agv_canada": ("Agrivoltaics Canada, response to Ontario's Affordable Energy Future (December 2024)",
@@ -208,7 +242,11 @@ def lt2_window_2(today: date, slugs: dict, timeline: dict | None) -> str:
            ("Does LT2 Window 2 still need municipal support?",
             "Yes. The IESO says the mandatory municipal support requirement isn't expected to change for any Window 2 proposal, including repowering. Proponents must have the Municipal Support Confirmation before they submit."),
            ("Can existing wind and solar farms bid in Window 2?",
-            "Yes, for the first time. Window 2 allows repowering of existing facilities over 1 MW that meet the IESO's eligibility paths, for new 20-year contracts.")]
+            "Yes, for the first time. Window 2 allows repowering of existing facilities over 1 MW that meet the IESO's eligibility paths, for new 20-year contracts."),
+           ("What is the IESO, and is it part of the government?",
+            "The Independent Electricity System Operator runs Ontario's grid and buys new supply through procurements like LT2. It's a "
+            "not-for-profit corporation set up under the Electricity Act, 1998, under the jurisdiction of Ontario's Minister of Energy. "
+            "The Act says it isn't a Crown agent, but the province appoints its board and the minister can issue it directives.")]
     body = f"""
 <div class="keyfacts">
 <div class="stat"><strong>Q2/Q3 2027</strong><span>proposals due, approximate</span></div>
@@ -237,9 +275,12 @@ def lt2_window_2(today: date, slugs: dict, timeline: dict | None) -> str:
 
 <h2>How Window 1 went</h2>
 <p>The energy stream ended with 13 contracts, 12 solar and 1 wind, for 2.37 TWh a year, against a 3.0 TWh target. The capacity stream met its 600 MW target with 640 MW of battery storage in 3 contracts. Both streams were heavily oversubscribed: about 4 times in energy and 12 times in capacity. {_src("w2_pres")} See every project and its municipality: <a href="{root}guides/lt2-window-1-results/">LT2 Window 1 results by municipality</a>.</p>
+
+<h2>Who runs LT2: the IESO</h2>
+<p>The IESO is a not-for-profit corporate entity established under the Electricity Act, 1998, under the jurisdiction of Ontario's Minister of Energy; the Ontario Energy Board sets its fees and licences. {_src("ieso_corp")} The Act states that the IESO isn't a Crown agent {_src("elec_act")}, and the province appoints its board of directors. {_src("dbrs_ieso")} The minister directs it through formal directives: the LT2 procurement itself started with one. See <a href="{root}guides/ontario-integrated-energy-plan/">Ontario's Integrated Energy Plan</a>.</p>
 {_faq_html(faq)}
 {_cta(root)}
-{_sources("w2_pres", "lt2_page", "ottawa_memo")}"""
+{_sources("w2_pres", "lt2_page", "ottawa_memo", "ieso_corp", "elec_act", "dbrs_ieso")}"""
     return _page("lt2-window-2", "IESO LT2 Window 2 (2027): dates, rules and municipal support",
                  "LT2 Window 2 timeline, what's changing from Window 1 (repowering, targets, domestic content) and why every proposal still needs council support. Updated from IESO documents.",
                  "IESO LT2 Window 2: dates, rules and municipal support",
@@ -479,7 +520,7 @@ def new_nuclear(today: date, slugs: dict, timeline) -> str:
 </tbody></table></div>
 
 <h2>Darlington SMRs (Clarington)</h2>
-<p>OPG chose the GE Vernova Hitachi BWRX-300 for the Darlington site in December 2021 and applied for a licence to construct in October 2022. The Commission authorized construction of one reactor in April 2025, and the first regulatory hold point (the reactor building foundation) was lifted on March 30, 2026. A future application could cover up to three more units. {_src("cnsc_dnnp")} The province approved construction of the first of four units in May 2025, with commercial service targeted by 2030. {_src("power_dnnp")}</p>
+<p>OPG chose the GE Vernova Hitachi BWRX-300 for the Darlington site in December 2021 and applied for a licence to construct in October 2022. The Commission authorized construction of one reactor in April 2025, and the first regulatory hold point (the reactor building foundation) was lifted on March 30, 2026. A future application could cover up to three more units. {_src("cnsc_dnnp")} The province approved construction of the first of four units on May 8, 2025. OPG expects that unit in service by the end of 2030, producing 300 MW, enough for about 300,000 homes; the full fleet of four would produce 1,200 MW. {_src("opg_smr", "opg_newnuclear")} The four units are budgeted at $20.9 billion. {_src("cbc_smr")}</p>
 
 <h2>Wesleyville (Port Hope)</h2>
 <p>OPG is studying up to 10,000 MWe at its Wesleyville site, assessed for a 78-year operating life with on-site storage of used fuel. The federal assessment uses a bounding approach because no technology has been chosen. {_src("iaac_wes")} OPG and the Municipality of Port Hope signed a memorandum of understanding on February 12, 2026, and OPG's own timeline puts regulatory approvals and agreements with Port Hope and First Nations in the late 2020s. {_src("opg_wes_letter")} OPG updated Port Hope council on April 21, 2026 and held public sessions in Port Hope and {m("Town of Cobourg", "Cobourg")} that May. {_src("opg_wes_council")} Some residents have pushed back, citing the town's history of radioactive waste cleanup; the mayor has said that cleanup and the Wesleyville project are separate. {_src("bnn_wes")}</p>
@@ -491,7 +532,7 @@ def new_nuclear(today: date, slugs: dict, timeline) -> str:
 <p>Nuclear projects are licensed by the Canadian Nuclear Safety Commission, but host councils are involved through agreements with the proponent and the federal impact assessment, as Port Hope's memorandum with OPG shows. {_src("opg_wes_letter")} Council Radar reads the agendas and minutes of these councils every morning and reports new nuclear items alongside solar, wind, storage and gas. See <a href="{root}guides/where-ontario-councils-stand/">where Ontario councils stand on energy projects</a>.</p>
 {_faq_html(faq)}
 {_cta(root)}
-{_sources("cnsc_dnnp", "power_dnnp", "iaac_wes", "iaac_wes_notice", "opg_wes_letter", "opg_wes_council", "bnn_wes", "cnsc_bruce", "iaac_bruce", "iaac_bruce_dec", "ieso_w1_overview")}"""
+{_sources("cnsc_dnnp", "opg_smr", "opg_newnuclear", "cbc_smr", "iaac_wes", "iaac_wes_notice", "opg_wes_letter", "opg_wes_council", "bnn_wes", "cnsc_bruce", "iaac_bruce", "iaac_bruce_dec", "ieso_w1_overview")}"""
     return _page("new-nuclear-ontario", "New nuclear in Ontario: Wesleyville, Darlington SMR and Bruce C",
                  "Ontario's three new nuclear projects: Darlington SMRs in Clarington, Wesleyville in Port Hope and Bruce C in Kincardine. Size, status and host councils, with sources.",
                  "New nuclear projects in Ontario",
@@ -600,6 +641,51 @@ def agrivoltaics(today: date, slugs: dict, timeline) -> str:
                  body, today, crumb="Agrivoltaics", faq=faq)
 
 
+def integrated_energy_plan(today: date, slugs: dict, timeline) -> str:
+    root = "../../"
+    faq = [("What is Ontario's Integrated Energy Plan?",
+            "Energy for Generations is Ontario's first integrated energy plan, released on June 12, 2025. It covers electricity, natural gas, "
+            "hydrogen, storage and other energy sources together, with a planning horizon to 2050, and is to be renewed on a five-year cycle."),
+           ("Who is Ontario's energy minister?",
+            "Stephen Lecce is Ontario's Minister of Energy and Mines. He released the Integrated Energy Plan in June 2025 and presented the "
+            "ministry's 2026–27 estimates to the legislature's Standing Committee on the Interior on September 29, 2026."),
+           ("How much will Ontario's electricity demand grow?",
+            "Law firm summaries of the plan put growth at about 75% over the next 25 years. The IESO says demand could grow by as much as 90% by 2050."),
+           ("What does the Integrated Energy Plan mean for municipalities?",
+            "The province buys most new supply through IESO procurements like LT2, and in those, municipalities decide whether they are "
+            "willing hosts. A project on municipal land needs a council support resolution before it can bid.")]
+    body = f"""
+<div class="keyfacts">
+<div class="stat"><strong>June 12, 2025</strong><span>Ontario's first integrated energy plan released</span></div>
+<div class="stat"><strong>2050</strong><span>planning horizon</span></div>
+<div class="stat"><strong>5 years</strong><span>planning cycle from 2025</span></div>
+</div>
+<p><em>Energy for Generations: Ontario's Integrated Plan to Power the Strongest Economy in the G7</em> is Ontario's first integrated energy plan. It sets a planning horizon to 2050 and brings electricity, natural gas, hydrogen, storage and other energy sources into one plan. {_src("iep_page")} It was approved by Order in Council on June 11, 2025 under the Electricity Act, 1998, which lets the minister issue such a plan with cabinet approval. {_src("iep_oic")} Minister of Energy and Mines Stephen Lecce launched it on June 12, 2025. {_src("blakes_iep")}</p>
+
+<h2>What the plan says</h2>
+<ul>
+<li><strong>Demand is rising fast.</strong> Summaries of the plan put electricity demand growth at about 75% over the next 25 years. {_src("blakes_iep")} The IESO's own outlook says up to 90% by 2050. {_src("ieso_w1_overview")}</li>
+<li><strong>Nuclear and hydro stay the backbone.</strong> Together they supply nearly 75% of Ontario's electricity today. {_src("torys_iep")} The plan backs new nuclear at Bruce Power and Port Hope and four SMRs at Darlington totalling 1,200 MW. {_src("iep_page", "mccarthy_iep")} See <a href="{root}guides/new-nuclear-ontario/">new nuclear projects in Ontario</a>.</li>
+<li><strong>Natural gas keeps a role.</strong> The plan includes Ontario's first Natural Gas Policy Statement, which treats gas as a key part of the energy mix for growth, reliability and affordability. {_src("torys_iep", "ngps_ero")}</li>
+<li><strong>Planning repeats every five years.</strong> Starting in 2025, Ontario runs a five-year cycle of integrated planning across all fuels. {_src("mccarthy_iep")}</li>
+<li><strong>The IESO and OEB carry it out.</strong> Ministerial directives tell the IESO and the Ontario Energy Board to implement the plan, including in the IESO's Annual Planning Outlook and regional plans. {_src("iep_ieso_dir", "mccarthy_iep")}</li>
+</ul>
+
+<h2>Who decides: the minister, the IESO and councils</h2>
+<p>Stephen Lecce is Minister of Energy and Mines; he presented the ministry's 2026–27 estimates to the legislature's Standing Committee on the Interior on September 29, 2026. {_src("ola_estimates")} On September 10, 2026, Matthew Rae was designated Associate Minister of Energy-Intensive Industries in the same ministry. {_src("oic_rae")} The minister directs the IESO, which plans the grid and runs procurements like LT2. {_src("ieso_corp")} In those procurements, municipalities determine whether they are willing hosts for new supply. {_src("ieso_municipal")} The province is also reviewing its Municipal Energy Plan grant program to support community energy planning. {_src("mep_ero")}</p>
+
+<h2>What it means for the next council term</h2>
+<p>The plan's new supply still has to be sited somewhere, and for solar, wind, storage and gas on municipal land, that means a council vote. Councils elected on October 26, 2026 will hear the support requests for <a href="{root}guides/lt2-window-2/">LT2 Window 2</a>, with proposals expected in 2027. See <a href="{root}guides/municipal-support-resolution/">how municipal support resolutions work</a> and <a href="{root}guides/where-ontario-councils-stand/">where Ontario councils stand</a>.</p>
+{_faq_html(faq)}
+{_cta(root)}
+{_sources("iep_page", "iep_oic", "blakes_iep", "torys_iep", "mccarthy_iep", "ngps_ero", "iep_ieso_dir", "iep_ieso_news", "ieso_w1_overview", "ola_estimates", "oic_rae", "ieso_corp", "ieso_municipal", "mep_ero")}"""
+    return _page("ontario-integrated-energy-plan", "Ontario Integrated Energy Plan (Energy for Generations) explained",
+                 "What Ontario's Integrated Energy Plan says about demand, nuclear, gas and procurement, who the energy minister is, and what it means for councils.",
+                 "Ontario's Integrated Energy Plan, explained",
+                 "What <em>Energy for Generations</em> commits to, who carries it out, and why council votes still decide where new supply goes.",
+                 body, today, crumb="Integrated Energy Plan", faq=faq)
+
+
 CATEGORY_LABELS = {"support_granted": "Support granted", "support_denied": "Support refused or not yet given",
                    "policy_protocol": "New protocol or criteria"}
 
@@ -658,6 +744,8 @@ PAGES = [
      "Agrivoltaic projects with LT2 contracts and the farmland rules councils apply."),
     ("new-nuclear-ontario", new_nuclear, "New nuclear projects in Ontario",
      "Darlington SMRs, Wesleyville and Bruce C: size, status and host councils."),
+    ("ontario-integrated-energy-plan", integrated_energy_plan, "Ontario's Integrated Energy Plan, explained",
+     "What Energy for Generations commits to, and who carries it out."),
     ("council-decisions", None, "Ontario council energy decisions, by month",
      "Every public council decision, month by month, with a source for each."),
 ]

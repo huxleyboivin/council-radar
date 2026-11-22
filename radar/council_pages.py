@@ -197,10 +197,31 @@ def _short_name(name: str) -> str:
     return name.split(" of ", 1)[1] if " of " in name else name
 
 
+def search_name(name: str) -> str:
+    """The council's name as people type it into Google (Semrush, Canada, November 2026).
+
+    Cities and counties are searched with the type after the name ("ottawa city council" 480/mo vs "ottawa council"
+    170; "oxford county council" 110 vs "oxford council" 20), regions as "<name> region council" ("peel region
+    council" 210), except Waterloo ("region of waterloo council" 170 vs 90). Towns, townships and municipalities are
+    searched by the bare name ("whitby council" 170 vs "whitby town council" 50)."""
+    short = _short_name(name)
+    if name.startswith("City of"):
+        return f"{short} City Council"
+    if name.startswith("County of"):
+        return f"{short} County Council"
+    if name == "Region of Waterloo":
+        return "Region of Waterloo Council"
+    if name.startswith("Region of"):
+        return f"{short} Region Council"
+    if name.endswith(" County"):
+        return f"{name} Council"
+    return f"{short} Council"
+
+
 def page_title(name: str) -> str:
     """Matches how people search ("<town> council meeting") and stays short enough not to be cut off."""
-    for t in (f"{name} council: meetings & energy decisions | Council Radar",
-              f"{name} council: meetings & energy decisions",
+    for t in (f"{search_name(name)}: meetings & energy decisions | Council Radar",
+              f"{search_name(name)}: meetings & energy decisions",
               f"{_short_name(name)} council: meetings & energy decisions"):
         if len(t) <= TITLE_MAX:
             return t
@@ -268,7 +289,7 @@ def council_page(c: dict, meta: dict, upcoming: list, slug: str, when, today: da
 
     title = page_title(name)
     if covered:
-        desc = (f"{name} council meetings and agendas, plus its decisions on solar, wind, battery storage and gas "
+        desc = (f"{search_name(name)} meetings and agendas, plus its decisions on solar, wind, battery storage and gas "
                 f"projects. Free calendar feed. Read every morning by Council Radar.")
     else:
         desc = f"What {name} council has decided on energy projects, from public records. Council Radar doesn't read this council's agendas yet."
