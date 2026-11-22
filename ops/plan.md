@@ -35,9 +35,9 @@ Honest timeline: $100k/month is a 2028-scale goal. The plan is built so every mo
 | 2028 | $100,000/month | 3–5 feeds, 2+ provinces, enterprise and data deals |
 
 ## Next 4 weeks: getting the first sale
-1. **Named-person selling (Huxley, about 20 min a day).** Every weekday the chief of staff prepares up to 5 named decision-makers. Each comes with a sourced reason, such as their project and their council's next meeting, plus a ready-to-paste LinkedIn note. Huxley sends them from his LinkedIn. Offer: free month, and "tell me which councils you need".
+1. **Named-person selling (Huxley, about 20 min a day).** *Started Nov 21: first 5 in `outreach/named_contacts.csv`; daily numbers in `ops/scoreboard.md`.* Every weekday the chief of staff prepares up to 5 named decision-makers. Each comes with a sourced reason, such as their project and their council's next meeting, plus a ready-to-paste LinkedIn note. Huxley sends them from his LinkedIn. Offer: free month, and "tell me which councils you need".
 2. **Concierge coverage for early customers.** For the first 5 customers, cover any council they name, including CiviCweb ones, by Huxley reading those agendas himself or signing councilradaron@gmail.com up to the council's own agenda email notices. Bots still never crawl CiviCweb.
-3. **CiviCweb permission.** Huxley sends the draft in `ops/civicweb_permission_request.md` through Diligent's contact form (no public email found). Update its link to getcouncilradar.ca first.
+3. **CiviCweb permission.** *Nov 21: link updated to getcouncilradar.ca; Diligent has no partnership/API form, so `ops/civicweb_permission_request.md` now routes it through the iCompass support contact on diligent.com/support, with the "Request a demo" form as fallback. Queued for the browser desk in `ops/browser_queue.md`.*
 4. **Timely hooks.** Use live events (the Neoen Saugeen Shores BESS rezoning on Nov 23, new support resolutions) as the reason to reach out that week.
 5. **Distribution.** Weekly drafts of Bluesky, LinkedIn and Reddit posts built from public decisions and guides. Weekly link-building pitches to the prospects in `docs/seo/link_prospects.csv`, drafted in Gmail for Huxley to send.
 6. **Warm replies get answered the same day.** The chief of staff drafts a reply in Gmail and pings Huxley.
