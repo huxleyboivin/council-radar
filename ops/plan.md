@@ -1,0 +1,60 @@
+# Council Radar growth plan (logistics agent)
+
+Written 2026-11-21. Owner: Huxley Boivin. Kept up to date by the "chief of staff" scheduled task, which commits it to `ops/plan.md` in the repo.
+
+## Goals
+- **Short term: first paying subscriber by Dec 18, 2026.**
+- **Long term: $100,000 a month in recurring revenue.**
+
+## Where things stand (Nov 21)
+- Product: 150 of 442 Ontario councils read every day, no errors. One issue sent so far, with 3 items. Site is on getcouncilradar.ca with 159+ indexable pages, 8 guides, GA4 and Search Console coming.
+- Sales: 22 cold emails in week 1, 1 polite reply (Blakes, offered 2 free issues on Nov 20), 0 trials, 0 subscribers, $0.
+- Prices: $59/month founding (regular $99), $249/month team.
+
+## The bottleneck
+It's a distribution problem, not a product problem:
+1. **Outreach goes to the wrong inboxes.** 15 of 22 emails went to info@ or role addresses. People buy a $249/month brief, inboxes don't. The developers with named project leads (Boralex, Kruger, Atura, Hydrostor) are on CiviCweb councils we can't read.
+2. **No founder-led selling yet.** Every first B2B sale in a niche like this comes from a person talking to a person: a LinkedIn note, a 15-minute call, a free month with personal service.
+3. **Thin sample.** One issue with 3 items is hard to sell. Weekly issues and coverage growth fix this over time.
+
+## The math for $100k/month
+At today's prices, $100k needs about 400 team plans or 1,700 founding seats. The Ontario energy niche alone (developers, energy law firms, consultants, Indigenous development corporations, utilities, investors) is maybe 200–400 organizations. Realistically that feed tops out around $20–40k/month. Getting to $100k takes four levers stacked together, in this order:
+1. **Win the Ontario energy niche** before LT2 Window 2 proposals (expected mid-2027). Target: $5–10k/month.
+2. **Add a higher tier.** For example $750–1,500/month for all councils, custom watchlists, alerts within 24 hours, historical exports and a named analyst. Law firms and large developers pay for this. (Price changes are Huxley's call.)
+3. **More feeds on the same pipeline.** `feeds.yaml` already supports this. Likely candidates: land development and housing (homebuilders and planning lawyers, a much bigger market), data centres and large loads, aggregates and mining, transmission.
+4. **More provinces.** Alberta, BC and Nova Scotia run renewable procurements with municipal steps.
+
+Honest timeline: $100k/month is a 2028-scale goal. The plan is built so every month has a measurable step toward it.
+
+## Milestones
+| By | Milestone | Leading indicators |
+|---|---|---|
+| Dec 18, 2026 | First paying subscriber | 10 trial readers, 3 calls booked |
+| Mar 31, 2027 | $1,000/month | 250+ councils read, 30 trial readers, 4 issues a month with 5+ items |
+| Jul 31, 2027 | $10,000/month | Enterprise tier live, second feed in beta, ranking top 5 for "ieso lt2" |
+| 2028 | $100,000/month | 3–5 feeds, 2+ provinces, enterprise and data deals |
+
+## Next 4 weeks: getting the first sale
+1. **Named-person selling (Huxley, about 20 min a day).** Every weekday the chief of staff prepares up to 5 named decision-makers. Each comes with a sourced reason, such as their project and their council's next meeting, plus a ready-to-paste LinkedIn note. Huxley sends them from his LinkedIn. Offer: free month, and "tell me which councils you need".
+2. **Concierge coverage for early customers.** For the first 5 customers, cover any council they name, including CiviCweb ones, by Huxley reading those agendas himself or signing councilradaron@gmail.com up to the council's own agenda email notices. Bots still never crawl CiviCweb.
+3. **CiviCweb permission.** Huxley sends the draft in `ops/civicweb_permission_request.md` through Diligent's contact form (no public email found). Update its link to getcouncilradar.ca first.
+4. **Timely hooks.** Use live events (the Neoen Saugeen Shores BESS rezoning on Nov 23, new support resolutions) as the reason to reach out that week.
+5. **Distribution.** Weekly drafts of Bluesky, LinkedIn and Reddit posts built from public decisions and guides. Weekly link-building pitches to the prospects in `docs/seo/link_prospects.csv`, drafted in Gmail for Huxley to send.
+6. **Warm replies get answered the same day.** The chief of staff drafts a reply in Gmail and pings Huxley.
+
+## The agent team
+| Agent | When (Toronto) | Job | Sends email? |
+|---|---|---|---|
+| Weekly issue | Mon 7:23 am | Reads councils, renders and sends the issue to subscribers and trial readers | Yes (subscribers only) |
+| LT2 Window 2 watch | Mon 7:41 am | Watches the IESO for Window 2 changes, opens a PR | No |
+| Daily outreach | Weekdays 1:37 pm | Cold email within the hard limits in `ops/outreach_task.md` | Yes (approved limits) |
+| Weekly business review | Fri 2:43 pm | Finds the bottleneck, ships one improvement, reports | Report only |
+| **Chief of staff (logistics)** | Weekdays 7:52 am | Checks every agent's health, keeps the plan and scoreboard, prepares the named-contact list and LinkedIn notes, drafts replies to warm leads, gives Huxley a short "your 3 actions" list | Only to Huxley; everything else is a Gmail draft |
+| **Social drafts** | Tue 4:11 pm | 3–5 posts for Bluesky, LinkedIn and Reddit from that week's public decisions and guides | Only to Huxley |
+| **Link building** | Wed 3:17 pm | Researches 3–5 link prospects and drafts pitches in Gmail | Drafts only |
+| **Expansion research** | Thu 7:26 pm | One sized, sourced memo a week on the path to $100k (new feed, province or tier). Prototypes a promising feed behind `enabled: false` in a PR | Only to Huxley |
+
+Rules every new agent follows: no spending or sign-ups, no price changes, no new outbound categories without Huxley's yes, honour robots.txt, never get past bot checks, and never edit other scheduled tasks. Anything that needs a human goes on Huxley's list.
+
+## Scoreboard (chief of staff updates weekly)
+Paying subscribers · MRR · trial readers · calls booked · named contacts sent · cold emails sent · replies · councils read · items per issue · organic clicks.
