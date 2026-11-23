@@ -1,7 +1,23 @@
 {
- "generated": "2026-11-22T11:40:58+00:00",
+ "generated": "2026-11-23T11:57:54+00:00",
  "municipalities_configured": 150,
  "recent_runs": [
+  {
+   "id": 13,
+   "kind": "run",
+   "started_at": "2026-11-23T11:23:57+00:00",
+   "finished_at": "2026-11-23T11:57:53+00:00",
+   "stats": {
+    "municipalities": 150,
+    "meetings": 1045,
+    "documents": 218,
+    "skipped": 644,
+    "matched": 0,
+    "ai_reads": 0,
+    "findings": 0,
+    "errors": []
+   }
+  },
   {
    "id": 12,
    "kind": "run",
@@ -322,5 +338,5 @@
  ],
  "findings_last_7_days": 0,
  "unsent_findings": {},
- "document_errors_last_7_days": 709
+ "document_errors_last_7_days": 0
 }
