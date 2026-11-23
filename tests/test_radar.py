@@ -401,3 +401,34 @@ def test_analytics_tag_on_every_kind_of_page(tmp_path):
     assert snippet in page
     for f in ("index.html", "sample.html", "brief.html"):
         assert (config.ROOT / "site" / f).read_text().count(config.ANALYTICS_TAG) == 1, f
+
+
+# --- housing beta feed (collect-only) ---
+
+def test_housing_feed_is_collect_only():
+    feeds = prefilter.load_feeds()
+    h = feeds["housing"]
+    assert h.collect and not h.enabled
+    # the digest builds and sends only enabled feeds, so a collect-only feed is never sent
+    assert "housing" not in {k for k, f in feeds.items() if f.enabled}
+    assert "energy" in {k for k, f in feeds.items() if f.enabled}
+
+
+def test_housing_patterns_match_planning_items():
+    h = prefilter.load_feeds()["housing"]
+    samples = [
+        "Public Meeting: Official Plan Amendment and Zoning By-law Amendment, 123 Main Street",
+        "Recommendation report on Draft Plan of Subdivision 24T-21003 (212 residential units)",
+        "Appeal to the Ontario Land Tribunal regarding the proposed mid-rise development",
+        "Development Charges By-law background study, 2026",
+        "Housing Accelerator Fund progress update",
+    ]
+    for text in samples:
+        hits, _ = prefilter.excerpt(text, h)
+        assert hits, text
+
+
+def test_housing_patterns_ignore_unrelated_items():
+    h = prefilter.load_feeds()["housing"]
+    hits, _ = prefilter.excerpt("Council approved the 2027 winter road maintenance contract and a new fire truck.", h)
+    assert not hits

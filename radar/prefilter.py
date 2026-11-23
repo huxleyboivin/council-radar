@@ -21,6 +21,7 @@ class Feed:
     patterns: list[re.Pattern]
     categories: list[str]
     enabled: bool = True
+    collect: bool = False  # beta: save excerpts in the daily run, but no issue is built or sent
 
 
 def load_feeds(path: Path | None = None) -> dict[str, Feed]:
@@ -34,6 +35,7 @@ def load_feeds(path: Path | None = None) -> dict[str, Feed]:
             patterns=[re.compile(p, re.I) for p in f["patterns"]],
             categories=list(f.get("categories", [])),
             enabled=bool(f.get("enabled", True)),
+            collect=bool(f.get("collect", False)),
         )
     return feeds
 

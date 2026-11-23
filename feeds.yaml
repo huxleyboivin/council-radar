@@ -38,3 +38,37 @@ str_rules:
     - '\bSTR\b'
     - 'municipal accommodation tax|\bMAT\b'
   categories: [bylaw_passed, bylaw_proposed, fee_change, enforcement, other_relevant]
+housing:
+  title: "Council Radar: Ontario Development & Housing"
+  audience: >-
+    Homebuilders, land developers, planning consultants, land-use lawyers and multifamily investors
+    who need to know when Ontario councils receive, hear, approve or refuse development applications,
+    and when they change housing policy, fees and incentives.
+  # Beta (added 2026-11-23): collected in the daily run to build a sample issue; not built or sent.
+  # Launching it (enabled: true) is Huxley's call.
+  enabled: false
+  collect: true
+  patterns:
+    - 'official plan amendment|\bOPA\s?(No\.?\s?)?\d'
+    - 'zoning by-?law amendment|\bZBA\b|re-?zoning application|zoning amendment application'
+    - '(draft )?plan of (subdivision|condominium)|\b(draft )?plan approval\b'
+    - 'site plan (approval|application|control agreement)'
+    - "minister'?s zoning order|\\bMZO\\b"
+    - 'Ontario Land Tribunal|\bOLT\b appeal'
+    - 'removal of (the )?holding|holding (symbol|provision)'
+    - 'interim control by-?law'
+    - 'development charges? (by-?law|background study|deferral|exemption|reduction)'
+    - 'community improvement plan|\bCIP\b'
+    - 'Housing Accelerator Fund|Building Faster Fund|housing (target|pledge)s?'
+    - 'Bill 23|Bill 185|Bill 17\b|More Homes Built Faster|Cutting Red Tape,? Building Ontario'
+    - 'additional residential units?|inclusionary zoning|major transit station area|\bMTSA\b'
+    - '(\d{2,5}|hundreds of) (new )?(residential |dwelling )?units|(townhouse|apartment|mixed[- ]use|high[- ]rise|mid[- ]rise) (development|building|units|proposal)'
+  categories:
+    - application_received   # new OPA/ZBA/subdivision/site plan application or complete-application notice
+    - public_meeting         # statutory public meeting or open house on an application
+    - decision_approved      # council or committee approves / adopts
+    - decision_refused       # refused, deferred, or non-decision
+    - appeal                 # Ontario Land Tribunal appeal or decision
+    - policy_change          # OP update, zoning by-law review, ICBL, MTSA, inclusionary zoning, ARU rules
+    - fees_incentives        # development charges, CIPs, HAF/BFF funding, deferrals
+    - other_relevant

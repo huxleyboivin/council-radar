@@ -76,7 +76,8 @@ def cmd_render(args) -> int:
 def cmd_run(args) -> int:
     started = store.now()
     con = store.connect()
-    feeds = {k: f for k, f in prefilter.load_feeds().items() if f.enabled}
+    # enabled feeds are read and sent; collect-only (beta) feeds are read so we build a sample, never sent
+    feeds = {k: f for k, f in prefilter.load_feeds().items() if f.enabled or f.collect}
     fetcher = escribe.Fetcher()
     client = analyze._client() if config.ANTHROPIC_API_KEY else None
     today = date.today()
