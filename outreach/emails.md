@@ -70,3 +70,20 @@ Council Radar · 230 Regina Street North, Waterloo, ON
 Hi [first name], just following up on my note from last week. This week's issue covered [one real item from that week's issue]. Happy to send it over if it's useful, and no worries if not.
 
 Huxley
+
+---
+
+## D. Concierge coverage (reply when a prospect or trial reader names a council we don't read)
+
+**Subject:** Re: [their subject]
+
+Hi [first name],
+
+Thanks for the list. We read [covered councils] automatically. [Uncovered council(s)] publish on a platform we don't crawl, so for your first month I'll cover [it/them] by hand: I'll read each agenda when it's posted and add anything on energy projects to your Monday issue, with a link to the council's document.
+
+Your preview: [https://getcouncilradar.ca/brief.html?for=<Company>&c=<covered council slugs>]
+The next two Monday issues will come to this address.
+
+Huxley
+
+(Log the request in ops/concierge.md. Only promise councils someone can actually cover that week.)
