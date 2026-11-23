@@ -31,3 +31,12 @@ Gmail read-back, and nothing in this repo can prevent it. Writing links without 
 
 Recommended: 2 for cold email (also tends to help deliverability) plus 1 for anything with a link that matters
 (trial confirmations, preview links, link pitches), and 3 in parallel.
+
+## Decision (Huxley, 2026-11-23): options 2 + Buttondown + 3
+- **Cold email is link-free** (templates A, B, C and the follow-up in `outreach/emails.md`). Prospects reply
+  "preview"/"sample" and the chief of staff replies with the link. They click within the day, so the redirect still works.
+- **Weekly issue and trial emails move to Buttondown** (`radar/deliver.py`, `weekly.yml` already support it) once
+  Huxley creates a free Buttondown account and adds `BUTTONDOWN_API_KEY` as a GitHub Actions secret. Until then
+  the weekly issue keeps sending through Gmail.
+- **Huxley asks Anthropic support** whether the connector's link rewriting can be turned off.
+- Gmail web sending through the browser desk is for one-off messages only (e.g. the CiviCweb request), not the standard path.

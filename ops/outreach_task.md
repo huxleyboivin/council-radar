@@ -58,11 +58,12 @@ Files: `outreach/prospects.csv` (research list), `outreach/log.csv` (every email
    one initial and one follow-up). If it prints `DO NOT SEND`, don't send. If it warns that the prospect's council
    is not read, use the sample link, not a preview link, and don't imply we track that council.
    Send one email per prospect from `emails.md`, filling every bracket with real, sourced details.
-   Template A (developer with a known project): use a personalized preview link,
-   `https://huxleyboivin.github.io/council-radar/brief.html?for=<Company>&c=<municipality>[,<municipality>]`,
-   e.g. `brief.html?for=Prowind%20Canada&c=minto,wellesley`. `c` takes the short municipality name
-   (or the full slug, e.g. `township-of-wellesley`); open the link once to confirm each council resolves.
-   Templates B and C: use the sample link https://huxleyboivin.github.io/council-radar/sample.html.
+   **No URLs or bare domains in initial emails or follow-ups** (since 2026-11-23; the Gmail connector wraps every
+   link in a google.com/url redirect, see `ops/gmail_link_wrapping.md`). Templates offer the preview or sample
+   on request ("reply 'preview'"). Still check the prospect's preview resolves before sending Template A:
+   `https://getcouncilradar.ca/brief.html?for=<Company>&c=<municipality>[,<municipality>]` (`c` takes the short
+   municipality name or the full slug), and record it in the `notes` column of log.csv so the chief of staff can send it
+   when they reply. Templates B and C point to the sample, https://getcouncilradar.ca/sample.html, on request.
    Plain text, no attachments, no tracking. Log each send in `log.csv`, including the Gmail `thread_id`.
 6. Commit `outreach/` and push (rebase first).
 7. **Notify the owner** (push notification and one email to councilradaron@gmail.com) only if something was sent or needs them: new emails sent
