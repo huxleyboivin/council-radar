@@ -362,7 +362,7 @@
     section{padding:3.25rem 0}
     .final{padding:2rem 1.5rem}
   }
-</style>
+.editions{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;margin:1.25rem 0 1.5rem}.edition{border:1px solid var(--rule,#D5DCE5);border-radius:10px;padding:1rem 1.2rem;background:#fff}.edition h3{margin:.1rem 0 .3rem}.edition p{margin:.3rem 0}.edition .tag{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--line,#2F6FB5)}.pilot{margin-top:1.25rem;font-size:.97rem}</style>
 <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-WGW5NBGR"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a');if(!a)return;var h=a.getAttribute('href')||'',k=a.hasAttribute('data-start')?'trial':h.indexOf('buy.stripe.com')>-1?'subscribe':h.indexOf('sample.html')>-1?'sample':h.indexOf('.ics')>-1?'calendar':'';if(k)gtag('event',k==='subscribe'||k==='trial'?'generate_lead':'select_content',{method:k,link_text:(a.textContent||'').trim().slice(0,60)});});</script>
 </head>
 <body>
@@ -559,6 +559,10 @@
         </div>
         <p class="bh-note" id="bh-note"></p>
       </div>
+      <div class="editions" aria-label="Editions">
+        <div class="edition"><span class="tag">Edition</span><h3>Energy projects</h3><p>Support requests and decisions, siting protocols, zoning and delegations on solar, wind, storage and gas.</p><p><a href="sample.html">Sample issue</a></p></div>
+        <div class="edition"><span class="tag">New edition</span><h3>Land development &amp; housing</h3><p>Rezonings, official plan amendments, subdivisions, site plans, OLT settlements and development charges.</p><p><a href="housing.html">See the housing edition</a></p></div>
+      </div>
       <div class="plans">
         <div class="plan lead">
           <h3>Founding subscriber</h3>
@@ -586,6 +590,7 @@
         </div>
       </div>
       <p class="fine">Not ready yet? <a data-trial-link href="mailto:councilradaron@gmail.com?subject=Free%20trial%20issue&amp;body=Hi%20Huxley%2C%20I%27d%20like%20a%20free%20trial%20issue%20of%20Council%20Radar.%20Councils%20I%20care%20about%3A%20">Get a free trial issue</a>, no payment needed. Payments are handled securely by Stripe.</p>
+      <p class="pilot"><strong>Law firms and large developers:</strong> a 60-day enterprise pilot with your own watchlist, alerts within 24 hours, CSV export and a named analyst, $990 a month, invoiced. <a href="mailto:councilradaron@gmail.com?subject=Enterprise%20pilot">Ask about a pilot</a>.</p>
     </div>
   </section>
 

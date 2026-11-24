@@ -1,8 +1,16 @@
 # Council Radar
 
-AI-read Ontario council agendas, sold as narrow weekly alert feeds. Feed #1:
-**Ontario Energy Projects**: every council move on IESO municipal support
-confirmations, energy-siting protocols, zoning and delegations.
+AI-read Ontario council agendas, sold as narrow weekly alert feeds (`feeds.yaml`):
+
+- **Ontario Energy Projects**: every council move on IESO municipal support
+  confirmations, energy-siting protocols, zoning and delegations (site/index.html, site/sample.html).
+- **Ontario Land Development & Housing** (launched 2026-11-24): OPAs, ZBLAs, subdivisions and condos,
+  site plans, OLT settlements, development charges and housing funding (site/housing.html).
+- **Enterprise pilot**: $990/month, invoiced: watchlists, 24-hour alerts, CSV export, a named analyst
+  (`ops/expansion/2026-11-23-enterprise-tier.md`).
+
+Prices: $59/month founding, $249/month team (5 people), via Stripe payment links; housing links carry
+`?client_reference_id=housing`. Business operations, agents and standing approvals: `ops/plan.md`, `ops/approvals.md`.
 
 ## How it runs (no human in the loop)
 

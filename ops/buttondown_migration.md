@@ -34,3 +34,9 @@ plain links, adds its own unsubscribe, and keeps subscriber data out of this pub
 - New trial readers: the Claude tasks don't hold the API key. Options: Buttondown's public embed-subscribe
   form from the site's Start panel (tag `trial-1`; needs the Buttondown username), or the browser desk adds them.
 - Confirm on the first live run whether `GET /v1/subscribers?tag=` takes the tag name or ID (the code passes the name).
+
+## Housing edition (added 2026-11-24)
+`send_weekly()` covers the energy edition only. Before switching to `send`, extend it per edition: tags
+`housing-active`, `housing-trial-1`, `housing-trial-2` (or a `feed` custom field), the housing Stripe links from
+`samples/build_housing_html.py` in the trial line, and `python -m radar send-issue --feed housing` in weekly.yml.
+If dedicated Stripe products for housing are created (`ops/stripe.md`), use those links.
