@@ -115,3 +115,22 @@ Council Radar · 230 Regina Street North, Waterloo, ON
 If you'd rather not hear from me again, just reply "no thanks" and I won't follow up.
 
 (Reply links: https://getcouncilradar.ca/housing.html. Link-free like A–C; see the note at the top.)
+
+---
+
+## E. Enterprise pilot (law firm or large developer; pre-approved in ops/approvals.md)
+
+**Subject:** A 60-day pilot of council monitoring for [firm]'s [energy / land-use] group
+
+Hi [first name],
+
+My name is Huxley Boivin, and I run Council Radar. We read 150 Ontario councils every day for energy and development decisions. [One sourced, specific reason: e.g. "Your team advised on [project], which goes to [council] on [date]."]
+
+For a few firms I'm running a 60-day pilot: a watchlist of the councils, projects and proponents you care about, alerts within 24 hours of an agenda posting, a CSV export of past decisions, and a named analyst who checks the documents. It's $990 a month, invoiced, and you can stop at any time.
+
+If it would help, reply "pilot" and I'll set up a short call to build your watchlist.
+
+Thank you for your time,
+Huxley Boivin
+Council Radar · 230 Regina Street North, Waterloo, ON
+If you'd rather not hear from me again, just reply "no thanks" and I won't follow up.

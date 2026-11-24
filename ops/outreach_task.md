@@ -49,6 +49,7 @@ Files: `outreach/prospects.csv` (research list), `outreach/log.csv` (every email
      (energy-storage.news, pv-magazine, Renewables Now, North American Windpower, Daily Commercial News)
      from the last month.
    - The unused rows of `outreach/prospects.csv`.
+   Standing approvals: read `ops/approvals.md`. Law and consulting groups and large developers may get template E (enterprise pilot) instead of B.
    Priority: developers with an active Ontario project needing municipal support (template A) >
    law and consulting energy groups (B) > associations (C, at most 1 a month).
    **Housing edition (since 2026-11-24):** also prospect homebuilders, land developers, planning consultancies and
