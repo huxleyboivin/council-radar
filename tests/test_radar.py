@@ -443,3 +443,10 @@ def test_housing_page_is_live_and_tagged():
     assert page.count("client_reference_id=housing") >= 2      # founding + team links are tagged
     assert "not yet on sale" not in page
     assert 'href="housing.html"' in (config.ROOT / "site" / "index.html").read_text()
+
+
+def test_housing_page_uses_housing_stripe_product():
+    from radar import config
+    page = (config.ROOT / "site" / "housing.html").read_text()
+    assert "buy.stripe.com/eVqeVfcwceIv5Ds4Px8Vi02" in page and "buy.stripe.com/4gM00l67O6bZ5DschZ8Vi03" in page
+    assert "eVqaEZ3ZGbwjc1Qdm38Vi00?client_reference_id" not in page   # not the energy links

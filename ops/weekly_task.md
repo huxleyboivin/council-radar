@@ -56,8 +56,8 @@ Run the same steps for `--feed housing` after the energy issue:
 - **Render:** write /tmp/housing_findings.json, then `python -m radar render --feed housing --findings /tmp/housing_findings.json`
   (no `--mark-done`; the energy render sets last_issue.txt).
 - **Send:** one email per `active` or `trial` reader whose `feed` is `housing` or `both`, with the same trial line (housing
-  Stripe links: https://buy.stripe.com/eVqaEZ3ZGbwjc1Qdm38Vi00?client_reference_id=housing and
-  https://buy.stripe.com/4gM8wRfIo9ob4zobdV8Vi01?client_reference_id=housing) and footer. If nobody gets housing yet,
+  Stripe links: https://buy.stripe.com/eVqeVfcwceIv5Ds4Px8Vi02?client_reference_id=housing and
+  https://buy.stripe.com/4gM00l67O6bZ5DschZ8Vi03?client_reference_id=housing) and footer. If nobody gets housing yet,
   send it to councilradaron@gmail.com as "[Preview] Housing".
 - **Sample:** if this week's issue has stronger items than `samples/housing-sample.md`, refresh the sample with them and run
   `python samples/build_housing_html.py` so site/housing.html shows the latest.

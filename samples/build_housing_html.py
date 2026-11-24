@@ -1,8 +1,8 @@
 """Render samples/housing-sample.md into site/housing.html: the Housing feed's landing + sample page.
 
 Built from site/sample.html so it keeps the site's styles, analytics tag and start.js.
-Stripe links are the same founding/team links as energy, tagged ?client_reference_id=housing
-so payments can be told apart (decision: Huxley, 2026-11-24).
+Stripe: dedicated 'Council Radar: Ontario Housing' product (prod_Vgjik3VMtFI1Oy) with its own $59 and $249 CAD/month
+payment links, created 2026-11-24; still tagged ?client_reference_id=housing.
 """
 import re
 from pathlib import Path
@@ -10,8 +10,8 @@ from pathlib import Path
 import markdown
 
 ROOT = Path(__file__).resolve().parent.parent
-FOUNDING = "https://buy.stripe.com/eVqaEZ3ZGbwjc1Qdm38Vi00?client_reference_id=housing"
-TEAM = "https://buy.stripe.com/4gM8wRfIo9ob4zobdV8Vi01?client_reference_id=housing"
+FOUNDING = "https://buy.stripe.com/eVqeVfcwceIv5Ds4Px8Vi02?client_reference_id=housing"
+TEAM = "https://buy.stripe.com/4gM00l67O6bZ5DschZ8Vi03?client_reference_id=housing"
 TRIAL = "mailto:councilradaron@gmail.com?subject=Free%20trial%20issue%20-%20Housing"
 
 INTRO = f"""

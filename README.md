@@ -9,8 +9,8 @@ AI-read Ontario council agendas, sold as narrow weekly alert feeds (`feeds.yaml`
 - **Enterprise pilot**: $990/month, invoiced: watchlists, 24-hour alerts, CSV export, a named analyst
   (`ops/expansion/2026-11-23-enterprise-tier.md`).
 
-Prices: $59/month founding, $249/month team (5 people), via Stripe payment links; housing links carry
-`?client_reference_id=housing`. Business operations, agents and standing approvals: `ops/plan.md`, `ops/approvals.md`.
+Prices: $59/month founding, $249/month team (5 people), via Stripe payment links, one Stripe product per edition
+(see `ops/stripe.md`). Business operations, agents and standing approvals: `ops/plan.md`, `ops/approvals.md`.
 
 ## How it runs (no human in the loop)
 

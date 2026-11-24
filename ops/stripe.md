@@ -1,20 +1,22 @@
-# Stripe setup (2026-11-24)
+# Stripe (live account "Council Radar", acct_1UcGeeRLMaRmZSCy)
 
-## Today
-| Product | Link | Used for |
-|---|---|---|
-| Founding, $59/month | https://buy.stripe.com/eVqaEZ3ZGbwjc1Qdm38Vi00 | Energy; housing with `?client_reference_id=housing` |
-| Team (5 people), $249/month | https://buy.stripe.com/4gM8wRfIo9ob4zobdV8Vi01 | Energy; housing with `?client_reference_id=housing` |
-| Billing portal | https://billing.stripe.com/p/login/eVqaEZ3ZGbwjc1Qdm38Vi00 | Manage or cancel, in every footer |
+Set up 2026-11-24 with Huxley. All prices CAD, monthly, no Stripe Tax (Huxley: match Energy; revisit if registered for HST),
+Managed Payments off on every link (it adds a 3.5% fee).
 
-Subscribers are detected from Stripe receipt emails in Gmail (weekly issue task, chief of staff).
+| Product | Product ID | Price | Payment link | Used on |
+|---|---|---|---|---|
+| Council Radar: Ontario Energy | prod_VdY5rD12wg7xvY | $59 founding (price_1UcGznRLMaRmZSCyRQE7BpLY) | https://buy.stripe.com/eVqaEZ3ZGbwjc1Qdm38Vi00 | index.html, sample.html, brief.html, start.js, energy trial lines |
+| | | $249 team (price_1UcGznRLMaRmZSCyZauc9nHS) | https://buy.stripe.com/4gM8wRfIo9ob4zobdV8Vi01 | same |
+| Council Radar: Ontario Housing | prod_Vgjik3VMtFI1Oy | $59 founding (price_1UfMF6RLMaRmZSCyk74R9N86) | https://buy.stripe.com/eVqeVfcwceIv5Ds4Px8Vi02 (+ `?client_reference_id=housing`) | housing.html, housing trial lines |
+| | | $249 team | https://buy.stripe.com/4gM00l67O6bZ5DschZ8Vi03 (+ `?client_reference_id=housing`) | same |
+| Council Radar: Enterprise pilot | prod_Vgjj64cuGFPyKl | $990/month (price_1UfMFaRLMaRmZSCygz0SMw83) | none: invoiced | ops/approvals.md, template E |
 
-## Next, once the Stripe connector is connected in claude.ai (Huxley, one sign-in)
-1. **Dedicated housing products** so checkout and receipts say "Housing": "Council Radar Housing, founding" ($59/month CAD)
-   and "Council Radar Housing, team" ($249/month CAD), each with a payment link. Then swap the two URLs in
-   `samples/build_housing_html.py`, `ops/weekly_task.md` and `radar/deliver.py`, rebuild site/housing.html, run tests.
-2. **Enterprise pilot product**: "Council Radar Enterprise pilot", $990/month CAD, billed by invoice (no payment link).
-   Invoices are drafted for a customer when a firm accepts; Huxley sends each one.
-3. **Read subscriptions from Stripe directly** (customers, active subscriptions, metadata `client_reference_id`), instead of
-   parsing receipt emails, in the weekly issue and chief-of-staff runs.
-4. Keep all existing links and prices working; never change or archive the energy links.
+Billing portal (manage or cancel, any product): https://billing.stripe.com/p/login/eVqaEZ3ZGbwjc1Qdm38Vi00
+
+## How agents use it
+- **Which edition someone bought:** the product on their subscription (Energy vs Housing), or `client_reference_id=housing`.
+- **Detecting subscribers:** Stripe receipt emails in Gmail today. Sessions that have the Stripe connector can list
+  subscriptions by product instead (read-only; the connector has read scope only).
+- **Enterprise pilot invoices:** the chief of staff prepares customer, product and terms; Huxley creates and sends each
+  invoice in the Stripe dashboard (charging customers is reserved for him, `ops/approvals.md`).
+- Never change, archive or deactivate existing products, prices or links.
