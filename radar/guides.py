@@ -139,6 +139,14 @@ S = {
                         "https://www.opg.com/documents/wesleyville-presentation-to-port-hope-council-april-2026-pdf/"),
     "agv_canada": ("Agrivoltaics Canada, response to Ontario's Affordable Energy Future (December 2024)",
                    "https://ero.ontario.ca/public/public_uploads/2024-12/Agrivoltaics%20Canada%20-%20Response%20to%20Ontario%27s%20Affordable%20Energy%20Future.pdf"),
+    "ieso_llt_page": ("IESO, Long Lead-Time RFP (schedule and documents, read November 24, 2026)",
+                      "https://www.ieso.ca/Sector-Participants/Resource-Acquisition-and-Contracts/Long-Lead-Time-RFP"),
+    "ieso_llt_guide": ("IESO, Long Lead-Time RFP Municipal Guide (Version 1, May 6, 2026)",
+                       "https://ieso.ca/-/media/Files/IESO/Document-Library/engage/long-term-rfp-community/llt-community-Municipal-Guide.pdf"),
+    "dentons_llt": ("Dentons, IESO's Long Lead-Time RFP: from engagement to active procurement (May 13, 2026)",
+                    "https://www.mondaq.com/canada/renewables/1794320/iesos-long-lead-time-request-for-proposals-from-engagement-to-active-procurement"),
+    "essnews_bluewater": ("ESS News, Agricultural issues behind recent rejection of Canadian CAES project (September 9, 2026)",
+                          "https://www.ess-news.com/2026/09/09/agricultural-issues-behind-recent-rejection-of-canadian-caes-project-says-official/"),
 }
 
 # --- IESO LT2 Window 1 results (final tables) ------------------------------------------------------------
@@ -686,6 +694,54 @@ def integrated_energy_plan(today: date, slugs: dict, timeline) -> str:
                  body, today, crumb="Integrated Energy Plan", faq=faq)
 
 
+def long_lead_time(today: date, slugs: dict, timeline) -> str:
+    root = "../../"
+    faq = [("When are Long Lead-Time RFP proposals due?",
+            "The IESO lists the proposal submission deadline as November 26, 2026 at 3:00 p.m. EPT, for both the energy stream (LLT(e)) and "
+            "the capacity stream (LLT(c)). Registration closed on October 6, 2026, and only registered proponents can submit. The IESO notes that dates are subject to change."),
+           ("What does the LLT RFP buy?",
+            "Hydroelectric generation of 1 MW or more in the energy stream, up to 1 TWh a year, and long-duration storage of 10 MW or more in the "
+            "capacity stream (compressed air, pumped hydro, liquid air and pumped thermal storage), up to 800 MW. Projects are expected online by 2035 and get 40-year contracts."),
+           ("Does an LLT project need council support?",
+            "Yes, if it is on land within a municipality. The IESO's municipal guide says the proposal must include a Municipal Support Confirmation, "
+            "either a project-specific support resolution or a blanket resolution plus a confirmation letter. Without it the IESO cannot consider the project. "
+            "Projects in unincorporated territory do not need one."),
+           ("When will the IESO pick LLT projects?",
+            "The IESO's target date to notify selected proponents is May 25, 2027.")]
+    body = f"""
+<div class="keyfacts">
+<div class="stat"><strong>Nov 26, 2026</strong><span>proposals due, 3:00 p.m. EPT</span></div>
+<div class="stat"><strong>40 years</strong><span>contract term</span></div>
+<div class="stat"><strong>800 MW + 1 TWh</strong><span>capacity and energy targets</span></div>
+<div class="stat"><strong>May 25, 2027</strong><span>target to notify selected projects</span></div>
+</div>
+<p>The Long Lead-Time (LLT) RFP is the IESO's procurement for resources that take years to build. Eligible resources are hydroelectric and certain long-duration energy storage technologies, and successful projects are offered a 40-year contract. {_src("ieso_llt_page")} The energy stream aims for up to 1 TWh of annual generation from waterpower of 1 MW or more. The capacity stream aims for up to 800 MW of compressed air, pumped hydro, liquid air and pumped thermal storage of 10 MW or more. Projects are expected online by 2035. {_src("ieso_llt_guide")}</p>
+
+<h2>The schedule</h2>
+<ul>
+<li><strong>Registration</strong> closed on October 6, 2026. Only registered proponents can submit. {_src("ieso_llt_page")}</li>
+<li><strong>Proposals</strong> are due November 26, 2026 at 3:00 p.m. EPT, for both streams. {_src("ieso_llt_page")} Dentons noted in May that the October 2026 municipal elections created "a compressed window for obtaining council resolutions". {_src("dentons_llt")}</li>
+<li><strong>Selection.</strong> The IESO's target date to notify selected proponents is May 25, 2027. The IESO says the dates are subject to change. {_src("ieso_llt_page")}</li>
+</ul>
+
+<h2>Council support is required at submission</h2>
+<p>For a project on land within a municipality, the developer must include a Municipal Support Confirmation with the proposal. It can be a Municipal Resolution in Support of Proposal Submission, or a blanket support resolution with a project-specific confirmation letter. Without it, the IESO cannot consider the project. The developer must also give the municipality a pre-engagement notice at least 60 days before the support confirmation. Projects in unincorporated territory don't need one. {_src("ieso_llt_guide")} Councils use the IESO's prescribed form. {_src("ieso_form")} In prime agricultural areas, the first component of the Agricultural Impact Assessment must be met by the proposal deadline. {_src("ieso_llt_guide")} See <a href="{root}guides/municipal-support-resolution/">how municipal support resolutions work</a>.</p>
+
+<h2>A council that said no</h2>
+<p>On August 13, 2026, Bluewater council in Huron County voted 9-0 against Bedrock Energy and Capstone Infrastructure's 382 MW / 3,056 MWh compressed air energy storage project, which was aimed at the LLT RFP. A councillor told pv magazine that agricultural land use was behind the decision. {_src("essnews_bluewater")} Without a support resolution, a project inside a municipality can't be considered. {_src("ieso_llt_guide")}</p>
+
+<h2>After the deadline</h2>
+<p>Once proposals are in, the next council decisions on new supply come through <a href="{root}guides/lt2-window-2/">LT2 Window 2</a>, which also needs council support at submission. The councils elected on October 26, 2026 will hear those requests. See <a href="{root}guides/where-ontario-councils-stand/">where Ontario councils stand</a>.</p>
+{_faq_html(faq)}
+{_cta(root)}
+{_sources("ieso_llt_page", "ieso_llt_guide", "ieso_form", "dentons_llt", "essnews_bluewater")}"""
+    return _page("long-lead-time-rfp", "IESO Long Lead-Time RFP: deadline, rules and council support",
+                 "When LLT proposals are due, what the IESO is buying, why a council support confirmation is required, and what happens next.",
+                 "IESO Long Lead-Time (LLT) RFP",
+                 "Hydro and long-duration storage on 40-year contracts. Proposals are due November 26, 2026, and projects inside a municipality need council support.",
+                 body, today, crumb="Long Lead-Time RFP", faq=faq)
+
+
 CATEGORY_LABELS = {"support_granted": "Support granted", "support_denied": "Support refused or not yet given",
                    "policy_protocol": "New protocol or criteria"}
 
@@ -746,6 +802,8 @@ PAGES = [
      "Darlington SMRs, Wesleyville and Bruce C: size, status and host councils."),
     ("ontario-integrated-energy-plan", integrated_energy_plan, "Ontario's Integrated Energy Plan, explained",
      "What Energy for Generations commits to, and who carries it out."),
+    ("long-lead-time-rfp", long_lead_time, "IESO Long Lead-Time RFP: deadline and council support",
+     "Hydro and long-duration storage on 40-year contracts, and the council support each proposal needs."),
     ("council-decisions", None, "Ontario council energy decisions, by month",
      "Every public council decision, month by month, with a source for each."),
 ]

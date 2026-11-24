@@ -179,8 +179,35 @@ def cmd_digest(args) -> int:
                 print(f"{key}: nothing new; not delivering")
                 continue
             res = deliver.send(subject, body)
-            store.mark_sent(con, [r["id"] for r in rows], str(res.get("id", "sent")))
-            con.commit()
+            if config.DELIVERY_MODE == "send":  # a Buttondown draft is not a delivery
+                store.mark_sent(con, [r["id"] for r in rows], str(res.get("id", "sent")))
+                con.commit()
+    return 0
+
+
+def cmd_send_issue(args) -> int:
+    """Send the issue the weekly task rendered (data/issues/<date>-<feed>.md) through Buttondown, per audience tag."""
+    out_dir = config.DATA_DIR / "issues"
+    if args.issue:
+        path = Path(args.issue)
+    else:
+        last = (out_dir / "last_issue.txt").read_text().strip()
+        path = out_dir / f"{last}-{args.feed}.md"
+    subject, body = deliver.issue_from_markdown(path)
+    mode = args.mode or config.DELIVERY_MODE
+    if args.dry_run:
+        for item in deliver.plan_weekly(subject, body):
+            print(f"[{item['tag']}] {item['subject']} ({len(item['body'])} chars)")
+        return 0
+    receipt = path.with_suffix(".buttondown.json")
+    if receipt.exists() and json.loads(receipt.read_text()).get("mode") == "send":
+        print(f"{path.name} was already sent through Buttondown; not sending again")
+        return 0
+    results = deliver.send_weekly(subject, body, mode=mode)
+    changes = deliver.advance_trials() if mode == "send" else []
+    # Receipt holds email IDs and counts only, never subscriber addresses (public repo).
+    receipt.write_text(json.dumps({"mode": mode, "results": results, "trial_changes": len(changes)}, indent=1))
+    print(json.dumps({"mode": mode, "results": results, "trial_changes": len(changes)}))
     return 0
 
 
@@ -343,6 +370,10 @@ def main(argv=None) -> int:
     r.add_argument("--refresh", action="store_true", help="re-fetch past agendas in the window (after editing feeds.yaml)")
     d = sub.add_parser("digest"); d.add_argument("--deliver", action="store_true")
     d.add_argument("--send-empty", action="store_true")
+    si = sub.add_parser("send-issue", help="send a rendered issue through Buttondown, per audience tag")
+    si.add_argument("--issue", help="path to data/issues/<date>-<feed>.md (default: the latest issue)")
+    si.add_argument("--feed", default="energy"); si.add_argument("--mode", choices=["draft", "send"])
+    si.add_argument("--dry-run", action="store_true", help="print the audiences without calling Buttondown")
     sub.add_parser("discover"); sub.add_parser("health")
     pe = sub.add_parser("pending"); pe.add_argument("--feed", default="energy"); pe.add_argument("--since")
     rn = sub.add_parser("render"); rn.add_argument("--feed", default="energy")
@@ -351,7 +382,7 @@ def main(argv=None) -> int:
     sub.add_parser("tracker"); sub.add_parser("survey")
     args = p.parse_args(argv)
     try:
-        return {"run": cmd_run, "digest": cmd_digest, "discover": cmd_discover, "health": cmd_health,
+        return {"run": cmd_run, "digest": cmd_digest, "send-issue": cmd_send_issue, "discover": cmd_discover, "health": cmd_health,
                 "pending": cmd_pending, "render": cmd_render, "debug": cmd_debug,
                 "tracker": lambda a: (tracker.build(), 0)[1], "survey": cmd_survey}[args.cmd](args)
     except Exception:

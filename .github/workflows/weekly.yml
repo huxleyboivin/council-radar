@@ -1,8 +1,11 @@
 name: weekly-issue
-# Paid-delivery path (Anthropic API + Buttondown). Off by default: in no-cost mode the
-# weekly issue is written and sent by a Claude scheduled task (see ops/weekly_task.md).
-# To switch on later, add the schedule back:  - cron: "41 11 * * 1"
+# Buttondown delivery of the issue the Monday Claude task rendered (data/issues/<date>-energy.md).
+# Does nothing until the BUTTONDOWN_API_KEY secret exists. Starts in "draft" mode (drafts to review in
+# Buttondown); set the repo variable RADAR_DELIVERY_MODE to "send" only after the switch-over checklist
+# in ops/buttondown_migration.md, so subscribers never get the issue from both Gmail and Buttondown.
 on:
+  schedule:
+    - cron: "11 14 * * 1"   # Mondays 9:11 a.m. Toronto (EST), after the 7:23 weekly task pushes the issue
   workflow_dispatch:
 permissions:
   contents: write
@@ -15,14 +18,17 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12", cache: pip }
       - run: pip install -r requirements.txt
-      - name: Build and deliver this week's issue
+      - name: Deliver this week's issue through Buttondown
         env:
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
-          # Starts as "draft" so the first issues can be checked; switch the repo
-          # variable RADAR_DELIVERY_MODE to "send" to go fully automatic.
           RADAR_DELIVERY_MODE: ${{ vars.RADAR_DELIVERY_MODE || 'draft' }}
         run: |
-          if [ -n "$BUTTONDOWN_API_KEY" ]; then python -m radar digest --deliver; else python -m radar digest; fi
+          if [ -z "$BUTTONDOWN_API_KEY" ]; then echo "BUTTONDOWN_API_KEY not set; nothing to do"; exit 0; fi
+          last=$(cat data/issues/last_issue.txt)
+          if [ "$last" != "$(TZ=America/Toronto date +%F)" ] && [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "Latest issue is $last, not today; the weekly task hasn't rendered this week's issue. Not sending."; exit 0
+          fi
+          python -m radar send-issue
       - name: Save data
         run: |
           git config user.name "council-radar-bot"
