@@ -51,6 +51,10 @@ Files: `outreach/prospects.csv` (research list), `outreach/log.csv` (every email
    - The unused rows of `outreach/prospects.csv`.
    Priority: developers with an active Ontario project needing municipal support (template A) >
    law and consulting energy groups (B) > associations (C, at most 1 a month).
+   **Housing edition (since 2026-11-24):** also prospect homebuilders, land developers, planning consultancies and
+   land-use law groups named as applicants, agents or counsel in `python -m radar pending --feed housing` and
+   `data/issues/*-housing-findings.json` (template H), using only addresses they publish for business contact. Same hard
+   limits; housing and energy sends share the 20-per-run ceiling. Buyer types and examples: `ops/expansion/2026-11-23-housing-buyers.md`.
    Add new organizations to `prospects.csv` with an evidence URL.
 5. **Check, then send.** Before each email run
    `python tools/outreach_check.py --email <address> --org "<organization>" --source <address_source_url> [--stage followup] [--municipality "<council>"]`.

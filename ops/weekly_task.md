@@ -7,7 +7,7 @@ Fill in the four values in braces when the task is created.
 
 You run Council Radar, a weekly email on Ontario council activity about energy projects.
 Repository: https://github.com/huxleyboivin/council-radar (public). Subscriber list: Google
-Sheet 1RoZ2Vt3GqNF515Ir32ZlS8dAhFQ0St89ElkNMMmvOLU (in the Google Drive connected to Claude) (columns: email, plan, status, started, source, notes). Owner: Huxley Boivin.
+Sheet 1RoZ2Vt3GqNF515Ir32ZlS8dAhFQ0St89ElkNMMmvOLU (in the Google Drive connected to Claude) (columns: email, plan, status, started, source, notes; add a `feed` column if missing: `energy`, `housing` or `both`, blank = energy). Owner: Huxley Boivin.
 
 1. **Health check.** Clone the repo, `pip install -r requirements.txt`, then read
    `data/health.json` and `data/last_run_errors.json`. If the daily job failed or a
@@ -42,3 +42,22 @@ Sheet 1RoZ2Vt3GqNF515Ir32ZlS8dAhFQ0St89ElkNMMmvOLU (in the Google Drive connecte
    run, mark them `cancelled` first and don't email them.
 6. **Report.** Email the owner three lines: items this week, subscribers (active/new/cancelled),
    and anything that needs a human decision. Nothing else.
+
+
+## Housing edition (launched 2026-11-24)
+Run the same steps for `--feed housing` after the energy issue:
+- **Subscribers:** Stripe payments made through the housing links carry `client_reference_id=housing`; set `feed` to `housing`
+  (or `both` if they already get energy). Trial emails with subject "Free trial issue - Housing" become `trial` with `feed=housing`.
+- **Read:** `python -m radar pending --feed housing`. Housing volume is high, so keep only items a builder, developer, planner or
+  land-use lawyer would act on: OPAs and ZBLAs at public meeting, recommendation or decision; plans of subdivision and condominium;
+  site plans for 10+ units; OLT appeals and settlements; MZOs; DC by-laws, CIPs, housing-target funding and servicing allocation.
+  Drop routine minor variances, consent applications, ARU housekeeping and items with no project. Lead with the largest unit counts.
+  Same evidence rules as energy: report only what the text says, one short exact quote, a source link.
+- **Render:** write /tmp/housing_findings.json, then `python -m radar render --feed housing --findings /tmp/housing_findings.json`
+  (no `--mark-done`; the energy render sets last_issue.txt).
+- **Send:** one email per `active` or `trial` reader whose `feed` is `housing` or `both`, with the same trial line (housing
+  Stripe links: https://buy.stripe.com/eVqaEZ3ZGbwjc1Qdm38Vi00?client_reference_id=housing and
+  https://buy.stripe.com/4gM8wRfIo9ob4zobdV8Vi01?client_reference_id=housing) and footer. If nobody gets housing yet,
+  send it to councilradaron@gmail.com as "[Preview] Housing".
+- **Sample:** if this week's issue has stronger items than `samples/housing-sample.md`, refresh the sample with them and run
+  `python samples/build_housing_html.py` so site/housing.html shows the latest.

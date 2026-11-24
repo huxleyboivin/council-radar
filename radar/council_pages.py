@@ -109,7 +109,7 @@ def _shell(title: str, desc: str, canonical: str, root: str, body: str, ld: dict
 <style>{CSS}</style>{ld_tag}{config.analytics_snippet()}
 </head><body>
 <header class="top"><a class="brand" href="{root}index.html">{LOGO}Council Radar</a>
-<nav class="nav" aria-label="Main"><a href="{root}councils/">Councils</a><a href="{root}guides/">Guides</a><a class="hide-sm" href="{root}sample.html">Sample issue</a><a class="hide-sm" href="{root}tracker.html">Tracker</a>
+<nav class="nav" aria-label="Main"><a href="{root}councils/">Councils</a><a href="{root}guides/">Guides</a><a class="hide-sm" href="{root}sample.html">Sample issue</a><a class="hide-sm" href="{root}housing.html">Housing</a><a class="hide-sm" href="{root}tracker.html">Tracker</a>
 <a class="btn primary small" href="{root}index.html#pricing">Subscribe</a></nav></header>
 {body}
 <footer>Council Radar reads public municipal records and summarizes them. It isn't legal advice. We count visits with Google Analytics. <a href="{root}index.html">Home</a> · <a href="{root}councils/">All councils</a> · <a href="{root}guides/">Guides</a> · <a href="mailto:councilradaron@gmail.com">councilradaron@gmail.com</a></footer>

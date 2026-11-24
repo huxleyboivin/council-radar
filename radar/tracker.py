@@ -619,7 +619,7 @@ def build(today: date | None = None) -> Path:
     (SITE / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"<url><loc>{SITE_URL}{p}</loc><lastmod>{today}</lastmod></url>\n"
-                  for p in ("", "tracker.html", "sample.html", *guide_pages, *pages))
+                  for p in ("", "tracker.html", "sample.html", "housing.html", *guide_pages, *pages))
         + "</urlset>\n")
     (SITE / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}sitemap.xml\n")
     _rebase_static_pages()

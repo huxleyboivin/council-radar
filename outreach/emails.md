@@ -93,3 +93,25 @@ The next two Monday issues will come to this address.
 Huxley
 
 (Log the request in ops/concierge.md. Only promise councils someone can actually cover that week.)
+
+
+---
+
+## H. Housing: builder, developer, planner or land-use lawyer with an application before a council
+
+**Subject:** [Municipality] council activity on [address or project], weekly
+
+Hi [first name],
+
+My name is Huxley Boivin, and I run Council Radar, a weekly brief on what Ontario councils are doing with development applications. I saw [company]'s [application, e.g. "zoning by-law amendment for 960 Lockhart Road"] is [stage, e.g. "at Barrie's public meeting on November 25"], so I thought it might be useful to you.
+
+Every Monday it reads agendas, staff reports and minutes from 150 councils and pulls out official plan and zoning amendments, subdivisions, site plans, OLT settlements and development charge changes, each linked to the council's own document.
+
+If you'd like to see this week's issue, just reply "sample" and I'll send it over. The founding rate is $59 a month, and I'd be glad to set up two free issues first.
+
+Thank you for your time,
+Huxley Boivin
+Council Radar · 230 Regina Street North, Waterloo, ON
+If you'd rather not hear from me again, just reply "no thanks" and I won't follow up.
+
+(Reply links: https://getcouncilradar.ca/housing.html. Link-free like A–C; see the note at the top.)

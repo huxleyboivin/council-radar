@@ -45,10 +45,8 @@ housing:
     every council and committee move on official plan and zoning by-law amendments, plans of
     subdivision and condominium, site plans, large minor variances, MZOs, development charges,
     CIPs and the local rollout of Bills 23, 185, 17 and 60.
-  # Beta since 2026-11-23: collected in the daily run (collect: true) to build samples; never built or sent.
-  # Launch (enabled: true) needs pricing + Stripe, Huxley's call; see ops/expansion/2026-11-23-housing.md
-  enabled: false
-  collect: true
+  # Launched 2026-11-24 (Huxley): same $59 founding / $249 team Stripe links, tagged ?client_reference_id=housing.
+  enabled: true
   patterns:
     - 'official plan amendment|\bOPA\b'
     - 'zoning by-?law amendment|\bZBLA\b|\bZBA\b|\bre-?zoning\b'

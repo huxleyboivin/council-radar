@@ -406,13 +406,11 @@ def test_analytics_tag_on_every_kind_of_page(tmp_path):
 
 # --- housing beta feed (collect-only) ---
 
-def test_housing_feed_is_collect_only():
+def test_housing_feed_is_live():
     feeds = prefilter.load_feeds()
     h = feeds["housing"]
-    assert h.collect and not h.enabled
-    # the digest builds and sends only enabled feeds, so a collect-only feed is never sent
-    assert "housing" not in {k for k, f in feeds.items() if f.enabled}
-    assert "energy" in {k for k, f in feeds.items() if f.enabled}
+    assert h.enabled          # launched 2026-11-24 (Huxley)
+    assert {"energy", "housing"} <= {k for k, f in feeds.items() if f.enabled}
 
 
 def test_housing_feed_matches_planning_items_only():
@@ -436,3 +434,12 @@ def test_housing_feed_matches_planning_items_only():
         assert prefilter.excerpt(text, feed) == (0, ""), text
     # the energy feed is untouched by the new block
     assert prefilter.excerpt("Draft Plan of Subdivision 26T-24001", feeds["energy"]) == (0, "")
+
+
+def test_housing_page_is_live_and_tagged():
+    from radar import config
+    page = (config.ROOT / "site" / "housing.html").read_text()
+    assert page.count(config.ANALYTICS_TAG) == 1
+    assert page.count("client_reference_id=housing") >= 2      # founding + team links are tagged
+    assert "not yet on sale" not in page
+    assert 'href="housing.html"' in (config.ROOT / "site" / "index.html").read_text()

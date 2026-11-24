@@ -1,7 +1,7 @@
 # Council Radar: Ontario Land Development & Housing
 *Sample issue · Week of November 23, 2026*
 
-**Sample issue (prototype feed, not yet on sale).** Every item below is a real, public council or committee item from the past four weeks, found by the new housing filter in Council Radar's daily read of 150 Ontario councils. In its first two days the filter flagged 134 agenda and minutes documents from 65 councils. These items come from agenda listings, minutes and excerpts. Live issues will read the full staff reports and give unit counts, staff recommendations and outcomes. Check the council's own record before relying on an item.
+**Sample issue.** Every item below is a real, public council or committee item from the past four weeks, found by the new housing filter in Council Radar's daily read of 150 Ontario councils. In its first two days the filter flagged 134 agenda and minutes documents from 65 councils. Weekly issues also read the full staff reports for unit counts, staff recommendations and outcomes. Check the council's own record before relying on an item.
 
 **Why this matters now:** the councils elected on October 26 now hold the decisions on Ontario's 1.5 million-home goal. Since Bill 185 took effect in June 2024, neighbours and ratepayer groups can no longer appeal official plan and zoning decisions to the Ontario Land Tribunal (OLT). That makes the council vote the real decision point.
 
