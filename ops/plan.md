@@ -60,3 +60,9 @@ Honest timeline: $100k/month is a 2028-scale goal. The plan is built so every mo
 
 ## Scoreboard (chief of staff updates weekly)
 Paying subscribers · MRR · trial readers · calls booked · named contacts sent · cold emails sent · replies · councils read · items per issue · organic clicks.
+
+## Update, Nov 24, 2026
+- **Housing edition launched** (Huxley's decision): `housing` feed on, site/housing.html live, same $59/$249 Stripe links tagged `client_reference_id=housing`. The Monday issue agent produces both editions; outreach prospects housing buyers with template H; the market memo is in `ops/expansion/2026-11-23-housing.md` (base case ~$14k/month).
+- **New agent: web designer**, Wednesdays and Sundays 1:29 pm. Ships one bold, measured site change per run, logged in `ops/design_log.md`.
+- **Agents recreated** (chief of staff, social, link building, expansion) so their runs can push to GitHub; the old versions are paused.
+- **Open decision:** the $990/month enterprise pilot for law firms (`ops/expansion/2026-11-23-enterprise-tier.md`).
