@@ -403,6 +403,7 @@ def test_analytics_tag_on_every_kind_of_page(tmp_path):
         assert (config.ROOT / "site" / f).read_text().count(config.ANALYTICS_TAG) == 1, f
 
 
+
 # --- housing beta feed (collect-only) ---
 
 def test_housing_feed_is_collect_only():
@@ -414,21 +415,24 @@ def test_housing_feed_is_collect_only():
     assert "energy" in {k for k, f in feeds.items() if f.enabled}
 
 
-def test_housing_patterns_match_planning_items():
-    h = prefilter.load_feeds()["housing"]
-    samples = [
-        "Public Meeting: Official Plan Amendment and Zoning By-law Amendment, 123 Main Street",
-        "Recommendation report on Draft Plan of Subdivision 24T-21003 (212 residential units)",
-        "Appeal to the Ontario Land Tribunal regarding the proposed mid-rise development",
-        "Development Charges By-law background study, 2026",
-        "Housing Accelerator Fund progress update",
-    ]
-    for text in samples:
-        hits, _ = prefilter.excerpt(text, h)
-        assert hits, text
-
-
-def test_housing_patterns_ignore_unrelated_items():
-    h = prefilter.load_feeds()["housing"]
-    hits, _ = prefilter.excerpt("Council approved the 2027 winter road maintenance contract and a new fire truck.", h)
-    assert not hits
+def test_housing_feed_matches_planning_items_only():
+    feeds = prefilter.load_feeds()
+    feed = feeds["housing"]
+    assert "zba" in feed.categories and "opa" in feed.categories
+    for text in ("Recommendation Report: Official Plan Amendment and Zoning By-law Amendment, 120 Main St",
+                 "Draft Plan of Subdivision 26T-24001 (Mattamy Homes), 312 units",
+                 "Site Plan Approval for a 14-storey mixed-use building",
+                 "Request for Council endorsement of a Minister's Zoning Order for 45 Elm Road",
+                 "Development Charges By-law update and background study",
+                 "Implementation of Bill 185, Cutting Red Tape, Building More Homes Act",
+                 "Building Faster Fund allocation and 2031 housing target progress",
+                 "appeal to the Ontario Land Tribunal regarding the decision",
+                 "Minor Variance A-12/26 to permit an apartment building of 86 units"):
+        assert prefilter.excerpt(text, feed)[0] >= 1, text
+    for text in ("Minor variance to permit a rear deck 1.2 m from the lot line",
+                 "Road resurfacing tender for Main Street.",
+                 "CIP: Council Information Package, November 2026",
+                 "battery energy storage system support resolution"):
+        assert prefilter.excerpt(text, feed) == (0, ""), text
+    # the energy feed is untouched by the new block
+    assert prefilter.excerpt("Draft Plan of Subdivision 26T-24001", feeds["energy"]) == (0, "")

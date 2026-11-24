@@ -39,36 +39,44 @@ str_rules:
     - 'municipal accommodation tax|\bMAT\b'
   categories: [bylaw_passed, bylaw_proposed, fee_change, enforcement, other_relevant]
 housing:
-  title: "Council Radar: Ontario Development & Housing"
+  title: "Council Radar: Ontario Land Development & Housing"
   audience: >-
-    Homebuilders, land developers, planning consultants, land-use lawyers and multifamily investors
-    who need to know when Ontario councils receive, hear, approve or refuse development applications,
-    and when they change housing policy, fees and incentives.
-  # Beta (added 2026-11-23): collected in the daily run to build a sample issue; not built or sent.
-  # Launching it (enabled: true) is Huxley's call.
+    Homebuilders, land developers, planning consultants, land-use lawyers and REITs who need
+    every council and committee move on official plan and zoning by-law amendments, plans of
+    subdivision and condominium, site plans, large minor variances, MZOs, development charges,
+    CIPs and the local rollout of Bills 23, 185, 17 and 60.
+  # Beta since 2026-11-23: collected in the daily run (collect: true) to build samples; never built or sent.
+  # Launch (enabled: true) needs pricing + Stripe, Huxley's call; see ops/expansion/2026-11-23-housing.md
   enabled: false
   collect: true
   patterns:
-    - 'official plan amendment|\bOPA\s?(No\.?\s?)?\d'
-    - 'zoning by-?law amendment|\bZBA\b|re-?zoning application|zoning amendment application'
-    - '(draft )?plan of (subdivision|condominium)|\b(draft )?plan approval\b'
-    - 'site plan (approval|application|control agreement)'
-    - "minister'?s zoning order|\\bMZO\\b"
-    - 'Ontario Land Tribunal|\bOLT\b appeal'
-    - 'removal of (the )?holding|holding (symbol|provision)'
+    - 'official plan amendment|\bOPA\b'
+    - 'zoning by-?law amendment|\bZBLA\b|\bZBA\b|\bre-?zoning\b'
+    - '(draft )?plan of (subdivision|condominium)|\b(subdivision|condominium) agreement|extension of draft (plan )?approval|lapsing of (draft )?approval'
+    - 'site plan (approval|application|control|agreement)'
+    # minor variances only when the item is about a sizeable development (unit counts / storeys)
+    - 'minor variance[\s\S]{0,400}?\b\d{2,4}[- ](residential |dwelling |townhouse |apartment )?(units?|storeys?|dwellings)\b'
+    - "Minister'?s zoning order|\\bMZO\\b|zoning order"
+    - 'community improvement plan'   # not bare "CIP": councils use it for "Council Information Package"
+    - 'development charges? (by-?law|background study|study|deferral|exemption|reduction|rates?|freeze)'
+    - '\bBill (23|185|17|60|109)\b|More Homes Built Faster|Cutting Red Tape,? Building More Homes|Protect Ontario by Building Faster|Fighting Delays,? Building Faster'
+    - 'housing (pledge|target)s?|Building Faster Fund|Housing Accelerator Fund'
+    - 'inclusionary zoning|(protected )?major transit station area|\bPMTSA\b'
     - 'interim control by-?law'
-    - 'development charges? (by-?law|background study|deferral|exemption|reduction)'
-    - 'community improvement plan|\bCIP\b'
-    - 'Housing Accelerator Fund|Building Faster Fund|housing (target|pledge)s?'
-    - 'Bill 23|Bill 185|Bill 17\b|More Homes Built Faster|Cutting Red Tape,? Building Ontario'
-    - 'additional residential units?|inclusionary zoning|major transit station area|\bMTSA\b'
-    - '(\d{2,5}|hundreds of) (new )?(residential |dwelling )?units|(townhouse|apartment|mixed[- ]use|high[- ]rise|mid[- ]rise) (development|building|units|proposal)'
+    - 'Ontario Land Tribunal|\bOLT\b'
+    - 'parkland dedication|cash[- ]in[- ]lieu of parkland'
+    - 'servicing allocation|(water|wastewater) (servicing )?(capacity )?allocation'
+    - 'additional residential units?'
   categories:
-    - application_received   # new OPA/ZBA/subdivision/site plan application or complete-application notice
-    - public_meeting         # statutory public meeting or open house on an application
-    - decision_approved      # council or committee approves / adopts
-    - decision_refused       # refused, deferred, or non-decision
-    - appeal                 # Ontario Land Tribunal appeal or decision
-    - policy_change          # OP update, zoning by-law review, ICBL, MTSA, inclusionary zoning, ARU rules
-    - fees_incentives        # development charges, CIPs, HAF/BFF funding, deferrals
+    - opa                    # official plan amendment (new, recommended, adopted, refused)
+    - zba                    # zoning by-law amendment / rezoning
+    - subdivision_condo      # draft plan of subdivision or condominium, extensions, lapsing
+    - site_plan              # site plan approval or agreement (large projects)
+    - minor_variance_major   # committee of adjustment item tied to a sizeable project
+    - mzo                    # minister's zoning order requested, endorsed or opposed
+    - dc_cip_incentive       # development charges, CIPs, fee deferrals and exemptions
+    - provincial_rollout     # local implementation of Bills 23/185/17/60, PPS conformity
+    - target_funding         # housing targets, Building Faster Fund, Housing Accelerator Fund
+    - olt_appeal             # Ontario Land Tribunal appeals and settlements
+    - servicing_allocation   # water / wastewater capacity allocated to projects
     - other_relevant
