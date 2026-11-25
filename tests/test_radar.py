@@ -462,3 +462,11 @@ def test_olt_guide_lists_sourced_agenda_items(tmp_path):
     assert "Free%20trial%20issue%20-%20Housing" in html and "housing.html" in html
     for _, _, _, key in guides.OLT_MATTERS + [(None, None, None, k) for *_, k in guides.OLT_DEFERENCE]:
         assert guides.S[key][1].startswith("https://") and guides.S[key][1] in html.replace("&amp;", "&")
+
+
+def test_llms_txt_lists_every_guide():
+    from radar import guides, tracker
+    txt = tracker.llms_txt()
+    assert txt.startswith("# Council Radar\n")
+    for slug, *_ in guides.PAGES:
+        assert f"guides/{slug}/" in txt

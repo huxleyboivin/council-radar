@@ -135,6 +135,20 @@ S = {
     "opg_newnuclear": ("OPG, Darlington New Nuclear Project", "https://opg.com/newnuclear"),
     "cbc_smr": ("CBC News, Ontario set to begin construction of Canada's 1st mini nuclear power plant (May 2025)",
                 "https://www.cbc.ca/lite/story/1.7529338"),
+    "cer_ontario": ("Canada Energy Regulator, Provincial and territorial energy profiles: Ontario",
+                    "https://neb-one.gc.ca/en/data-analysis/energy-markets/province-territory-energy-profiles/ontario.html"),
+    "cer_2018": ("Canada Energy Regulator, Nuclear generation in Canada (2018, archived)",
+                 "https://neb-one.gc.ca/en/data-analysis/energy-commodities/electricity/report/archive/2018-nuclear-energy/nuclear-generation-in-canada.html"),
+    "statcan_nuclear": ("Statistics Canada, Nuclear energy in Canada: past, present and future",
+                        "https://www.statcan.gc.ca/o1/en/plus/8487-nuclear-energy-canada-past-present-and-future"),
+    "canada_snapshot": ("Government of Canada, Ontario: clean electricity snapshot",
+                        "https://www.canada.ca/en/services/environment/weather/climatechange/climate-plan/clean-electricity/overview-ontario.html"),
+    "opg_pickering": ("OPG, OPG set to refurbish Pickering Nuclear",
+                      "https://www.opg.com/story/opg-set-to-refurbish-pickering-nuclear-to-secure-decades-more-reliable-low-carbon-power-for-ontario"),
+    "wnn_pickering": ("World Nuclear News, Pickering refurbishment gets government go-ahead",
+                      "https://world-nuclear-news.org/articles/pickering-refurbishment-gets-government-go-ahead"),
+    "ans_pickering": ("American Nuclear Society, Pickering refurb will strengthen Ontario's energy security (September 24, 2026)",
+                      "https://www.ans.org/news/2026-09-24/article-8434/pickering-refurb-will-strengthen-ontarios-economic-sovereignty-and-energy-security/"),
     "opg_wes_council": ("OPG, Exploring new nuclear in Port Hope: council update (April 21, 2026)",
                         "https://www.opg.com/documents/wesleyville-presentation-to-port-hope-council-april-2026-pdf/"),
     "agv_canada": ("Agrivoltaics Canada, response to Ontario's Affordable Energy Future (December 2024)",
@@ -503,7 +517,13 @@ def new_nuclear(today: date, slugs: dict, timeline) -> str:
     def m(name, label=None):
         slug = slugs.get(name)
         return f'<a href="{root}councils/{slug}/">{_e(label or name)}</a>' if slug else _e(label or name)
-    faq = [("Where is the Wesleyville nuclear project?",
+    faq = [("How many nuclear power plants are in Ontario?",
+            "Three: Bruce in Kincardine, run by Bruce Power, and Darlington in Clarington and Pickering in the City of Pickering, "
+            "both run by Ontario Power Generation. Together they have about 12,800 MW of installed capacity."),
+           ("Is Ontario building a new nuclear power plant?",
+            "Yes. The first small modular reactor is under construction at Darlington, and OPG and Bruce Power are going through federal "
+            "impact assessments for new nuclear at Wesleyville in Port Hope and Bruce C in Kincardine."),
+           ("Where is the Wesleyville nuclear project?",
             "At Ontario Power Generation's Wesleyville site in the Municipality of Port Hope, on Lake Ontario. OPG is studying up to "
             "10,000 MWe of new nuclear there; the federal impact assessment is under way and no reactor technology has been chosen."),
            ("Is the Darlington SMR under construction?",
@@ -520,7 +540,11 @@ def new_nuclear(today: date, slugs: dict, timeline) -> str:
 </div>
 <p>Ontario is planning new nuclear generation alongside the wind, solar and storage it buys through the IESO. The IESO says the province's electricity demand could grow by as much as 90% by 2050. {_src("ieso_w1_overview")} Three new nuclear projects are moving, each at an existing nuclear site and each with a host council: {m("Municipality of Clarington", "Clarington")}, {m("Municipality of Port Hope", "Port Hope")} and {m("Municipality of Kincardine", "Kincardine")}.</p>
 
-<h2>The three projects</h2>
+<h2>Ontario's existing nuclear plants</h2>
+<p>Ontario has three operating nuclear power plants, with a combined 12,844 MW of installed capacity. {_src("cer_ontario")} Bruce Power runs the Bruce station in Kincardine; OPG runs Darlington in Clarington and Pickering in the City of Pickering. {_src("cer_2018")} Bruce has eight reactors, and Darlington and Pickering each have four. {_src("statcan_nuclear")} Bruce alone supplies about 30% of Ontario's electricity. {_src("canada_snapshot")}</p>
+<p><strong>Pickering refurbishment.</strong> The province approved OPG's plan to refurbish Pickering's four "B" units in November 2025, with a final budget of $26.8 billion. {_src("opg_pickering", "wnn_pickering")} The units were to come out of service by the end of September 2026, with refurbishment starting in early 2027, beginning with Unit 5, pending final approval from the Canadian Nuclear Safety Commission. {_src("ans_pickering")} OPG expects completion by the mid-2030s and says Pickering currently meets about 11% of Ontario's electricity needs. {_src("opg_pickering", "wnn_pickering")} Council pages: {m("City of Pickering", "Pickering")}, {m("Municipality of Clarington", "Clarington")}, {m("Municipality of Kincardine", "Kincardine")}.</p>
+
+<h2>The three new projects</h2>
 <div class="scroll"><table class="tbl"><thead><tr><th>Project and host council</th><th>Proponent</th><th>Size</th><th>Where it stands</th></tr></thead><tbody>
 <tr><td><strong>Darlington New Nuclear Project</strong><span class="m">{m("Municipality of Clarington")}</span></td><td>Ontario Power Generation</td><td>Up to 4 BWRX-300 small modular reactors, 300 MWe each</td><td>Licence to construct one unit granted April 2025 (valid to March 31, 2035). One unit under construction. OPG applied for a 20-year operating licence on March 25, 2026. {_src("cnsc_dnnp")}</td></tr>
 <tr><td><strong>New Nuclear at Wesleyville</strong><span class="m">{m("Municipality of Port Hope")}</span></td><td>Ontario Power Generation</td><td>Up to 10,000 MWe; technology not yet selected</td><td>Federal impact assessment started with OPG's Initial Project Description (public notice January 12, 2026). {_src("iaac_wes_notice", "iaac_wes")}</td></tr>
@@ -540,11 +564,11 @@ def new_nuclear(today: date, slugs: dict, timeline) -> str:
 <p>Nuclear projects are licensed by the Canadian Nuclear Safety Commission, but host councils are involved through agreements with the proponent and the federal impact assessment, as Port Hope's memorandum with OPG shows. {_src("opg_wes_letter")} Council Radar reads the agendas and minutes of these councils every morning and reports new nuclear items alongside solar, wind, storage and gas. See <a href="{root}guides/where-ontario-councils-stand/">where Ontario councils stand on energy projects</a>.</p>
 {_faq_html(faq)}
 {_cta(root)}
-{_sources("cnsc_dnnp", "opg_smr", "opg_newnuclear", "cbc_smr", "iaac_wes", "iaac_wes_notice", "opg_wes_letter", "opg_wes_council", "bnn_wes", "cnsc_bruce", "iaac_bruce", "iaac_bruce_dec", "ieso_w1_overview")}"""
-    return _page("new-nuclear-ontario", "New nuclear in Ontario: Wesleyville, Darlington SMR and Bruce C",
-                 "Ontario's three new nuclear projects: Darlington SMRs in Clarington, Wesleyville in Port Hope and Bruce C in Kincardine. Size, status and host councils, with sources.",
-                 "New nuclear projects in Ontario",
-                 "Where the Darlington SMRs, Wesleyville and Bruce C stand, how big each is, and which councils host them.",
+{_sources("cer_ontario", "cer_2018", "statcan_nuclear", "canada_snapshot", "wnn_pickering", "ans_pickering", "opg_pickering", "cnsc_dnnp", "opg_smr", "opg_newnuclear", "cbc_smr", "iaac_wes", "iaac_wes_notice", "opg_wes_letter", "opg_wes_council", "bnn_wes", "cnsc_bruce", "iaac_bruce", "iaac_bruce_dec", "ieso_w1_overview")}"""
+    return _page("new-nuclear-ontario", "Nuclear power plants in Ontario: Wesleyville, Darlington SMR, Bruce C",
+                 "Ontario's three nuclear plants (Bruce, Darlington, Pickering) and its new projects: Darlington SMRs, Wesleyville and Bruce C. Size, status and host councils, with sources.",
+                 "Nuclear power plants in Ontario",
+                 "The three plants running today, the Pickering refurbishment, and where the Darlington SMRs, Wesleyville and Bruce C stand.",
                  body, today, crumb="New nuclear", faq=faq)
 
 
@@ -903,7 +927,7 @@ def council_decisions(today: date, slugs: dict, items: list[dict]) -> str:
             + "".join(sections) +
             f'<p>Related: <a href="{root}guides/where-ontario-councils-stand/">Where Ontario councils stand</a> · '
             f'<a href="{root}guides/lt2-window-2/">LT2 Window 2 guide</a></p>{_cta(root)}')
-    html_ = _page("council-decisions", "Ontario council energy decisions, by month",
+    html_ = _page("council-decisions", "Every Ontario council energy decision, month by month",
                   "Every public Ontario council decision on solar, wind, battery storage and gas projects, grouped by month, "
                   "with a source link for each. Updated as decisions are published.",
                   "Ontario council energy decisions, by month",
@@ -928,8 +952,8 @@ PAGES = [
      "New wind contracts, repowering in Window 2, and where councils stand on wind."),
     ("agrivoltaics-ontario", agrivoltaics, "Agrivoltaics in Ontario",
      "Agrivoltaic projects with LT2 contracts and the farmland rules councils apply."),
-    ("new-nuclear-ontario", new_nuclear, "New nuclear projects in Ontario",
-     "Darlington SMRs, Wesleyville and Bruce C: size, status and host councils."),
+    ("new-nuclear-ontario", new_nuclear, "Nuclear power plants in Ontario",
+     "The three plants running today, the Pickering refurbishment, and the Darlington SMRs, Wesleyville and Bruce C."),
     ("ontario-integrated-energy-plan", integrated_energy_plan, "Ontario's Integrated Energy Plan, explained",
      "What Energy for Generations commits to, and who carries it out."),
     ("long-lead-time-rfp", long_lead_time, "IESO Long Lead-Time RFP: deadline and council support",

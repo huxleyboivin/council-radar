@@ -587,6 +587,21 @@ def _rebase_static_pages() -> None:
             f.write_text(f.read_text().replace(config.GITHUB_PAGES_URL, SITE_URL))
 
 
+def llms_txt() -> str:
+    """A plain index of the site for AI assistants (llmstxt.org). Semrush's audit flagged it as missing."""
+    from . import guides
+    lines = ["# Council Radar", "",
+             "> Council Radar reads the agendas and minutes of 150 Ontario councils every morning and reports their decisions "
+             "on solar, wind, battery storage and gas projects, with each item linked to the council's own document.", "",
+             "## Main pages", "",
+             f"- [Decision tracker]({SITE_URL}tracker.html): every public council energy decision we've found, with sources",
+             f"- [Councils]({SITE_URL}councils/): one page per council with its meetings and energy decisions",
+             f"- [Sample email]({SITE_URL}sample.html): what a weekly Council Radar email looks like", "",
+             "## Guides", ""]
+    lines += [f"- [{title}]({SITE_URL}guides/{slug}/): {blurb}" for slug, _, title, blurb in guides.PAGES]
+    return "\n".join(lines) + "\n"
+
+
 def build(today: date | None = None) -> Path:
     today = today or date.today()
     items = collect_items(today)
@@ -622,6 +637,7 @@ def build(today: date | None = None) -> Path:
                   for p in ("", "tracker.html", "sample.html", "housing.html", *guide_pages, *pages))
         + "</urlset>\n")
     (SITE / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}sitemap.xml\n")
+    (SITE / "llms.txt").write_text(llms_txt())
     _rebase_static_pages()
     cals = write_calendars(today)
     print(json.dumps({"tracker": str(out), "items": len(items), "councils": len(councils), "calendars": cals, "council_pages": len(pages) - 1, "share_cards": cards}))

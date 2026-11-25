@@ -378,7 +378,7 @@ def council_page(c: dict, meta: dict, upcoming: list, slug: str, when, today: da
         next_line = f'<p class="nextmtg"><strong>Next meeting:</strong> {_e(nxt[0])}, {_e(when(nxt[1]))}{agenda}</p>'
     body = f"""<main>
 <p class="crumbs"><a href="{root}index.html">Home</a> › <a href="{root}councils/">Councils</a> › {_e(name)}</p>
-<h1>{_e(name)} and energy projects</h1>
+<h1>{_e(name)} council meetings and energy projects</h1>
 <p class="lede">Where {_e(name)} council stands on solar, wind, battery storage and gas projects, and when it meets next.</p>
 {next_line}
 <p class="status">{" · ".join(status)}</p>
