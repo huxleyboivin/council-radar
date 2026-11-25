@@ -9,9 +9,16 @@
   const TO = "councilradaron@gmail.com";
   const PAID = "https://buy.stripe.com/eVqaEZ3ZGbwjc1Qdm38Vi00";
   const TEAM = "https://buy.stripe.com/4gM8wRfIo9ob4zobdV8Vi01";
+  // Two editions, each with its own Stripe product. Housing checkouts keep their existing client_reference_id=housing tag.
+  const HOUSING_PAID = "https://buy.stripe.com/eVqeVfcwceIv5Ds4Px8Vi02";
+  const HOUSING_TEAM = "https://buy.stripe.com/4gM00l67O6bZ5DschZ8Vi03";
   const cfg = window.CRStart = Object.assign({context: () => ({})}, window.CRStart || {});
   const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
   const fold = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+  const EDITIONS = {
+    energy: {label: "Energy projects", short: "Energy", paid: PAID, team: TEAM},
+    housing: {label: "Land development & housing", short: "Housing", paid: HOUSING_PAID, team: HOUSING_TEAM}
+  };
   const core = n => fold(n.replace(/^(City|Town|Township|Municipality|County|Village|Region|United Counties|Regional Municipality) of /, "").replace(/ County$/, ""));
 
   const css = `
@@ -42,7 +49,7 @@
   .crs-chips li{display:inline-flex;align-items:center;gap:.3rem;background:#EEF3F8;border:1px solid #D5DCE5;border-radius:999px;padding:.28rem .35rem .28rem .7rem;font-size:.9rem;color:#14284B}
   .crs-chips li.off{border-style:dashed}
   .crs-chips button{border:0;background:none;color:#52607A;font-size:1.05rem;line-height:1;cursor:pointer;padding:0 .2rem}
-  .crs input{width:100%;font:500 1rem/1.2 "Public Sans",system-ui,sans-serif;color:#14284B;padding:.7rem .75rem;border:1.5px solid #9AA8BD;border-radius:8px;background:#fff}
+  .crs input{box-sizing:border-box;width:100%;font:500 1rem/1.2 "Public Sans",system-ui,sans-serif;color:#14284B;padding:.7rem .75rem;border:1.5px solid #9AA8BD;border-radius:8px;background:#fff}
   .crs input:focus{outline:0;border-color:#14284B;box-shadow:0 0 0 3px rgba(47,111,181,.22)}
   .crs label{display:block;font-size:.88rem;color:#52607A;margin:.7rem 0 .3rem}
   .crs .crs-two{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
@@ -61,6 +68,14 @@
   .crs-pay a.paid{background:#EEF3F8;border-color:#EEF3F8}
   .crs-pay a.paid:hover{border-color:#14284B}
   .crs-pay small{display:block;font-weight:500;color:#52607A;font-size:.82rem}
+  .crs-ed{border:0;margin:0 0 .4rem;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+  .crs-ed legend{padding:0;width:100%}
+  .crs-ed label{position:relative;display:block;margin:0;cursor:pointer}
+  .crs-ed input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+  .crs-ed span{display:block;height:100%;box-sizing:border-box;border:1.5px solid #D5DCE5;border-radius:10px;padding:.65rem .75rem;font:700 .95rem/1.25 "Public Sans",system-ui,sans-serif;color:#14284B;transition:border-color .15s,background .15s}
+  .crs-ed small{display:block;margin-top:.2rem;font-weight:500;font-size:.8rem;color:#52607A}
+  .crs-ed input:checked+span{border-color:#14284B;background:#EEF3F8;box-shadow:inset 0 0 0 1px #14284B}
+  .crs-ed input:focus-visible+span{outline:3px solid #2F6FB5;outline-offset:2px}
   .crs-f{padding:1rem 1.5rem 1.4rem;border-top:1px solid #D5DCE5;font-size:.82rem;color:#52607A}
   @media (max-width:640px){.crs{width:100%;margin:0}.crs-dock{left:.75rem;right:.75rem;bottom:.75rem;justify-content:space-between}}
   @media (prefers-reduced-motion: reduce){.crs[open],.crs[open]::backdrop,.crs.crs-closing{animation:none}.crs-dock{transition:none}}`;
@@ -83,16 +98,20 @@
     <p>Pick your councils and we'll send a trial Monday email that covers them. No payment, no account.</p></div>
     <button type="button" class="crs-x" data-crs-close aria-label="Close">×</button></div>
     <div class="crs-b">
-      <p class="crs-step"><i>1</i>Your councils</p>
+      <fieldset class="crs-ed"><legend class="crs-step"><i>1</i>Your edition</legend>
+        <label><input type="radio" name="crs-ed" value="energy"><span>Energy projects<small>Solar, wind, storage, support votes</small></span></label>
+        <label><input type="radio" name="crs-ed" value="housing"><span>Land development &amp; housing<small>Rezonings, OPAs, subdivisions, OLT</small></span></label>
+      </fieldset>
+      <p class="crs-step"><i>2</i>Your councils</p>
       <ul class="crs-chips" id="crs-chips"></ul>
       <input id="crs-add" list="crs-list" placeholder="Add a council, e.g. Haldimand" autocomplete="off" aria-label="Add a council">
       <datalist id="crs-list"></datalist>
-      <p class="crs-step"><i>2</i>Where to send it</p>
+      <p class="crs-step"><i>3</i>Where to send it</p>
       <label for="crs-email">Work email</label>
       <input id="crs-email" type="email" autocomplete="email" placeholder="you@company.com" required>
       <div class="crs-two"><div><label for="crs-co">Company</label><input id="crs-co" autocomplete="organization"></div>
         <div><label for="crs-role">Role <span style="font-weight:400">(optional)</span></label><input id="crs-role" autocomplete="organization-title"></div></div>
-      <p class="crs-step"><i>3</i>Send your request</p>
+      <p class="crs-step"><i>4</i>Send your request</p>
       <div class="crs-send">
         <a id="crs-mailto" class="main">Open in my email app</a>
         <a id="crs-gmail" target="_blank" rel="noopener">Gmail</a>
@@ -110,15 +129,16 @@
     <p class="crs-f">Nothing you type here is stored. It goes only into the email you send, or into Stripe's secure checkout. Cancel any time.</p></div>`;
   document.body.appendChild(dlg);
   const $ = id => dlg.querySelector("#" + id);
-  let picked = [], company = "", lastFocus = null, src = "site";
+  let picked = [], company = "", lastFocus = null, src = "site", edition = "energy";
 
   const valid = () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("crs-email").value.trim());
   function compose() {
     const email = $("crs-email").value.trim(), co = $("crs-co").value.trim(), role = $("crs-role").value.trim();
     const byName = Object.fromEntries((ALL || []).map(c => [c.n, c]));
     const lines = picked.length ? picked.map(n => "- " + n + (byName[n] && !byName[n].c ? " (not read yet, please add it)" : "")).join("\n") : "- (I'll tell you which councils)";
-    const subject = `Free trial: ${co || email || "Council Radar"} (${picked.length || "?"} ${picked.length === 1 ? "council" : "councils"})`;
-    const body = `Hi Huxley,\n\nI'd like a free trial issue of Council Radar.\n\nCouncils:\n${lines}\n\nEmail: ${email}\nCompany: ${co}\nRole: ${role}\n\n(Sent from the Council Radar site: ${src})`;
+    const ed = EDITIONS[edition];
+    const subject = `Free trial: ${co || email || "Council Radar"} (${picked.length || "?"} ${picked.length === 1 ? "council" : "councils"}) - ${ed.short}`;
+    const body = `Hi Huxley,\n\nI'd like a free trial issue of Council Radar, ${ed.label} edition.\n\nCouncils:\n${lines}\n\nEmail: ${email}\nCompany: ${co}\nRole: ${role}\n\n(Sent from the Council Radar site: ${src})`;
     return {subject, body, email};
   }
   function refresh() {
@@ -136,10 +156,12 @@
     $("crs-gmail").textContent = gmail ? "Send with Gmail" : "Gmail";
     $("crs-mailto").textContent = gmail ? "Email app" : "Open in my email app";
     $("crs-hint").textContent = ok ? "It sends from your own email, so you can reply to Huxley directly. You'll hear back within one business day." : "Enter your work email to continue.";
-    const ref = ("s_" + picked.map(n => core(n).replace(/ /g, "-")).join("_")).slice(0, 200);
-    const q = (email && ok ? "prefilled_email=" + e(email) + "&" : "") + (picked.length ? "client_reference_id=" + e(ref) : "");
-    $("crs-paid").href = PAID + (q ? "?" + q.replace(/&$/, "") : "");
-    $("crs-team").href = TEAM + (q ? "?" + q.replace(/&$/, "") : "");
+    const ed = EDITIONS[edition];
+    const ref = edition === "housing" ? "housing" : ("s_" + picked.map(n => core(n).replace(/ /g, "-")).join("_")).slice(0, 200);
+    const q = (email && ok ? "prefilled_email=" + e(email) + "&" : "") + (picked.length || edition === "housing" ? "client_reference_id=" + e(ref) : "");
+    $("crs-paid").href = ed.paid + (q ? "?" + q.replace(/&$/, "") : "");
+    $("crs-team").href = ed.team + (q ? "?" + q.replace(/&$/, "") : "");
+    dlg.querySelectorAll('input[name="crs-ed"]').forEach(r => { r.checked = r.value === edition; });
   }
   function add(v) {
     v = (v || "").trim(); if (!v) return;
@@ -156,6 +178,7 @@
     const ctx = Object.assign({}, cfg.context() || {}, opts);
     picked = [...new Set(ctx.councils || [])]; company = ctx.company || "";
     src = ctx.source || location.pathname.split("/").pop() || "index.html";
+    edition = EDITIONS[ctx.edition] ? ctx.edition : EDITIONS[cfg.edition] ? cfg.edition : "energy";
     if (company && !$("crs-co").value) $("crs-co").value = company;
     lastFocus = document.activeElement;
     refresh();
@@ -180,10 +203,12 @@
     const rm = e.target.closest("[data-crs-rm]"); if (rm) { picked.splice(+rm.dataset.crsRm, 1); refresh(); }
   });
   ["crs-email", "crs-co", "crs-role"].forEach(id => $(id).addEventListener("input", refresh));
+  dlg.querySelectorAll('input[name="crs-ed"]').forEach(r => r.addEventListener("change", () => { if (r.checked) { edition = r.value; refresh(); } }));
   $("crs-add").addEventListener("change", () => add($("crs-add").value));
   $("crs-add").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); add($("crs-add").value); } });
   ["crs-gmail", "crs-outlook", "crs-mailto"].forEach(id => $(id).addEventListener("click", () => {
     $("crs-ok").textContent = "Your email should be open with everything filled in. Press send, and you're done.";
+    if (typeof window.gtag === "function") window.gtag("event", "trial_request", {edition: edition, method: id.replace("crs-", ""), councils: picked.length});
   }));
   $("crs-copy").addEventListener("click", async () => {
     const {subject, body} = compose(), text = `To: ${TO}\nSubject: ${subject}\n\n${body}`;
@@ -196,7 +221,10 @@
     const a = e.target.closest(`a[href^="mailto:${TO}?subject="], [data-start]`);
     if (!a || dlg.contains(a) || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
     e.preventDefault();
-    open(a.dataset.councils ? {councils: a.dataset.councils.split("|")} : {});
+    const o = a.dataset.councils ? {councils: a.dataset.councils.split("|")} : {};
+    const ed = a.dataset.edition || (/Housing/.test(a.getAttribute("href") || "") ? "housing" : "");
+    if (ed) o.edition = ed;
+    open(o);
   });
 
   // Optional dock: shown by pages that call CRStart.dock(n) (e.g. once a watchlist exists).

@@ -613,6 +613,14 @@ def build(today: date | None = None) -> Path:
                    lambda _: f'<!--COUNCILDATA--><script type="application/json" id="council-data">{data}</script><!--/COUNCILDATA-->',
                    s, flags=re.S)
         idx.write_text(s)
+    try:  # housing landing page: live meeting counts for its council lookup (samples/build_housing_html.py)
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("build_housing_html", config.ROOT / "samples" / "build_housing_html.py")
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        mod.build(today)
+    except Exception as exc:  # noqa: BLE001
+        print(f"housing page skipped: {exc}")
     from . import guides
     with_pages = {c["n"]: council_slug(c["n"]) for c in index["councils"] if c.get("c") or c.get("i")}
     guide_pages = guides.write(today, with_pages, items=items)

@@ -462,3 +462,63 @@ def test_olt_guide_lists_sourced_agenda_items(tmp_path):
     assert "Free%20trial%20issue%20-%20Housing" in html and "housing.html" in html
     for _, _, _, key in guides.OLT_MATTERS + [(None, None, None, k) for *_, k in guides.OLT_DEFERENCE]:
         assert guides.S[key][1].startswith("https://") and guides.S[key][1] in html.replace("&amp;", "&")
+
+
+# --- housing front door (web designer, 2026-11-25) ---
+
+def _housing_builder():
+    import importlib.util
+    from radar import config
+    spec = importlib.util.spec_from_file_location("build_housing_html", config.ROOT / "samples" / "build_housing_html.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_housing_notice_sign_comes_from_the_sample():
+    from radar import config
+    b = _housing_builder()
+    md = (config.ROOT / "samples" / "housing-sample.md").read_text()
+    projects = b.largest_projects(md)
+    assert projects and all(p["units"] and p["url"].startswith("https://") for p in projects)
+    for p in projects:   # every number on the sign is in the sample text
+        assert f'{p["units"]}-unit' in md and p["council"] in md
+    html = b.notice_sign(projects, "November 23, 2026")
+    assert html.count('role="tabpanel"') == len(projects) and "Development proposal" in html
+
+
+def test_housing_activity_counts_distinct_meetings_in_window(tmp_path):
+    import json
+    from datetime import date
+    b = _housing_builder()
+    day = tmp_path / "2026-11-25"
+    day.mkdir()
+    docs = [("barrie_agenda_1", "City of Barrie", "2026-11-25", "Affordability Committee"),
+            ("barrie_addendum_1", "City of Barrie", "2026-11-25", "Affordability Committee"),   # same meeting
+            ("barrie_agenda_2", "City of Barrie", "2026-12-02", "City Council"),
+            ("barrie_agenda_old", "City of Barrie", "2026-09-01", "City Council")]               # outside window
+    for key, muni, when, name in docs:
+        (day / f"housing__{key}.json").write_text(json.dumps({"feed": "housing", "municipality": muni, "meeting_date": when, "meeting_name": name}))
+    (day / "energy__barrie_agenda_9.json").write_text(json.dumps({"feed": "energy", "municipality": "City of Barrie", "meeting_date": "2026-11-25", "meeting_name": "X"}))
+    act = b.housing_activity(date(2026, 11, 25), tmp_path)
+    assert act == {"City of Barrie": [["2026-12-02", "City Council"], ["2026-11-25", "Affordability Committee"]]}
+
+
+def test_housing_page_front_door():
+    from radar import config
+    page = (config.ROOT / "site" / "housing.html").read_text()
+    assert page.count(config.ANALYTICS_TAG) == 1
+    assert 'class="hs-sign"' in page and 'id="hs-find"' in page and 'id="housing-data"' in page
+    assert page.count('<script src="start.js">') == 1 and 'window.CRStart={edition:"housing"}' in page
+    assert page.count('data-edition="housing"') >= 3       # header, hero and closing trial links open the Start panel in Housing
+    assert "client_reference_id=housing" in page and "eVqaEZ3ZGbwjc1Qdm38Vi00" not in page
+    assert "<h1" in page and page.count("<h1") == 1
+
+
+def test_start_panel_offers_both_editions():
+    from radar import config
+    js = (config.ROOT / "site" / "start.js").read_text()
+    for link in ("eVqaEZ3ZGbwjc1Qdm38Vi00", "4gM8wRfIo9ob4zobdV8Vi01", "eVqeVfcwceIv5Ds4Px8Vi02", "4gM00l67O6bZ5DschZ8Vi03"):
+        assert f"https://buy.stripe.com/{link}" in js
+    assert 'name="crs-ed" value="energy"' in js and 'name="crs-ed" value="housing"' in js
+    assert 'edition === "housing" ? "housing"' in js        # housing checkouts keep client_reference_id=housing
