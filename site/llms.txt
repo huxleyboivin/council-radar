@@ -1,0 +1,24 @@
+# Council Radar
+
+> Council Radar reads the agendas and minutes of 150 Ontario councils every morning and reports their decisions on solar, wind, battery storage and gas projects, with each item linked to the council's own document.
+
+## Main pages
+
+- [Decision tracker](https://getcouncilradar.ca/tracker.html): every public council energy decision we've found, with sources
+- [Councils](https://getcouncilradar.ca/councils/): one page per council with its meetings and energy decisions
+- [Sample email](https://getcouncilradar.ca/sample.html): what a weekly Council Radar email looks like
+
+## Guides
+
+- [IESO LT2 Window 2: dates, rules and municipal support](https://getcouncilradar.ca/guides/lt2-window-2/): When proposals are due, what's new compared with Window 1, and why council support decides which projects can bid.
+- [LT2 Window 1 results by municipality](https://getcouncilradar.ca/guides/lt2-window-1-results/): Every energy and capacity contract, where it is, its size and its price.
+- [Municipal support resolutions for IESO projects](https://getcouncilradar.ca/guides/municipal-support-resolution/): MRSPS versus blanket resolutions, how the process runs, and how councils handle it.
+- [Solar farms and battery storage projects in Ontario](https://getcouncilradar.ca/guides/solar-and-battery-projects-ontario/): Contracted projects by municipality, and recent council decisions on new proposals.
+- [Where Ontario councils stand on energy projects](https://getcouncilradar.ca/guides/where-ontario-councils-stand/): Wind refusals, solar and gas support, and councils with written rules.
+- [Wind farms and wind turbines in Ontario](https://getcouncilradar.ca/guides/wind-projects-ontario/): New wind contracts, repowering in Window 2, and where councils stand on wind.
+- [Agrivoltaics in Ontario](https://getcouncilradar.ca/guides/agrivoltaics-ontario/): Agrivoltaic projects with LT2 contracts and the farmland rules councils apply.
+- [Nuclear power plants in Ontario](https://getcouncilradar.ca/guides/new-nuclear-ontario/): The three plants running today, the Pickering refurbishment, and the Darlington SMRs, Wesleyville and Bruce C.
+- [Ontario's Integrated Energy Plan, explained](https://getcouncilradar.ca/guides/ontario-integrated-energy-plan/): What Energy for Generations commits to, and who carries it out.
+- [IESO Long Lead-Time RFP: deadline and council support](https://getcouncilradar.ca/guides/long-lead-time-rfp/): Hydro and long-duration storage on 40-year contracts, and the council support each proposal needs.
+- [Ontario Land Tribunal matters on council agendas](https://getcouncilradar.ca/guides/ontario-land-tribunal-council-agendas/): OLT appeals, settlements and the OLT review resolution, from November 2026 council agendas.
+- [Ontario council energy decisions, by month](https://getcouncilradar.ca/guides/council-decisions/): Every public council decision, month by month, with a source for each.

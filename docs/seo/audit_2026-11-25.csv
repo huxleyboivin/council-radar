@@ -1,0 +1,12 @@
+issue_id,issue,severity,count,example_url,action
+105,Duplicate content in h1 and title,warning,1,https://getcouncilradar.ca/guides/council-decisions/,fixed 2026-11-25 (new title)
+106,Missing meta description,warning,1,https://getcouncilradar.ca/sample.html,fixed 2026-11-25
+112,Low text to HTML ratio,warning,2,https://getcouncilradar.ca/ (and /index.html),left as is (homepage design)
+123,Nofollow attributes in internal links,warning,155,https://getcouncilradar.ca/councils/township-of-wilmot/ -> brief.html?c=...,intentional: brief.html is a personalised preview kept out of search
+135,Unminified JavaScript and CSS files,warning,175,(inline styles and scripts),left as is (small pages; GitHub Pages serves gzip)
+137,Llms.txt not found,notice,1,https://getcouncilradar.ca/llms.txt,fixed 2026-11-25 (generated on each build from guides.PAGES)
+202,Nofollow attributes in external links,notice,787,(source links),intentional
+205,No HSTS support,notice,2,https://getcouncilradar.ca/,GitHub Pages controls headers; can't change
+215,Resources formatted as page links,notice,155,https://getcouncilradar.ca/cal/<council>.ics,intentional (calendar downloads)
+4,Blocked from crawling,notice,1,https://getcouncilradar.ca/brief.html,intentional
+summary,"Snapshot 6b038210462e20d1b6ec6672 (Nov 23, 2026): 176 pages crawled, 0 errors, 334 warnings, 946 notices",,,,
