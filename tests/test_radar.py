@@ -450,3 +450,15 @@ def test_housing_page_uses_housing_stripe_product():
     page = (config.ROOT / "site" / "housing.html").read_text()
     assert "buy.stripe.com/eVqeVfcwceIv5Ds4Px8Vi02" in page and "buy.stripe.com/4gM00l67O6bZ5DschZ8Vi03" in page
     assert "eVqaEZ3ZGbwjc1Qdm38Vi00?client_reference_id" not in page   # not the energy links
+
+
+def test_olt_guide_lists_sourced_agenda_items(tmp_path):
+    from datetime import date
+    from radar import guides
+    paths = guides.write(date(2026, 11, 25), {"City of Ottawa": "city-of-ottawa"}, tmp_path)
+    assert "guides/ontario-land-tribunal-council-agendas/" in paths
+    html = (tmp_path / "ontario-land-tribunal-council-agendas" / "index.html").read_text()
+    assert "2175 Prince of Wales Drive" in html and "NYX Tannery" in html
+    assert "Free%20trial%20issue%20-%20Housing" in html and "housing.html" in html
+    for _, _, _, key in guides.OLT_MATTERS + [(None, None, None, k) for *_, k in guides.OLT_DEFERENCE]:
+        assert guides.S[key][1].startswith("https://") and guides.S[key][1] in html.replace("&amp;", "&")

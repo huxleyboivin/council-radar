@@ -742,6 +742,136 @@ def long_lead_time(today: date, slugs: dict, timeline) -> str:
                  body, today, crumb="Long Lead-Time RFP", faq=faq)
 
 
+# --- Housing edition guides ------------------------------------------------------------------------------
+# Facts below come only from council agenda packages Council Radar read (data/excerpts/, feed=housing).
+_ESC = "https://pub-{}.escribemeetings.com/Meeting.aspx?Id={}&Agenda={}&lang={}"
+S.update({
+    "olt_ottawa": ("City of Ottawa, City Council agenda, November 12, 2026 (item 15.5, report ACS2026-PDB-PS-0072)",
+                   _ESC.format("ottawa", "7e8e2766-5703-4860-9fc6-7b51b4bd783a", "Agenda", "French")),
+    "olt_mississauga": ("City of Mississauga, Council agenda, November 25, 2026 (closed session item 21.1)",
+                        _ESC.format("mississauga", "b8d22c9c-7009-4716-ba20-fe9fb33fa902", "Agenda", "English")),
+    "olt_kincardine": ("Municipality of Kincardine, Council agenda, November 25, 2026 (report Development Services-2026-15)",
+                       _ESC.format("kincardine", "d50a5541-32d3-4322-bedf-399edb5d04cd", "Agenda", "English")),
+    "olt_king": ("Township of King, Council agenda, November 2, 2026 (closed session item 3.1)",
+                 _ESC.format("king", "a834bacf-11ab-4439-ab2c-4cd81674e3fe", "Agenda", "English")),
+    "olt_eastgarafraxa": ("Township of East Garafraxa, Special Council agenda, November 17, 2026 (item 7.2)",
+                          _ESC.format("eastgarafraxa", "a2ac97e2-2662-4de1-af02-e05e2c20b83a", "Agenda", "English")),
+    "olt_wasaga": ("Town of Wasaga Beach, Council agenda, November 26, 2026 (closed session item 17.3.1)",
+                   _ESC.format("wasagabeach", "bfdd1911-670c-4df3-9029-623d45ee0dc0", "Agenda", "English")),
+    "olt_markham": ("City of Markham, Council agenda, November 10, 2026 (confidential items 13.2.1 and 13.2.2)",
+                    _ESC.format("markham", "a1c9d196-93f3-4e0b-9557-74b55051c0ec", "Merged", "English")),
+    "olt_bradford": ("Town of Bradford West Gwillimbury, Committee of Adjustment agenda, November 25, 2026",
+                     _ESC.format("bradfordwestgwillimbury", "0266e026-8fab-49b9-ae9e-515173ee0de5", "Agenda", "English")),
+    "olt_kitchener": ("City of Kitchener, Planning and Strategic Initiatives Committee agenda, November 30, 2026",
+                      _ESC.format("kitchener", "dd38ce04-e03e-472e-88b6-2c92e6b10aa8", "Agenda", "English")),
+    "olt_site": ("Ontario Land Tribunal website (linked from Kitchener's planning notices)", "https://olt.gov.on.ca/"),
+    "olt_haldimand": ("Haldimand County, Information Package, November 9, 2026",
+                      _ESC.format("haldimandcounty", "268e86db-f7ae-4401-b1e6-1253ef70bd38", "Agenda", "English")),
+    "olt_georgianbluffs": ("Township of Georgian Bluffs, Council agenda, November 4, 2026 (item 9.2.15)",
+                           _ESC.format("georgianbluffs", "2b800aa7-f759-41a1-9182-71460b86cdec", "Agenda", "English")),
+    "olt_northgrenville": ("Municipality of North Grenville, Council agenda, November 3, 2026 (item N.3)",
+                           _ESC.format("northgrenville", "2308f660-dc3c-411d-a6f4-7eb640280387", "Agenda", "English")),
+    "olt_eg_info": ("Township of East Garafraxa, Information Items Package, November 17, 2026 (item 2.13)",
+                    _ESC.format("eastgarafraxa", "632a6e76-49b4-4b2b-877e-c9afd938fdd4", "Agenda", "English")),
+    "olt_northperth": ("Municipality of North Perth, Regular Council agenda, November 9, 2026",
+                       _ESC.format("northperth", "5c2919fb-4f2c-4e3a-9314-7cfa9d75f463", "Agenda", "English")),
+})
+
+# (council, what the agenda shows, meeting date, source key). Exact wording from the agenda packages.
+OLT_MATTERS = [
+    ("City of Ottawa", "Ontario Land Tribunal settlement on an official plan amendment and zoning by-law amendment for "
+     "2175 Prince of Wales Drive (Knoxdale-Merivale, Ward 9), report ACS2026-PDB-PS-0072, after Planning and Housing Committee on November 4",
+     "2026-11-12", "olt_ottawa"),
+    ("City of Mississauga", "Closed session: instructions on a revised proposed settlement of the appeals to the Ontario Land "
+     "Tribunal by NYX Tannery LP for 51 and 57 Tannery Street and 208 Emby Drive (Ward 11)", "2026-11-25", "olt_mississauga"),
+    ("Municipality of Kincardine", "Staff report on OLT-26-000700 (Bruce Road 23, Soaring Eagles), with "
+     "by-laws Z-2025-020 and L-2025-008 attached", "2026-11-25", "olt_kincardine"),
+    ("Town of Wasaga Beach", "Closed session: OLT-24-001047 (10 Club Court)", "2026-11-26", "olt_wasaga"),
+    ("Township of East Garafraxa", "Tribunal acknowledgement letter for OLT-26-000987 (063076 Dufferin County Road 3)",
+     "2026-11-17", "olt_eastgarafraxa"),
+    ("City of Markham", "Confidential updates on an OLT appeal of the heritage designation by-law for 7507 Kennedy Road "
+     "(Ward 8) and an OLT appeal of a minor variance application by the York Catholic District School Board at 2188 Rodick Road (Ward 2)",
+     "2026-11-10", "olt_markham"),
+    ("Township of King", "Closed session: litigation matter, direction required, OLT-22-002262 (2472498 Ontario Inc., King Heights)",
+     "2026-11-02", "olt_king"),
+]
+
+# Councils whose fall 2026 agenda packages carried the "Review of the Ontario Land Tribunal and Enhancing Deference to
+# Municipal Planning Decisions" resolution as correspondence, and which councils' resolutions the package names.
+OLT_DEFERENCE = [
+    ("Haldimand County", "2026-11-09", "from the Town of Whitby", "olt_haldimand"),
+    ("Municipality of North Grenville", "2026-11-03", "from the Township of Blandford-Blenheim and the Town of Ingersoll", "olt_northgrenville"),
+    ("Township of Georgian Bluffs", "2026-11-04", "from the Town of Cobourg, with correspondence from the Township of Puslinch", "olt_georgianbluffs"),
+    ("Municipality of North Perth", "2026-11-09", "", "olt_northperth"),
+    ("Township of East Garafraxa", "2026-11-17", "from the City of Guelph, the City of Port Colborne, the Town of Cobourg, "
+     "the Township of Blandford-Blenheim and the Township of East Zorra-Tavistock", "olt_eg_info"),
+]
+
+
+def _housing_cta(root: str) -> str:
+    return (f'<div class="cta"><p><strong>See OLT settlements, rezonings and subdivisions the week they reach council.</strong> '
+            f'The Land Development &amp; Housing edition of Council Radar reads the agendas of 150 Ontario councils every morning '
+            f'and sends one email each Monday, each item with a link to the council\'s own document.</p>'
+            f'<a class="btn primary" href="mailto:councilradaron@gmail.com?subject=Free%20trial%20issue%20-%20Housing" data-start>Get a free trial issue</a>'
+            f'<a class="btn secondary" href="{root}housing.html">See the housing edition</a></div>')
+
+
+def olt_at_council(today: date, slugs: dict, timeline) -> str:
+    root = "../../"
+    d = lambda s: date.fromisoformat(s).strftime("%B %-d")  # noqa: E731
+    rows = "".join(f"<tr><td>{_muni(c, c, slugs, root)}</td><td>{_e(what)}</td><td>{d(when)} {_src(k)}</td></tr>"
+                   for c, what, when, k in sorted(OLT_MATTERS, key=lambda r: r[2], reverse=True))
+    defer = "".join(f"<li>{_muni(c, c, slugs, root)}, {d(when)}{(', ' + _e(frm)) if frm else ''}. {_src(k)}</li>"
+                    for c, when, frm, k in OLT_DEFERENCE)
+    faq = [("How does an Ontario Land Tribunal appeal reach a council agenda?",
+            "Usually as a closed-session item. Councils list Tribunal matters under the Municipal Act exception for litigation or "
+            "potential litigation, including matters before administrative tribunals, then report settlements in open session, "
+            "as Ottawa did for 2175 Prince of Wales Drive on November 12, 2026."),
+           ("Who can appeal a Committee of Adjustment decision to the OLT?",
+            "Bradford West Gwillimbury's November 25, 2026 Committee of Adjustment notice says the applicant, the minister or a "
+            "specified person or public body that has no interest in the matter may appeal the decision to the Ontario Land Tribunal."),
+           ("What is the OLT deference resolution councils are passing around?",
+            "A resolution titled \"Review of the Ontario Land Tribunal and Enhancing Deference to Municipal Planning Decisions\". "
+            "This fall it arrived as correspondence on at least five agendas Council Radar reads, carrying resolutions from councils "
+            "including Whitby, Cobourg, Guelph, Port Colborne, Blandford-Blenheim, East Zorra-Tavistock and Ingersoll."),
+           ("Where are OLT decisions published?",
+            "On the Ontario Land Tribunal's own website, which municipal planning notices such as Kitchener's point residents to. "
+            "Council Radar tracks the council side: when an appeal, settlement or instruction appears on an agenda.")]
+    body = f"""
+<div class="keyfacts">
+<div class="stat"><strong>{len(OLT_MATTERS)}</strong><span>councils with OLT matters on agendas, Nov 2026</span></div>
+<div class="stat"><strong>{len(OLT_DEFERENCE)}</strong><span>agendas carrying the OLT "deference" resolution</span></div>
+<div class="stat"><strong>150</strong><span>Ontario councils read every morning</span></div>
+</div>
+<p>The Ontario Land Tribunal (OLT) hears appeals of planning decisions, from Committee of Adjustment rulings to official plan and zoning amendments. {_src("olt_bradford", "olt_site")} Before a Tribunal hearing or settlement, the matter often passes through council: a closed-session instruction, a settlement report, or a staff update. This page lists the ones that reached the councils Council Radar reads in November 2026, from the agendas themselves.</p>
+
+<h2>OLT appeals and settlements on council agendas, November 2026</h2>
+<table><thead><tr><th>Council</th><th>What the agenda shows</th><th>Meeting</th></tr></thead><tbody>{rows}</tbody></table>
+<p>Closed-session items are listed under the Municipal Act exception for "litigation or potential litigation, including matters before administrative tribunals". {_src("olt_mississauga", "olt_markham")} The agenda tells you a matter is moving; the decision usually follows in open session or at the Tribunal.</p>
+
+<h2>The OLT review resolution going council to council</h2>
+<p>A resolution titled "Review of the Ontario Land Tribunal and Enhancing Deference to Municipal Planning Decisions" is circulating between councils. These agenda packages carried it as correspondence this fall (receipt is not the same as endorsement):</p>
+<ul>{defer}</ul>
+
+<h2>Why developers and their lawyers watch this</h2>
+<ul>
+<li><strong>Settlement instructions show where an appeal is heading.</strong> Mississauga's council took instructions on a revised proposed settlement of the NYX Tannery appeals on November 25, before any Tribunal ruling. {_src("olt_mississauga")}</li>
+<li><strong>Old files come back.</strong> King's November 2 agenda carried OLT-22-002262, a file number from 2022. {_src("olt_king")}</li>
+<li><strong>Small councils have Tribunal files too.</strong> Kincardine, East Garafraxa and Wasaga Beach all had OLT items in the same month. {_src("olt_kincardine", "olt_eastgarafraxa", "olt_wasaga")}</li>
+</ul>
+<p>Related: <a href="{root}housing.html">the Land Development &amp; Housing edition</a> · <a href="{root}guides/">all guides</a></p>
+{_faq_html(faq)}
+{_housing_cta(root)}
+{_sources("olt_ottawa", "olt_mississauga", "olt_kincardine", "olt_wasaga", "olt_eastgarafraxa", "olt_markham", "olt_king",
+          "olt_haldimand", "olt_northgrenville", "olt_georgianbluffs", "olt_northperth", "olt_eg_info", "olt_bradford", "olt_kitchener", "olt_site")}"""
+    return _page("ontario-land-tribunal-council-agendas", "Ontario Land Tribunal appeals and settlements at council",
+                 "Which Ontario councils had Ontario Land Tribunal appeals, settlements and instructions on their agendas in "
+                 "November 2026, and the OLT review resolution councils are circulating. Every item sourced to the agenda.",
+                 "Ontario Land Tribunal matters on council agendas",
+                 "OLT appeals, settlements and closed-session instructions from Ontario council agendas, November 2026, each linked to the council's own document.",
+                 body, today, crumb="OLT matters at council", faq=faq)
+
+
 CATEGORY_LABELS = {"support_granted": "Support granted", "support_denied": "Support refused or not yet given",
                    "policy_protocol": "New protocol or criteria"}
 
@@ -804,6 +934,8 @@ PAGES = [
      "What Energy for Generations commits to, and who carries it out."),
     ("long-lead-time-rfp", long_lead_time, "IESO Long Lead-Time RFP: deadline and council support",
      "Hydro and long-duration storage on 40-year contracts, and the council support each proposal needs."),
+    ("ontario-land-tribunal-council-agendas", olt_at_council, "Ontario Land Tribunal matters on council agendas",
+     "OLT appeals, settlements and the OLT review resolution, from November 2026 council agendas."),
     ("council-decisions", None, "Ontario council energy decisions, by month",
      "Every public council decision, month by month, with a source for each."),
 ]
