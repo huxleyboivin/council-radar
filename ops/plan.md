@@ -72,3 +72,8 @@ Paying subscribers · MRR · trial readers · calls booked · named contacts sen
 - **Enterprise pilot offered to the warm contact** (Blakes, Reena Goyal) by the chief of staff, as ops/approvals.md directs. Miller Thomson's planning group leader (Tara Piurko) is routed to outreach with template E.
 - **First housing SEO guide live:** Ontario Land Tribunal matters on council agendas (`/guides/ontario-land-tribunal-council-agendas/`). Still to write: Bill 17/185/23, development charges, HAF/BFF.
 - **Bluesky is blocked on an email verification** that only Huxley can complete (code in councilradaron@gmail.com); 6 posts are queued behind it.
+
+## Update, Nov 26, 2026
+- **Second housing SEO guide live:** development charges on council agendas (`/guides/development-charges-council-agendas/`, `dev_charges` in radar/guides.py), targeting "development charges" (390/mo). Built from 11 agenda items at 11 councils, Nov 3 to Dec 1. Still to write: Bill 17/185/23 and HAF/BFF.
+- **Pipeline:** 19 named contacts prepared, 4 routed to outreach, 4 emailed; 0 replies beyond Blakes. Bluesky still waits on Huxley's email verification (6 posts queued). The subscriber sheet now has the `feed` column the Nov 30 housing issue needs.
+

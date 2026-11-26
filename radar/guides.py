@@ -872,6 +872,111 @@ def olt_at_council(today: date, slugs: dict, timeline) -> str:
                  body, today, crumb="OLT matters at council", faq=faq)
 
 
+S.update({
+    "dc_cambridge": ("City of Cambridge, Council agenda, December 1, 2026 (item 5.6, report 26-022-CFS)",
+                     _ESC.format("cambridge", "9fb442c5-4197-46e6-b029-9b592fd25919", "Agenda", "English")),
+    "dc_vaughan": ("City of Vaughan, Committee of the Whole (2) agenda, December 1, 2026 (item 4)",
+                   _ESC.format("vaughan", "a36cccae-f468-4830-94be-2a38a9555330", "Agenda", "English")),
+    "dc_oshawa": ("City of Oshawa, Planning and Development Services Committee agenda, November 30, 2026 (report PDSC-26-04)",
+                  _ESC.format("oshawa", "b622ca9a-610a-4fa4-bc5c-f6951f4343db", "Agenda", "English")),
+    "dc_oakville": ("Town of Oakville, Council Information Packages, November 25, 2026 (staff memo 1.2)",
+                    _ESC.format("oakville", "cf5a154c-c4e3-43d2-bdc8-4b501cb25d23", "Agenda", "English")),
+    "dc_orangeville": ("Town of Orangeville, Council agenda, November 23, 2026 (closed item 4.2, CPS-2026-059)",
+                       _ESC.format("orangeville", "800295f6-932d-4867-b0cc-4debe413fbe9", "Agenda", "English")),
+    "dc_renfrew": ("Town of Renfrew, Special Council agenda, November 24, 2026 (closed item 3.1)",
+                   _ESC.format("renfrew", "ec9f41e9-721e-47f2-bb1d-2dfde9040366", "Agenda", "English")),
+    "dc_westelgin": ("Municipality of West Elgin, Special Council agenda, November 12, 2026 (item 6.3)",
+                     _ESC.format("westelgin", "3a37fbe5-600e-4fd4-a71b-5d8ae1e614db", "Agenda", "English")),
+    "dc_grey": ("County of Grey, Committee of the Whole agenda, November 12, 2026 (item 6.g, report CAOR-CW-30-26)",
+                _ESC.format("grey", "ef5ef752-bbd6-4b77-84a2-e1da85b27b66", "Agenda", "English")),
+    "dc_stthomas": ("City of St. Thomas, Council meeting, November 9, 2026 (minutes)",
+                    _ESC.format("stthomas", "70480a5e-df45-4410-89b8-7e350815bd58", "PostMinutes", "English")),
+    "dc_markham": ("City of Markham, General Committee agenda, November 3, 2026 (York Region communications)",
+                   _ESC.format("markham", "8d901821-3268-4be3-9ad8-224bc8479e32", "Merged", "English")),
+    "dc_woolwich": ("Township of Woolwich, Council agenda, November 3, 2026 (Breslau staging plan)",
+                    _ESC.format("woolwich", "c0c43de9-ffc3-4ae0-8de9-bdbdc5699614", "Merged", "English")),
+})
+
+# (council, what the agenda shows, meeting date, kind, source key). Wording from the agenda packages themselves.
+DC_ITEMS = [
+    ("City of Cambridge", "Recommended motion: approve the annual indexing of the City's development charges by 3.2%, "
+     "effective December 1, 2026 (report 26-022-CFS)", "2026-12-01", "Rates", "dc_cambridge"),
+    ("City of Vaughan", "Request for Development Charge Deferral Agreement Extension, a report of the Deputy City Manager, "
+     "Corporate Services, City Treasurer and Chief Financial Officer", "2026-12-01", "Deferral", "dc_vaughan"),
+    ("City of Oshawa", "Development Charge By-law Amendment for Temporary Sales Offices (PDSC-26-04): By-law 91-2024 exempts "
+     "temporary buildings for up to three years, and the report notes sales offices are often needed longer", "2026-11-30",
+     "By-law amendment", "dc_oshawa"),
+    ("Town of Oakville", "Staff memo: Finance Department, Development Charges Background Study, November 18, 2026",
+     "2026-11-25", "Background study", "dc_oakville"),
+    ("Town of Orangeville", "Closed session: Development Charges By-law OLT Appeal Update (CPS-2026-059)", "2026-11-23",
+     "OLT appeal", "dc_orangeville"),
+    ("Town of Renfrew", "Closed session: Development Charge Reduction Program Grant Update", "2026-11-24",
+     "Provincial program", "dc_renfrew"),
+    ("Municipality of West Elgin", "Motion directing the Treasurer to report on the history and implementation of "
+     "Development Charges By-law 2024-85, including the timeline between the by-law taking effect and the start of collection",
+     "2026-11-12", "By-law review", "dc_westelgin"),
+    ("County of Grey", "Report CAOR-CW-30-26: Funding Approval Update on the County's Development Charge Reduction Program "
+     "submission, received for information", "2026-11-12", "Provincial program", "dc_grey"),
+    ("City of St. Thomas", "Council approved changing the applicant to Oakstone Developments Inc. for Community Improvement Plan "
+     "incentives at 4 West Pearl Street, including a Development Charge Grant", "2026-11-09", "Grant", "dc_stthomas"),
+    ("City of Markham", "York Region communication received: Canada-Ontario Partnership to Build and Development Charge "
+     "Reduction Program, update", "2026-11-03", "Provincial program", "dc_markham"),
+    ("Township of Woolwich", "Breslau staging plan endorsed subject to a fiscal plan that may include outside funding to "
+     "substantially supplement the Township's Development Charge reserves", "2026-11-03", "Growth staging", "dc_woolwich"),
+]
+
+
+def dev_charges(today: date, slugs: dict, timeline) -> str:
+    root = "../../"
+    d = lambda s: date.fromisoformat(s).strftime("%B %-d")  # noqa: E731
+    items = sorted(DC_ITEMS, key=lambda r: r[2], reverse=True)
+    rows = "".join(f"<tr><td>{_muni(c, c, slugs, root)}</td><td>{_e(kind)}</td><td>{_e(what)}</td><td>{d(when)} {_src(k)}</td></tr>"
+                   for c, what, when, kind, k in items)
+    n_prog = sum(1 for r in DC_ITEMS if r[3] == "Provincial program")
+    faq = [("How often do Ontario councils change development charges?",
+            "Rates move between by-laws too. Cambridge's December 1, 2026 agenda recommends indexing its development charges by "
+            "3.2%, effective that day, \"in accordance with the City's Development Charges By-laws\"."),
+           ("Can a development charge be deferred?",
+            "Some councils enter deferral agreements. Vaughan's Committee of the Whole considers a request to extend a development "
+            "charge deferral agreement on December 1, 2026."),
+           ("Can a development charges by-law be appealed?",
+            "Yes. Orangeville's November 23, 2026 agenda lists a closed-session update on an Ontario Land Tribunal appeal of its "
+            "Development Charges By-law."),
+           ("What is the Development Charge Reduction Program?",
+            f"A program councils report on as funding from senior governments. In November 2026 it appeared on {n_prog} agendas "
+            "Council Radar reads, including Grey County's funding approval update and a York Region communication to Markham "
+            "titled \"Canada-Ontario Partnership to Build and Development Charge Reduction Program\".")]
+    body = f"""
+<div class="keyfacts">
+<div class="stat"><strong>{len(DC_ITEMS)}</strong><span>development charge items on council agendas, Nov to Dec 1, 2026</span></div>
+<div class="stat"><strong>3.2%</strong><span>Cambridge's recommended indexing, effective Dec 1, 2026</span></div>
+<div class="stat"><strong>150</strong><span>Ontario councils read every morning</span></div>
+</div>
+<p>Development charges are the fees Ontario municipalities levy on new construction to pay for growth-related infrastructure, set out in each council's development charges by-law. Changes reach council in many forms: annual indexing, background studies for a new by-law, amendments and exemptions, deferral agreements, grants, appeals to the Ontario Land Tribunal, and reports on provincial and federal programs that offset them. This page lists the ones on the agendas Council Radar read from November 3 to December 1, 2026, each linked to the council's own document.</p>
+
+<h2>Development charge items on council agendas</h2>
+<div class="scroll"><table class="tbl"><thead><tr><th>Council</th><th>Type</th><th>What the agenda shows</th><th>Meeting</th></tr></thead><tbody>{rows}</tbody></table></div>
+
+<h2>What to watch for</h2>
+<ul>
+<li><strong>Indexing dates.</strong> Cambridge's indexing takes effect December 1, 2026, the same day council votes on it. {_src("dc_cambridge")}</li>
+<li><strong>Background studies come before new by-laws.</strong> Oakville's information package carried a November 18 memo on its Development Charges Background Study. {_src("dc_oakville")}</li>
+<li><strong>Exemptions get rewritten.</strong> Oshawa is amending its by-law because temporary sales offices often stay longer than its three-year exemption. {_src("dc_oshawa")}</li>
+<li><strong>Collection can lag the by-law.</strong> West Elgin asked its Treasurer to explain the gap between By-law 2024-85 taking effect and the start of collection. {_src("dc_westelgin")}</li>
+<li><strong>Appeals and deferrals run in closed session or committee first.</strong> {_src("dc_orangeville", "dc_vaughan")}</li>
+</ul>
+<p>Related: <a href="{root}guides/ontario-land-tribunal-council-agendas/">OLT matters on council agendas</a> · <a href="{root}housing.html">the Land Development &amp; Housing edition</a> · <a href="{root}guides/">all guides</a></p>
+{_faq_html(faq)}
+{_housing_cta(root)}
+{_sources(*[r[4] for r in items])}"""
+    return _page("development-charges-council-agendas", "Ontario development charges on council agendas, Nov 2026",
+                 "Development charge indexing, background studies, by-law amendments, deferral agreements, OLT appeals and "
+                 "reduction-program updates on Ontario council agendas, November to December 1, 2026. Every item sourced.",
+                 "Development charges on Ontario council agendas",
+                 "Indexing, new by-laws, exemptions, deferrals and appeals from Ontario council agendas, each linked to the council's own document.",
+                 body, today, crumb="Development charges at council", faq=faq)
+
+
 CATEGORY_LABELS = {"support_granted": "Support granted", "support_denied": "Support refused or not yet given",
                    "policy_protocol": "New protocol or criteria"}
 
@@ -936,6 +1041,8 @@ PAGES = [
      "Hydro and long-duration storage on 40-year contracts, and the council support each proposal needs."),
     ("ontario-land-tribunal-council-agendas", olt_at_council, "Ontario Land Tribunal matters on council agendas",
      "OLT appeals, settlements and the OLT review resolution, from November 2026 council agendas."),
+    ("development-charges-council-agendas", dev_charges, "Development charges on Ontario council agendas",
+     "Indexing, background studies, exemptions, deferrals and OLT appeals of development charges, from council agendas."),
     ("council-decisions", None, "Ontario council energy decisions, by month",
      "Every public council decision, month by month, with a source for each."),
 ]

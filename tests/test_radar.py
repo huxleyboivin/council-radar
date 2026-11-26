@@ -464,6 +464,18 @@ def test_olt_guide_lists_sourced_agenda_items(tmp_path):
         assert guides.S[key][1].startswith("https://") and guides.S[key][1] in html.replace("&amp;", "&")
 
 
+def test_dc_guide_lists_sourced_agenda_items(tmp_path):
+    from datetime import date
+    from radar import guides
+    paths = guides.write(date(2026, 11, 26), {"City of Cambridge": "city-of-cambridge"}, tmp_path)
+    assert "guides/development-charges-council-agendas/" in paths
+    html = (tmp_path / "development-charges-council-agendas" / "index.html").read_text()
+    assert "3.2%" in html and "Temporary Sales Offices" in html and "councils/city-of-cambridge/" in html
+    assert "Free%20trial%20issue%20-%20Housing" in html and "FAQPage" in html
+    for *_, key in guides.DC_ITEMS:
+        assert guides.S[key][1].startswith("https://") and guides.S[key][1] in html.replace("&amp;", "&")
+
+
 # --- housing front door (web designer, 2026-11-25) ---
 
 def _housing_builder():
