@@ -75,5 +75,5 @@ Paying subscribers · MRR · trial readers · calls booked · named contacts sen
 
 ## Update, Nov 26, 2026
 - **Second housing SEO guide live:** development charges on council agendas (`/guides/development-charges-council-agendas/`, `dev_charges` in radar/guides.py), targeting "development charges" (390/mo). Built from 11 agenda items at 11 councils, Nov 3 to Dec 1. Still to write: Bill 17/185/23 and HAF/BFF.
-- **Pipeline:** 19 named contacts prepared, 4 routed to outreach, 4 emailed; 0 replies beyond Blakes. Bluesky still waits on Huxley's email verification (6 posts queued). The subscriber sheet now has the `feed` column the Nov 30 housing issue needs.
+- **Pipeline:** 19 named contacts prepared, 4 routed to outreach, 4 emailed; 0 replies beyond Blakes. Bluesky still waits on Huxley's email verification (4 posts queued; 2 time-sensitive ones expired). The subscriber sheet now has the `feed` column the Nov 30 housing issue needs.
 
