@@ -534,3 +534,33 @@ def test_start_panel_offers_both_editions():
         assert f"https://buy.stripe.com/{link}" in js
     assert 'name="crs-ed" value="energy"' in js and 'name="crs-ed" value="housing"' in js
     assert 'edition === "housing" ? "housing"' in js        # housing checkouts keep client_reference_id=housing
+
+
+# --- data centres beta feed (collect-only, 2026-11-26) ---
+
+def test_datacentres_feed_is_collect_only():
+    feeds = prefilter.load_feeds()
+    dc = feeds["datacentres"]
+    assert dc.collect and not dc.enabled          # excerpts saved daily, never built or sent
+    assert "pause_icbl" in dc.categories and "other_relevant" in dc.categories
+
+
+def test_datacentres_feed_matches_real_agenda_wording():
+    feeds = prefilter.load_feeds()
+    feed = feeds["datacentres"]
+    # wording from Hamilton (Dec 1), North Grenville (Nov 3) and Orangeville (Nov 23) agendas in data/excerpts/
+    for text in ("City of Hamilton Response to Environmental Registry of Ontario Posting 026-0853",
+                 "Artificial Intelligence Data Centres Study - Interim Report (City Wide)",
+                 "prepare an Interim Control By-law, for a period of one (1) year, to temporarily prohibit data centre development",
+                 "Township of Mulmur - Data Centres.pdf",
+                 "Comments on Ontario's Data Centre Playbook and Bill 40",
+                 "rezoning to permit a hyperscale campus",
+                 "facilities with a peak demand of 10 MW or more (large computational loads)"):
+        assert prefilter.excerpt(text, feed)[0] >= 1, text
+    for text in ("Road resurfacing tender for Main Street.",
+                 "Official Plan Amendment and Zoning By-law Amendment, 120 Main St",
+                 "battery energy storage system support resolution",
+                 "Bill 185, Cutting Red Tape, Building More Homes Act"):
+        assert prefilter.excerpt(text, feed) == (0, ""), text
+    # existing editions are untouched by the new block
+    assert prefilter.excerpt("Township of Mulmur - Data Centres.pdf", feeds["energy"]) == (0, "")

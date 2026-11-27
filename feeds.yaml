@@ -78,3 +78,32 @@ housing:
     - olt_appeal             # Ontario Land Tribunal appeals and settlements
     - servicing_allocation   # water / wastewater capacity allocated to projects
     - other_relevant
+datacentres:
+  title: "Council Radar: Ontario Data Centres & Large Loads"
+  audience: >-
+    Data centre developers and operators, industrial landowners marketing "data-centre-ready"
+    sites, power developers offering bring-your-own-generation, utilities, site selectors and
+    the energy and land-use lawyers advising them, who need every council move on data centre
+    pauses (interim control by-laws), zoning and official plan policy, specific site
+    applications, water and power servicing, and municipal responses to Ontario's Data Centre
+    Playbook (ERO 026-0853) and Bill 40.
+  # Collect-only beta from 2026-11-26 (expansion memo ops/expansion/2026-11-26-data-centres.md).
+  # Excerpts are saved daily; nothing is built or sent. Launch when the memo's bar is met.
+  enabled: false
+  collect: true
+  patterns:
+    - 'data cent(re|er)s?|data[- ]processing (facility|centre|center)s?'
+    - 'hyperscale|co-?location (facility|facilities|data)|server farms?'
+    - 'large (computational|electricity|power) (loads?|users?)|large[- ]load (facility|facilities|customers?)'
+    - '\bAI (data|compute|computing) (cent(re|er)s?|facilit(y|ies)|campus(es)?)|artificial intelligence (data|compute|computing)'
+    - 'Data Cent(re|er)s? Playbook|026-0853|Economic and Strategic Assessment Framework'
+    - '\bBill 40\b'
+    - 'crypto(currency)?[- ]mining|bitcoin mining|digital asset mining'
+  categories:
+    - pause_icbl            # interim control by-law, moratorium or pause (proposed, passed, defeated, extended)
+    - land_use_policy       # OP / zoning policy, permitted-use definitions, planning study directions
+    - site_application      # a specific data centre: rezoning, site plan, severance, sale of municipal land
+    - servicing_power       # water, wastewater, hydro / grid capacity for data centres
+    - provincial_response   # comments on the Playbook, ERO 026-0853, Bill 40; circulated resolutions
+    - delegation            # proponent or residents present; early signal
+    - other_relevant
