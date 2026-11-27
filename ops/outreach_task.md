@@ -56,6 +56,13 @@ Files: `outreach/prospects.csv` (research list), `outreach/log.csv` (every email
    land-use law groups named as applicants, agents or counsel in `python -m radar pending --feed housing` and
    `data/issues/*-housing-findings.json` (template H), using only addresses they publish for business contact. Same hard
    limits; housing and energy sends share the 20-per-run ceiling. Buyer types and examples: `ops/expansion/2026-11-23-housing-buyers.md`.
+   **Start from `outreach/agenda_leads.csv` (since 2026-11-27).** `python tools/agenda_leads.py --write` ranks the firms
+   named next to "submitted by / Agent: / Applicant: / on behalf of" in our housing excerpts (corporate names only,
+   already-contacted orgs dropped). Each row has the agenda URL to use as `personalization_source_url`. It never
+   contains addresses: a row with `status=needs_address` still needs one the firm publishes itself. When the address is
+   found (here, or by the browser desk), set the row's `status` to `address_found <email> <source url>` and add the firm
+   to `prospects.csv`; when none is published, set `no_published_address`. Prefer `consultant` rows (one consultancy
+   files at many councils); find the parent company before emailing a `site_company` row.
    Add new organizations to `prospects.csv` with an evidence URL.
 5. **Check, then send.** Before each email run
    `python tools/outreach_check.py --email <address> --org "<organization>" --source <address_source_url> [--stage followup] [--municipality "<council>"]`.
