@@ -77,3 +77,7 @@ Paying subscribers · MRR · trial readers · calls booked · named contacts sen
 - **Second housing SEO guide live:** development charges on council agendas (`/guides/development-charges-council-agendas/`, `dev_charges` in radar/guides.py), targeting "development charges" (390/mo). Built from 11 agenda items at 11 councils, Nov 3 to Dec 1. Still to write: Bill 17/185/23 and HAF/BFF.
 - **Pipeline:** 19 named contacts prepared, 4 routed to outreach, 4 emailed; 0 replies beyond Blakes. Bluesky still waits on Huxley's email verification (4 posts queued; 2 time-sensitive ones expired). The subscriber sheet now has the `feed` column the Nov 30 housing issue needs.
 
+
+## Update, Nov 27, 2026
+- **Third housing SEO guide live:** the Housing Accelerator Fund on council agendas (`/guides/housing-accelerator-fund-council-agendas/`, `haf_at_council` in radar/guides.py), targeting "housing accelerator fund" (590/mo). Built from 6 agenda items at Markham, Mississauga, Kitchener, London and Tweed, Nov 3 to Dec 1. Still to write: Bill 17/185/23.
+- **Enterprise pipeline:** two more land-use law groups routed for the $990 pilot (WeirFoulds, Goodmans), so template E now covers Blakes, Miller Thomson and these two. Pipeline: 22 named contacts, 6 routed, 7 emailed; 0 replies beyond Blakes. Bluesky still waits on Huxley's email confirmation click.

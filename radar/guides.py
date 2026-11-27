@@ -977,6 +977,91 @@ def dev_charges(today: date, slugs: dict, timeline) -> str:
                  body, today, crumb="Development charges at council", faq=faq)
 
 
+# --- Housing Accelerator Fund and housing funding on council agendas (chief of staff, 2026-11-27) ---
+S.update({
+    "haf_markham_dsc": ("City of Markham, Development Services Committee agenda, November 3, 2026 (item 8.1)",
+                        _ESC.format("markham", "e66dec2e-e341-4fb1-8a16-58c1efe1e515", "Merged", "English")),
+    "haf_markham_min": ("City of Markham, Development Services Committee minutes, November 3, 2026 (deputations)",
+                        _ESC.format("markham", "e66dec2e-e341-4fb1-8a16-58c1efe1e515", "PostMinutes", "English")),
+    "haf_markham_cc": ("City of Markham, Council agenda, November 10, 2026 (item 7.2.3)",
+                       _ESC.format("markham", "a1c9d196-93f3-4e0b-9557-74b55051c0ec", "Merged", "English")),
+    "haf_mississauga": ("City of Mississauga, Council agenda, November 25, 2026 (correspondence item 14.1.1)",
+                        _ESC.format("mississauga", "b8d22c9c-7009-4716-ba20-fe9fb33fa902", "Agenda", "English")),
+    "haf_kitchener": ("City of Kitchener, Planning and Strategic Initiatives Committee agenda, November 30, 2026 (item 7.2, DSD-2026-403)",
+                      _ESC.format("kitchener", "dd38ce04-e03e-472e-88b6-2c92e6b10aa8", "Agenda", "English")),
+    "haf_london": ("City of London, Planning and Environment Committee agenda, December 1, 2026 (consent item 2.1)",
+                   _ESC.format("london", "2a144f09-6219-415d-bc7b-b8a03040ed62", "Agenda", "English")),
+    "haf_tweed": ("Municipality of Tweed, Council agenda, November 26, 2026 (correspondence item 13.12)",
+                  _ESC.format("tweed", "5025f619-fde2-4663-874c-cb937da99ea5", "Agenda", "English")),
+})
+
+# (council, what the agenda shows, meeting date, program, source key). Wording from the agenda packages themselves.
+HAF_ITEMS = [
+    ("City of London", "Staff report \"Housing Accelerator Fund - 2026 Annual Update\", on the consent agenda",
+     "2026-12-01", "Housing Accelerator Fund", "haf_london"),
+    ("City of Kitchener", "Quarterly report DSD-2026-403 on significant planning applications and the Housing Pledge, with "
+     "\"Attachment B - Housing Accelerator Fund Projects Q4 2026\"", "2026-11-30", "Housing Accelerator Fund", "haf_kitchener"),
+    ("Municipality of Tweed", "Ministry of Infrastructure and AMO webinar notice on the Municipal Housing Infrastructure Program, "
+     "non-development charge municipalities stream", "2026-11-26", "Municipal Housing Infrastructure Program", "haf_tweed"),
+    ("City of Mississauga", "A letter dated September 29, 2026 from Mayor Parrish \"regarding receiving the fourth installment of "
+     "the Housing Accelerator Fund (HAF)\"", "2026-11-25", "Housing Accelerator Fund", "haf_mississauga"),
+    ("City of Markham", "Council receives the November 3 report \"CMHC Housing Accelerator Fund Update\" and the deputation on it",
+     "2026-11-10", "Housing Accelerator Fund", "haf_markham_cc"),
+    ("City of Markham", "Report \"CMHC Housing Accelerator Fund Update\" with appendices on the status of HAF initiatives and "
+     "milestones, the second annual HAF reporting update and HAF financials", "2026-11-03", "Housing Accelerator Fund",
+     "haf_markham_dsc"),
+]
+
+
+def haf_at_council(today: date, slugs: dict, timeline) -> str:
+    root = "../../"
+    d = lambda s: date.fromisoformat(s).strftime("%B %-d")  # noqa: E731
+    items = sorted(HAF_ITEMS, key=lambda r: r[2], reverse=True)
+    rows = "".join(f"<tr><td>{_muni(c, c, slugs, root)}</td><td>{_e(prog)}</td><td>{_e(what)}</td><td>{d(when)} {_src(k)}</td></tr>"
+                   for c, what, when, prog, k in items)
+    n_councils = len({r[0] for r in HAF_ITEMS if r[3] == "Housing Accelerator Fund"})
+    faq = [("How do Housing Accelerator Fund updates reach council?",
+            "As staff reports and correspondence. Markham's Development Services Committee received a report titled \"CMHC Housing "
+            "Accelerator Fund Update\" on November 3, 2026, with appendices on the status of HAF initiatives and milestones, the "
+            "second annual HAF reporting update and HAF financials, and council received it on November 10."),
+           ("Do residents speak to HAF reports?",
+            "Sometimes. Markham's November 3, 2026 minutes record a deputant asking about the Housing Accelerator Fund, "
+            "\"particularly surrounding Council's decision to not allow four units per residential property, as of right.\""),
+           ("Are HAF funds paid in installments?",
+            "Mississauga's November 25, 2026 council agenda lists a September 29 letter from Mayor Parrish about receiving \"the "
+            "fourth installment of the Housing Accelerator Fund (HAF)\"."),
+           ("Which other housing funding programs show up on agendas?",
+            "Provincial programs too. Tweed's November 26, 2026 agenda carried a Ministry of Infrastructure and AMO notice about "
+            "the Municipal Housing Infrastructure Program's stream for non-development charge municipalities.")]
+    body = f"""
+<div class="keyfacts">
+<div class="stat"><strong>{n_councils}</strong><span>councils with Housing Accelerator Fund items, Nov 3 to Dec 1, 2026</span></div>
+<div class="stat"><strong>4th</strong><span>HAF installment noted on Mississauga's Nov 25 agenda</span></div>
+<div class="stat"><strong>150</strong><span>Ontario councils read every morning</span></div>
+</div>
+<p>The Housing Accelerator Fund (HAF) is the federal program, run by CMHC, that funds municipalities for initiatives meant to speed up housing approvals. Councils report on it in staff updates, annual reporting and correspondence, and the same agendas carry provincial housing infrastructure programs. This page lists the HAF and housing funding items on the agendas Council Radar read from November 3 to December 1, 2026, each linked to the council's own document.</p>
+
+<h2>Housing funding items on council agendas</h2>
+<div class="scroll"><table class="tbl"><thead><tr><th>Council</th><th>Program</th><th>What the agenda shows</th><th>Meeting</th></tr></thead><tbody>{rows}</tbody></table></div>
+
+<h2>What to watch for</h2>
+<ul>
+<li><strong>Annual reporting season.</strong> Markham's report included its second annual HAF reporting update, and London's committee takes a 2026 annual update on December 1. {_src("haf_markham_dsc", "haf_london")}</li>
+<li><strong>HAF projects travel with planning reports.</strong> Kitchener attaches its HAF project list to the quarterly report on significant planning applications. {_src("haf_kitchener")}</li>
+<li><strong>Zoning permissions come up.</strong> The Markham deputation tied HAF to council's decision on four units per residential property. {_src("haf_markham_min")}</li>
+</ul>
+<p>Related: <a href="{root}guides/development-charges-council-agendas/">development charges on council agendas</a> · <a href="{root}guides/ontario-land-tribunal-council-agendas/">OLT matters on council agendas</a> · <a href="{root}housing.html">the Land Development &amp; Housing edition</a></p>
+{_faq_html(faq)}
+{_housing_cta(root)}
+{_sources(*sorted({r[4] for r in items} | {"haf_markham_min"}))}"""
+    return _page("housing-accelerator-fund-council-agendas", "Housing Accelerator Fund on Ontario council agendas, Nov 2026",
+                 "Housing Accelerator Fund updates, annual reports, installments and provincial housing infrastructure programs on "
+                 "Ontario council agendas, November to December 1, 2026. Every item sourced.",
+                 "The Housing Accelerator Fund on Ontario council agendas",
+                 "HAF updates, annual reports and installments from Ontario council agendas, each linked to the council's own document.",
+                 body, today, crumb="Housing Accelerator Fund at council", faq=faq)
+
+
 CATEGORY_LABELS = {"support_granted": "Support granted", "support_denied": "Support refused or not yet given",
                    "policy_protocol": "New protocol or criteria"}
 
@@ -1043,6 +1128,8 @@ PAGES = [
      "OLT appeals, settlements and the OLT review resolution, from November 2026 council agendas."),
     ("development-charges-council-agendas", dev_charges, "Development charges on Ontario council agendas",
      "Indexing, background studies, exemptions, deferrals and OLT appeals of development charges, from council agendas."),
+    ("housing-accelerator-fund-council-agendas", haf_at_council, "The Housing Accelerator Fund on Ontario council agendas",
+     "HAF updates, annual reports and installments, plus provincial housing infrastructure programs, from council agendas."),
     ("council-decisions", None, "Ontario council energy decisions, by month",
      "Every public council decision, month by month, with a source for each."),
 ]

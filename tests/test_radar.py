@@ -564,3 +564,15 @@ def test_datacentres_feed_matches_real_agenda_wording():
         assert prefilter.excerpt(text, feed) == (0, ""), text
     # existing editions are untouched by the new block
     assert prefilter.excerpt("Township of Mulmur - Data Centres.pdf", feeds["energy"]) == (0, "")
+
+
+def test_haf_guide_lists_sourced_agenda_items(tmp_path):
+    from datetime import date
+    from radar import guides
+    paths = guides.write(date(2026, 11, 27), {"City of Markham": "city-of-markham"}, tmp_path)
+    assert "guides/housing-accelerator-fund-council-agendas/" in paths
+    html = (tmp_path / "housing-accelerator-fund-council-agendas" / "index.html").read_text()
+    assert "fourth installment" in html and "councils/city-of-markham/" in html
+    assert "Free%20trial%20issue%20-%20Housing" in html and "FAQPage" in html
+    for *_, key in guides.HAF_ITEMS:
+        assert guides.S[key][1].startswith("https://") and guides.S[key][1] in html.replace("&amp;", "&")
